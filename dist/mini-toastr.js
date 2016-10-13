@@ -60,7 +60,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _keys = __webpack_require__(1);
+	var _defineProperty2 = __webpack_require__(1);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+	var _keys = __webpack_require__(5);
 
 	var _keys2 = _interopRequireDefault(_keys);
 
@@ -100,58 +104,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, 1000 / 30);
 	  }
 
-	  var defaultConfig = {
-	    timeOut: 5000,
-	    appendTarget: document.body,
-	    node: document.createElement('div'),
-	    style: {
-	      container: {
-	        position: "fixed",
-	        zIndex: 99999,
-	        right: "12px",
-	        top: "12px"
-	      },
-	      box: {
-	        base: {
-	          cursor: "pointer",
-	          padding: "12px 18px",
-	          margin: "0 0 6px 0",
-	          backgroundColor: "#000",
-	          opacity: 0.8,
-	          color: "#fff",
-	          font: "normal 13px 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif",
-	          borderRadius: "3px",
-	          boxShadow: "#3c3b3b 0 0 12px",
-	          width: "300px"
-	        },
-	        error: {
-	          backgroundColor: "#FF0000"
-	        },
-	        warn: {
-	          backgroundColor: "#f9a937"
-	        },
-	        success: {
-	          backgroundColor: "#73b573"
-	        },
-	        info: {
-	          backgroundColor: "#58abc3"
-	        },
-	        hover: {
-	          opacity: 1,
-	          boxShadow: "#000 0 0 12px"
-	        }
-	      },
-	      title: {
-	        fontWeight: "700"
-	      },
-	      text: {
-	        display: "inline-block",
-	        verticalAlign: "middle",
-	        width: "240px",
-	        padding: "0 12px"
-	      }
-	    }
-	  };
 	  var TYPES = {
 	    error: 'error',
 	    warn: 'warn',
@@ -160,11 +112,97 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var CLASSES = {
-	    basic: 'mini-toastr-notification',
+	    base: 'mini-toastr-notification',
 	    error: '-' + TYPES.error,
 	    warn: '-' + TYPES.warn,
 	    success: '-' + TYPES.success,
 	    info: '-' + TYPES.info
+	  };
+
+	  /**
+	   * @param  {Object} obj
+	   * @return {String}
+	   */
+	  function makeCssString(obj) {
+	    return (0, _keys2['default'])(obj).reduce(function (prev, key) {
+	      return prev + key + ':' + obj[key] + '; ';
+	    }, '');
+	  }
+
+	  function getCss(config) {
+	    var _ref;
+
+	    return _ref = {}, (0, _defineProperty3['default'])(_ref, CLASSES.base, makeCssString(config.style.box.base)), (0, _defineProperty3['default'])(_ref, CLASSES.error, makeCssString(config.style.box.error)), (0, _defineProperty3['default'])(_ref, CLASSES.warn, makeCssString(config.style.box.warn)), (0, _defineProperty3['default'])(_ref, CLASSES.success, makeCssString(config.style.box.success)), (0, _defineProperty3['default'])(_ref, CLASSES.info, makeCssString(config.style.box.info)), _ref;
+	  }
+
+	  /**
+	   * @param  {String} css
+	   */
+	  function appendStyles(css) {
+	    var head = document.head || document.getElementsByTagName('head')[0];
+	    var style = document.createElement('style');
+
+	    style.type = 'text/css';
+	    if (style.styleSheet) {
+	      style.styleSheet.cssText = css;
+	    } else {
+	      style.appendChild(document.createTextNode(css));
+	    }
+
+	    head.appendChild(style);
+	  }
+
+	  var defaultConfig = {
+	    timeOut: 5000,
+	    appendTarget: document.body,
+	    node: document.createElement('div'),
+	    style: {
+	      container: {
+	        position: 'fixed',
+	        zIndex: 99999,
+	        right: '12px',
+	        top: '12px'
+	      },
+	      box: {
+	        base: {
+	          cursor: 'pointer',
+	          padding: '12px 18px',
+	          margin: '0 0 6px 0',
+	          backgroundColor: '#000',
+	          opacity: 0.8,
+	          color: '#fff',
+	          // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
+	          borderRadius: '3px',
+	          boxShadow: '#3c3b3b 0 0 12px',
+	          width: '300px'
+	        },
+	        error: {
+	          backgroundColor: '#FF0000'
+	        },
+	        warn: {
+	          backgroundColor: '#f9a937'
+	        },
+	        success: {
+	          backgroundColor: '#73b573'
+	        },
+	        info: {
+	          backgroundColor: '#58abc3'
+	        },
+	        hover: {
+	          opacity: 1,
+	          boxShadow: '#000 0 0 12px'
+	        }
+	      },
+	      title: {
+	        fontWeight: '700'
+	      },
+	      text: {
+	        display: 'inline-block',
+	        verticalAlign: 'middle',
+	        width: '240px',
+	        padding: '0 12px'
+	      }
+	    }
 	  };
 
 	  /**
@@ -179,8 +217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config = config || exports.config;
 
 	    var notificationElem = document.createElement('div');
-	    console.info(notificationElem);
-	    notificationElem['class'] = CLASSES.basic + ' ' + CLASSES[type];
+	    notificationElem['class'] = CLASSES.base + ' ' + CLASSES[type];
 
 	    applyStyles(notificationElem, config.style.box.base);
 	    applyStyles(notificationElem, config.style.box[type]);
@@ -229,8 +266,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return  {exports}
 	     */
 	    init: function init(config) {
+	      // TODO (S.Panfilov)
 	      this.config = config || defaultConfig;
-	      applyStyles(this.config.node, this.config.style.container);
+	      var css = getCss(this.config);
+	      console.info(css);
+	      appendStyles(css);
+	      // applyStyles(this.config.node, this.config.style.container)
 	      this.config.node.id = 'qqq';
 	      this.config.appendTarget.appendChild(this.config.node);
 	      return this;
@@ -297,16 +338,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = { "default": __webpack_require__(2), __esModule: true };
+	exports.__esModule = true;
+
+	var _defineProperty = __webpack_require__(2);
+
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { "default": obj };
+	}
+
+	exports["default"] = function (obj, key, value) {
+	  if (key in obj) {
+	    (0, _defineProperty2["default"])(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	__webpack_require__(3);
-	module.exports = __webpack_require__(9).Object.keys;
+	module.exports = { "default": __webpack_require__(3), __esModule: true };
 
 /***/ },
 /* 3 */
@@ -314,29 +377,77 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(4);
+	var $ = __webpack_require__(4);
+	module.exports = function defineProperty(it, key, desc) {
+	  return $.setDesc(it, key, desc);
+	};
 
-	__webpack_require__(6)('keys', function ($keys) {
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var $Object = Object;
+	module.exports = {
+	  create: $Object.create,
+	  getProto: $Object.getPrototypeOf,
+	  isEnum: {}.propertyIsEnumerable,
+	  getDesc: $Object.getOwnPropertyDescriptor,
+	  setDesc: $Object.defineProperty,
+	  setDescs: $Object.defineProperties,
+	  getKeys: $Object.keys,
+	  getNames: $Object.getOwnPropertyNames,
+	  getSymbols: $Object.getOwnPropertySymbols,
+	  each: [].forEach
+	};
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	module.exports = { "default": __webpack_require__(6), __esModule: true };
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(7);
+	module.exports = __webpack_require__(13).Object.keys;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(8);
+
+	__webpack_require__(10)('keys', function ($keys) {
 	  return function keys(it) {
 	    return $keys(toObject(it));
 	  };
 	});
 
 /***/ },
-/* 4 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(5);
+	var defined = __webpack_require__(9);
 	module.exports = function (it) {
 	  return Object(defined(it));
 	};
 
 /***/ },
-/* 5 */
+/* 9 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -348,15 +459,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 6 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// most Object methods by ES6 should accept primitives
-	var $export = __webpack_require__(7),
-	    core = __webpack_require__(9),
-	    fails = __webpack_require__(12);
+	var $export = __webpack_require__(11),
+	    core = __webpack_require__(13),
+	    fails = __webpack_require__(16);
 	module.exports = function (KEY, exec) {
 	  var fn = (core.Object || {})[KEY] || Object[KEY],
 	      exp = {};
@@ -367,14 +478,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 7 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var global = __webpack_require__(8),
-	    core = __webpack_require__(9),
-	    ctx = __webpack_require__(10),
+	var global = __webpack_require__(12),
+	    core = __webpack_require__(13),
+	    ctx = __webpack_require__(14),
 	    PROTOTYPE = 'prototype';
 
 	var $export = function $export(type, name, source) {
@@ -422,7 +533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = $export;
 
 /***/ },
-/* 8 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -432,7 +543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 /***/ },
-/* 9 */
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -441,13 +552,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 /***/ },
-/* 10 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// optional / simple context binding
-	var aFunction = __webpack_require__(11);
+	var aFunction = __webpack_require__(15);
 	module.exports = function (fn, that, length) {
 	  aFunction(fn);
 	  if (that === undefined) return fn;
@@ -471,7 +582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 11 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -482,7 +593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 12 */
+/* 16 */
 /***/ function(module, exports) {
 
 	"use strict";

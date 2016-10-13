@@ -25,58 +25,6 @@ var miniToastr = (function () {
     setTimeout(() => fadeOut.apply(this, [element]), 1000 / 30)
   }
 
-  const defaultConfig = {
-    timeOut: 5000,
-    appendTarget: document.body,
-    node: document.createElement('div'),
-    style: {
-      container: {
-        position: "fixed",
-        zIndex: 99999,
-        right: "12px",
-        top: "12px"
-      },
-      box: {
-        base: {
-          cursor: "pointer",
-          padding: "12px 18px",
-          margin: "0 0 6px 0",
-          backgroundColor: "#000",
-          opacity: 0.8,
-          color: "#fff",
-          font: "normal 13px 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif",
-          borderRadius: "3px",
-          boxShadow: "#3c3b3b 0 0 12px",
-          width: "300px"
-        },
-        error: {
-          backgroundColor: "#FF0000",
-        },
-        warn: {
-          backgroundColor: "#f9a937",
-        },
-        success: {
-          backgroundColor: "#73b573",
-        },
-        info: {
-          backgroundColor: "#58abc3",
-        },
-        hover: {
-          opacity: 1,
-          boxShadow: "#000 0 0 12px"
-        }
-      },
-      title: {
-        fontWeight: "700"
-      },
-      text: {
-        display: "inline-block",
-        verticalAlign: "middle",
-        width: "240px",
-        padding: "0 12px"
-      }
-    }
-  }
   const TYPES = {
     error: 'error',
     warn: 'warn',
@@ -85,11 +33,101 @@ var miniToastr = (function () {
   }
 
   const CLASSES = {
-    basic: 'mini-toastr-notification',
+    base: 'mini-toastr-notification',
     error: `-${TYPES.error}`,
     warn: `-${TYPES.warn}`,
     success: `-${TYPES.success}`,
     info: `-${TYPES.info}`
+  }
+
+  /**
+   * @param  {Object} obj
+   * @return {String}
+   */
+  function makeCssString (obj) {
+    return Object.keys(obj).reduce(function (prev, key) {
+      return prev + key + ':' + obj[key] + '; ';
+    }, '');
+  }
+
+  function getCss (config) {
+    return {
+      [CLASSES.base]: makeCssString(config.style.box.base),
+      [CLASSES.error]: makeCssString(config.style.box.error),
+      [CLASSES.warn]: makeCssString(config.style.box.warn),
+      [CLASSES.success]: makeCssString(config.style.box.success),
+      [CLASSES.info]: makeCssString(config.style.box.info)
+    }
+  }
+
+  /**
+   * @param  {String} css
+   */
+  function appendStyles (css) {
+    let head = document.head || document.getElementsByTagName('head')[0]
+    let style = document.createElement('style')
+
+    style.type = 'text/css';
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+  }
+
+  const defaultConfig = {
+    timeOut: 5000,
+    appendTarget: document.body,
+    node: document.createElement('div'),
+    style: {
+      container: {
+        position: 'fixed',
+        zIndex: 99999,
+        right: '12px',
+        top: '12px'
+      },
+      box: {
+        base: {
+          cursor: 'pointer',
+          padding: '12px 18px',
+          margin: '0 0 6px 0',
+          backgroundColor: '#000',
+          opacity: 0.8,
+          color: '#fff',
+          // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
+          borderRadius: '3px',
+          boxShadow: '#3c3b3b 0 0 12px',
+          width: '300px'
+        },
+        error: {
+          backgroundColor: '#FF0000',
+        },
+        warn: {
+          backgroundColor: '#f9a937',
+        },
+        success: {
+          backgroundColor: '#73b573',
+        },
+        info: {
+          backgroundColor: '#58abc3',
+        },
+        hover: {
+          opacity: 1,
+          boxShadow: '#000 0 0 12px'
+        }
+      },
+      title: {
+        fontWeight: '700'
+      },
+      text: {
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        width: '240px',
+        padding: '0 12px'
+      }
+    }
   }
 
   /**
@@ -104,8 +142,7 @@ var miniToastr = (function () {
     config = config || exports.config
 
     const notificationElem = document.createElement('div')
-    console.info(notificationElem)
-    notificationElem.class = `${CLASSES.basic} ${CLASSES[type]}`
+    notificationElem.class = `${CLASSES.base} ${CLASSES[type]}`
 
     applyStyles(notificationElem, config.style.box.base)
     applyStyles(notificationElem, config.style.box[type])
@@ -154,8 +191,12 @@ var miniToastr = (function () {
      * @return  {exports}
      */
     init (config) {
+      // TODO (S.Panfilov)
       this.config = config || defaultConfig
-      applyStyles(this.config.node, this.config.style.container)
+      const css = getCss(this.config)
+      console.info(css)
+      appendStyles(css)
+      // applyStyles(this.config.node, this.config.style.container)
       this.config.node.id = 'qqq'
       this.config.appendTarget.appendChild(this.config.node)
       return this
