@@ -62,7 +62,13 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
     "source": "0.0.3",
-    "through2": "^2.0.1"
+    "through2": "^2.0.1",
+    "to-case": "^2.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "webpack": "^1.13.2",
+    "webpack-merge": "^0.14.1",
+    "webpack-stream": "^3.2.0"
   },
   "dependencies": {}
 }

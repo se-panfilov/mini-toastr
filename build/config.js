@@ -2,7 +2,7 @@
 
 const SRC = 'src';
 const DEST = 'dist';
-const PROJECT_NAME = 'miniToastr';
+const PROJECT_NAME = 'mini-toastr';
 const TESTS_SRC = 'test';
 
 const config = {

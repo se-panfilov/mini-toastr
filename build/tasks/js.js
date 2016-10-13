@@ -11,6 +11,7 @@ const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const babel = require('gulp-babel');
 const source = require('vinyl-source-stream');
+const webpack = require('webpack-stream');
 
 gulp.task('js', () => {
   const moduleWrap =
@@ -32,8 +33,9 @@ gulp.task('js', () => {
       })
     }))
     .pipe(concat(config.projectName + '.js'))
-    .pipe(babel())
-    .pipe(wrap(moduleWrap))
+    .pipe(rename({ basename: `${config.projectName}.es6` }))
+    .pipe(gulp.dest(config.dest))
+    .pipe(webpack(require('../webpack.config.js')))
     .pipe(rename({ basename: config.projectName }))
     .pipe(gulp.dest(config.dest))
     .pipe(sourcemaps.init({ loadMaps: true }))
@@ -42,5 +44,14 @@ gulp.task('js', () => {
     .pipe(gulp.dest(config.dest))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(config.dest))
+    // .pipe(babel())
+    // .pipe(rename({ basename: config.projectName }))
+    // .pipe(gulp.dest(config.dest))
+    // .pipe(sourcemaps.init({ loadMaps: true }))
+    // .pipe(uglify())
+    // .pipe(rename({ basename: `${config.projectName}.min` }))
+    // .pipe(gulp.dest(config.dest))
+    // .pipe(sourcemaps.write('.'))
+    // .pipe(gulp.dest(config.dest))
     ;
 });
