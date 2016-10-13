@@ -191,11 +191,13 @@ var miniToastr = (function () {
      * @return  {exports}
      */
     init (config) {
-      // TODO (S.Panfilov)
       this.config = config || defaultConfig
-      const css = getCss(this.config)
+      const cssObj = getCss(this.config)
+
+      // TODO (S.Panfilov) CurWork point reduce instead of map!!
+      const css = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`)
       console.info(css)
-      appendStyles(css)
+      appendStyles(css[0])
       // applyStyles(this.config.node, this.config.style.container)
       this.config.node.id = 'qqq'
       this.config.appendTarget.appendChild(this.config.node)

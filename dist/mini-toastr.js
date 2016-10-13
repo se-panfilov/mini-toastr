@@ -266,11 +266,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return  {exports}
 	     */
 	    init: function init(config) {
-	      // TODO (S.Panfilov)
 	      this.config = config || defaultConfig;
-	      var css = getCss(this.config);
+	      var cssObj = getCss(this.config);
+
+	      // TODO (S.Panfilov) CurWork point reduce instead of map!!
+	      var css = (0, _keys2['default'])(cssObj).map(function (v) {
+	        return '.' + v + ' { ' + cssObj[v] + ' }';
+	      });
 	      console.info(css);
-	      appendStyles(css);
+	      appendStyles(css[0]);
 	      // applyStyles(this.config.node, this.config.style.container)
 	      this.config.node.id = 'qqq';
 	      this.config.appendTarget.appendChild(this.config.node);
