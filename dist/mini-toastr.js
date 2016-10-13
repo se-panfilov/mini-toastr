@@ -73,16 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var miniToastr = function () {
 	  'use strict';
 
-	  /**
-	   * @param  {Node} element
-	   * @param  {Object} styleObj
-	   */
-
-	  function applyStyles(element, styleObj) {
-	    return (0, _keys2['default'])(styleObj).forEach(function (v) {
-	      return element.style[v] = styleObj[v];
-	    });
-	  }
+	  var PACKAGE_NAME = 'mini-toastr';
 
 	  /**
 	   * @param  {Node} element
@@ -112,7 +103,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var CLASSES = {
-	    base: 'mini-toastr-notification',
+	    container: PACKAGE_NAME + '-container',
+	    base: PACKAGE_NAME + '-notification',
 	    error: '-' + TYPES.error,
 	    warn: '-' + TYPES.warn,
 	    success: '-' + TYPES.success,
@@ -132,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function getCss(config) {
 	    var _ref;
 
-	    return _ref = {}, (0, _defineProperty3['default'])(_ref, CLASSES.base, makeCssString(config.style.box.base)), (0, _defineProperty3['default'])(_ref, CLASSES.error, makeCssString(config.style.box.error)), (0, _defineProperty3['default'])(_ref, CLASSES.warn, makeCssString(config.style.box.warn)), (0, _defineProperty3['default'])(_ref, CLASSES.success, makeCssString(config.style.box.success)), (0, _defineProperty3['default'])(_ref, CLASSES.info, makeCssString(config.style.box.info)), _ref;
+	    return _ref = {}, (0, _defineProperty3['default'])(_ref, CLASSES.container, makeCssString(config.style.container)), (0, _defineProperty3['default'])(_ref, CLASSES.base, makeCssString(config.style.box.base)), (0, _defineProperty3['default'])(_ref, CLASSES.error, makeCssString(config.style.box.error)), (0, _defineProperty3['default'])(_ref, CLASSES.warn, makeCssString(config.style.box.warn)), (0, _defineProperty3['default'])(_ref, CLASSES.success, makeCssString(config.style.box.success)), (0, _defineProperty3['default'])(_ref, CLASSES.info, makeCssString(config.style.box.info)), _ref;
 	  }
 
 	  /**
@@ -140,16 +132,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	   */
 	  function appendStyles(css) {
 	    var head = document.head || document.getElementsByTagName('head')[0];
-	    var style = document.createElement('style');
+	    var styleElem = document.createElement('style');
+	    styleElem.id = PACKAGE_NAME + '-styles';
+	    styleElem.type = 'text/css';
 
-	    style.type = 'text/css';
-	    if (style.styleSheet) {
-	      style.styleSheet.cssText = css;
+	    if (styleElem.styleSheet) {
+	      styleElem.styleSheet.cssText = css;
 	    } else {
-	      style.appendChild(document.createTextNode(css));
+	      styleElem.appendChild(document.createTextNode(css));
 	    }
 
-	    head.appendChild(style);
+	    head.appendChild(styleElem);
 	  }
 
 	  var defaultConfig = {
@@ -159,7 +152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    style: {
 	      container: {
 	        position: 'fixed',
-	        zIndex: 99999,
+	        'z-index': 99999,
 	        right: '12px',
 	        top: '12px'
 	      },
@@ -168,42 +161,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	          cursor: 'pointer',
 	          padding: '12px 18px',
 	          margin: '0 0 6px 0',
-	          backgroundColor: '#000',
+	          'background-color': '#000',
 	          opacity: 0.8,
 	          color: '#fff',
 	          // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
-	          borderRadius: '3px',
-	          boxShadow: '#3c3b3b 0 0 12px',
+	          'border-radius': '3px',
+	          'box-shadow': '#3c3b3b 0 0 12px',
 	          width: '300px'
 	        },
 	        error: {
-	          backgroundColor: '#FF0000'
+	          'background-color': '#FF0000'
 	        },
 	        warn: {
-	          backgroundColor: '#f9a937'
+	          'background-color': '#f9a937'
 	        },
 	        success: {
-	          backgroundColor: '#73b573'
+	          'background-color': '#73b573'
 	        },
 	        info: {
-	          backgroundColor: '#58abc3'
+	          'background-color': '#58abc3'
 	        },
 	        hover: {
 	          opacity: 1,
-	          boxShadow: '#000 0 0 12px'
+	          'box-shadow': '#000 0 0 12px'
 	        }
 	      },
 	      title: {
-	        fontWeight: '700'
+	        'font-weight': '500'
 	      },
 	      text: {
 	        display: 'inline-block',
-	        verticalAlign: 'middle',
+	        'vertical-align': 'middle',
 	        width: '240px',
 	        padding: '0 12px'
 	      }
 	    }
 	  };
+
+	  /**
+	   * @param  {String} type
+	   * @return  {String}
+	   */
+	  function makeClassStr(type) {
+	    return CLASSES.base + ' ' + CLASSES[type];
+	  }
 
 	  /**
 	   * @param  {String} message
@@ -217,29 +218,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config = config || exports.config;
 
 	    var notificationElem = document.createElement('div');
-	    notificationElem['class'] = CLASSES.base + ' ' + CLASSES[type];
-
-	    applyStyles(notificationElem, config.style.box.base);
-	    applyStyles(notificationElem, config.style.box[type]);
+	    notificationElem.className = makeClassStr(type);
 
 	    notificationElem.onmouseover = function () {
-	      applyStyles(this, config.style.box.hover);
+	      // applyStyles(this, config.style.box.hover)
 	    };
 	    notificationElem.onmouseout = function () {
-	      applyStyles(this, config.style.box.base);
+	      // applyStyles(this, config.style.box.base)
 	    };
 	    notificationElem.onclick = function () {
 	      this.style.display = 'none';
 	    };
 
 	    var textElem = document.createElement('div');
-	    applyStyles(textElem, config.style.text);
+	    // applyStyles(textElem, config.style.text)
 
 	    notificationElem.appendChild(textElem);
 
 	    if (title) {
 	      var titleText = document.createElement('div');
-	      applyStyles(titleText, config.style.title);
+	      // applyStyles(titleText, config.style.title)
 	      titleText.appendChild(document.createTextNode(title));
 	      textElem.appendChild(titleText);
 	    }
@@ -268,15 +266,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    init: function init(config) {
 	      this.config = config || defaultConfig;
 	      var cssObj = getCss(this.config);
-
-	      // TODO (S.Panfilov) CurWork point reduce instead of map!!
-	      var css = (0, _keys2['default'])(cssObj).map(function (v) {
+	      var cssStr = (0, _keys2['default'])(cssObj).map(function (v) {
 	        return '.' + v + ' { ' + cssObj[v] + ' }';
-	      });
-	      console.info(css);
-	      appendStyles(css[0]);
-	      // applyStyles(this.config.node, this.config.style.container)
-	      this.config.node.id = 'qqq';
+	      }).join(' ');
+
+	      appendStyles(cssStr);
+	      this.config.node.id = PACKAGE_NAME + '-container';
+	      this.config.node.className = PACKAGE_NAME + '-container';
 	      this.config.appendTarget.appendChild(this.config.node);
 	      return this;
 	    },
