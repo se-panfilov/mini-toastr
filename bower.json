@@ -17,13 +17,22 @@
     "messages",
     "errors"
   ],
-  "author": "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)",
+    "authors": [
+    "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)"
+  ],
   "license": "MIT",
   "private": false,
   "bugs": {
     "url": "https://github.com/se-panfilov/vue-notifications/issues"
   },
-  "homepage": "https://github.com/se-panfilov/vue-notifications#readme",
+  "homepage": "https://github.com/se-panfilov/mini-toastr",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "devDependencies": {},
   "dependencies": {}
 }
