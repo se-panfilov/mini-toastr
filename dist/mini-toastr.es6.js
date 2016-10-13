@@ -65,16 +65,35 @@ var miniToastr = (function () {
       }
     }
   }
+  const TYPES = {
+    error: 'error',
+    warn: 'warn',
+    success: 'success',
+    info: 'info'
+  }
+
+  const CLASSES = {
+    basic: 'mini-toastr-notification',
+    error: `-${TYPES.error}`,
+    warn: `-${TYPES.warn}`,
+    success: `-${TYPES.success}`,
+    info: `-${TYPES.info}`
+  }
 
   /**
    * @param  {String} message
    * @param  {String} title
-   * @param  {type} title
+   * @param  {String} type
    * @param  {Number} timeout
    * @param  {Function} cb
+   * @param  {Object} config
    */
-  function showMessage (message, title, type, timeout, cb) {
+  function showMessage (message, title, type, timeout, cb, config) {
+    config = config || exports.config
+
     const notificationElem = document.createElement('div')
+    notificationElem.class = `${CLASSES.basic} ${CLASSES[type]}`
+
     applyStyles(notificationElem, config.style.box.base)
 
     notificationElem.onmouseover = function () {
@@ -114,15 +133,16 @@ var miniToastr = (function () {
   }
 
   const exports = {
+    config: defaultConfig,
     /**
      * @param  {Object} config
      * @return  {exports}
      */
     init (config) {
-      config = config || defaultConfig
-      applyStyles(config.node, config.style.container)
-      config.node.id = 'qqq'
-      config.appendTarget.appendChild(config.node)
+      this.config = config || defaultConfig
+      applyStyles(this.config.node, this.config.style.container)
+      this.config.node.id = 'qqq'
+      this.config.appendTarget.appendChild(this.config.node)
       return this
     },
     /**
@@ -130,10 +150,11 @@ var miniToastr = (function () {
      * @param  {String} title
      * @param  {Number} timeout
      * @param  {Function} cb
+     * @param  {Object} config
      * @return  {exports}
      */
-    info (message, title, timeout, cb) {
-      showMessage(message, title, 'info', timeout, cb)
+    info (message, title, timeout, cb, config) {
+      showMessage(message, title, TYPES.info, timeout, cb, config)
       return this
     },
     /**
@@ -141,30 +162,33 @@ var miniToastr = (function () {
      * @param  {String} title
      * @param  {Number} timeout
      * @param  {Function} cb
+     * @param  {Object} config
      * @return  {exports}
      */
-    warning (message, title, timeout, cb) {
-      showMessage(message, title, 'warning', timeout, cb)
+    warn (message, title, timeout, cb, config) {
+      showMessage(message, title, TYPES.warn, timeout, cb, config)
     },
     /**
      * @param  {String} message
      * @param  {String} title
      * @param  {Number} timeout
      * @param  {Function} cb
+     * @param  {Object} config
      * @return  {exports}
      */
-    success (message, title, timeout, cb) {
-      showMessage(message, title, 'success', timeout, cb)
+    success (message, title, timeout, cb, config) {
+      showMessage(message, title, TYPES.success, timeout, cb, config)
     },
     /**
      * @param  {String} message
      * @param  {String} title
      * @param  {Number} timeout
      * @param  {Function} cb
+     * @param  {Object} config
      * @return  {exports}
      */
-    error (message, title, timeout, cb) {
-      showMessage(message, title, 'error', timeout, cb)
+    error (message, title, timeout, cb, config) {
+      showMessage(message, title, TYPES.error, timeout, cb, config)
     }
   }
 
