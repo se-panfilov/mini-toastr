@@ -214,6 +214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    config.node.insertBefore(notificationElem, config.node.firstChild);
 
+	    // TODO (S.Panfilov) revert
 	    // setTimeout(function () {
 	    //   fadeOut(notificationElem)
 	    // }, timeout || config.timeOut)
