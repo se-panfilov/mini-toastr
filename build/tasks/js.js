@@ -10,14 +10,7 @@ const rename = require('gulp-rename');
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const babel = require('gulp-babel');
-const browserify = require('browserify');
 const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const babelify = require('babelify');
-const fs = require("fs");
-const path = require("path");
-const webpack = require('webpack-stream');
-const to = require('to-case')
 
 gulp.task('js', () => {
   const moduleWrap =
