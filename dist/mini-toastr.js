@@ -121,8 +121,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	          color: "#fff",
 	          font: "normal 13px 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif",
 	          borderRadius: "3px",
-	          boxShadow: "#999 0 0 12px",
+	          boxShadow: "#3c3b3b 0 0 12px",
 	          width: "300px"
+	        },
+	        error: {
+	          backgroundColor: "#FF0000"
+	        },
+	        warn: {
+	          backgroundColor: "#f9a937"
+	        },
+	        success: {
+	          backgroundColor: "#73b573"
+	        },
+	        info: {
+	          backgroundColor: "#58abc3"
 	        },
 	        hover: {
 	          opacity: 1,
@@ -167,9 +179,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config = config || exports.config;
 
 	    var notificationElem = document.createElement('div');
+	    console.info(notificationElem);
 	    notificationElem['class'] = CLASSES.basic + ' ' + CLASSES[type];
 
 	    applyStyles(notificationElem, config.style.box.base);
+	    applyStyles(notificationElem, config.style.box[type]);
 
 	    notificationElem.onmouseover = function () {
 	      applyStyles(this, config.style.box.hover);
@@ -200,9 +214,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    config.node.insertBefore(notificationElem, config.node.firstChild);
 
-	    setTimeout(function () {
-	      fadeOut(notificationElem);
-	    }, timeout || config.timeOut);
+	    // setTimeout(function () {
+	    //   fadeOut(notificationElem)
+	    // }, timeout || config.timeOut)
 
 	    if (cb) cb();
 	  }
