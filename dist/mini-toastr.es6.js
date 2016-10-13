@@ -1,10 +1,17 @@
 var miniToastr = (function () {
   'use strict';
 
+  /**
+   * @param  {Node} element
+   * @param  {Object} styleObj
+   */
   function applyStyles (element, styleObj) {
     return Object.keys(styleObj).forEach(v => element.style[v] = styleObj[v])
   }
 
+  /**
+   * @param  {Node} element
+   */
   function fadeOut (element) {
     if (element.style.opacity && element.style.opacity > 0.05) {
       element.style.opacity = element.style.opacity - 0.05
@@ -18,8 +25,9 @@ var miniToastr = (function () {
     setTimeout(() => fadeOut.apply(this, [element]), 1000 / 30)
   }
 
-  var config = {
+  const defaultConfig = {
     timeOut: 5000,
+    appendTarget: document.body,
     node: document.createElement('div'),
     style: {
       container: {
@@ -58,63 +66,105 @@ var miniToastr = (function () {
     }
   }
 
-  applyStyles(config.node, config.style.container)
+  /**
+   * @param  {String} message
+   * @param  {String} title
+   * @param  {type} title
+   * @param  {Number} timeout
+   * @param  {Function} cb
+   */
+  function showMessage (message, title, type, timeout, cb) {
+    const notificationElem = document.createElement('div')
+    applyStyles(notificationElem, config.style.box.base)
 
-  document.body.appendChild(config.node)
-
-  function notify (message, title, type, timeout, cb) {
-    var notification = document.createElement('div')
-    applyStyles(notification, config.style.box.base)
-
-    notification.onmouseover = function () {
+    notificationElem.onmouseover = function () {
       applyStyles(this, config.style.box.hover)
     }
-    notification.onmouseout = function () {
+    notificationElem.onmouseout = function () {
       applyStyles(this, config.style.box.base)
     }
-    notification.onclick = function () {
+    notificationElem.onclick = function () {
       this.style.display = 'none'
     }
 
-    var text = document.createElement('div')
-    applyStyles(text, config.style.text)
+    var textElem = document.createElement('div')
+    applyStyles(textElem, config.style.text)
 
-    notification.appendChild(text)
+    notificationElem.appendChild(textElem)
 
     if (title) {
-      var title_text = document.createElement('div')
-      applyStyles(title_text, config.style.title)
-      title_text.appendChild(document.createTextNode(title))
-      text.appendChild(title_text)
+      var titleText = document.createElement('div')
+      applyStyles(titleText, config.style.title)
+      titleText.appendChild(document.createTextNode(title))
+      textElem.appendChild(titleText)
     }
 
     if (message) {
-      var message_text = document.createElement('div')
-      message_text.appendChild(document.createTextNode(message))
-      text.appendChild(message_text)
+      var messageText = document.createElement('div')
+      messageText.appendChild(document.createTextNode(message))
+      textElem.appendChild(messageText)
     }
-
-    config.node.insertBefore(notification, config.node.firstChild)
+    config.node.insertBefore(notificationElem, config.node.firstChild);
 
     setTimeout(function () {
-      fadeOut(notification)
+      fadeOut(notificationElem)
     }, timeout || config.timeOut)
 
     if (cb) cb()
   }
 
   const exports = {
+    /**
+     * @param  {Object} config
+     * @return  {exports}
+     */
+    init (config) {
+      config = config || defaultConfig
+      applyStyles(config.node, config.style.container)
+      config.node.id = 'qqq'
+      config.appendTarget.appendChild(config.node)
+      return this
+    },
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @return  {exports}
+     */
     info (message, title, timeout, cb) {
-      this.notify(message, title, 'info', timeout, cb)
+      showMessage(message, title, 'info', timeout, cb)
+      return this
     },
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @return  {exports}
+     */
     warning (message, title, timeout, cb) {
-      this.notify(message, title, 'warning', timeout, cb)
+      showMessage(message, title, 'warning', timeout, cb)
     },
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @return  {exports}
+     */
     success (message, title, timeout, cb) {
-      this.notify(message, title, 'success', timeout, cb)
+      showMessage(message, title, 'success', timeout, cb)
     },
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @return  {exports}
+     */
     error (message, title, timeout, cb) {
-      this.notify(message, title, 'error', timeout, cb)
+      showMessage(message, title, 'error', timeout, cb)
     }
   }
 
