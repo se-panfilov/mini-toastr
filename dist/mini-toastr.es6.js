@@ -56,6 +56,53 @@ var miniToastr = (function () {
     }
   }
 
+
+  /**
+   * @param  {Object} obj
+   * @param  {Object} into
+   * @param  {String} prefix
+   * @return {Object}
+   */
+  function flatten (obj, into, prefix) {
+    into = into || {}
+    prefix = prefix || ""
+
+    for (var k in obj) {
+      if (obj.hasOwnProperty(k)) {
+        var prop = obj[k]
+        if (prop && typeof prop === "object" && !(prop instanceof Date || prop instanceof RegExp)) {
+          flatten(prop, into, prefix + k + " ")
+        } else {
+          if (into[prefix] && typeof into[prefix] === 'object') {
+            into[prefix][k] = prop
+          } else {
+            into[prefix] = {}
+            into[prefix][k] = prop
+          }
+        }
+      }
+    }
+
+    return into;
+  }
+
+  /**
+   * @param  {Object} obj
+   * @return {String}
+   */
+  function makeCss (obj) {
+    const flat = flatten(obj)
+    let str = JSON.stringify(flat, null, 2)
+    str = str.replace(/"(.+)": \{/g, '\$1 \{')
+    str = str.replace(/"(\w*\-*\w*)": "(.+)",?/g, '$1: $2;')
+    str = str.replace(/"(.+)":/g, '$1:')
+    str = str.replace(/},/g, '}\n')
+
+    str = str.substr(1, str.lastIndexOf('}') - 1)
+
+    return str
+  }
+
   /**
    * @param  {String} css
    */
@@ -79,46 +126,44 @@ var miniToastr = (function () {
     appendTarget: document.body,
     node: document.createElement('div'),
     style: {
-      container: {
+      [`.${PACKAGE_NAME}`]: {
         position: 'fixed',
         'z-index': 99999,
         right: '12px',
         top: '12px'
       },
-      box: {
-        base: {
-          cursor: 'pointer',
-          padding: '12px 18px',
-          margin: '0 0 6px 0',
-          'background-color': '#000',
-          opacity: 0.8,
-          color: '#fff',
-          // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
-          'border-radius': '3px',
-          'box-shadow': '#3c3b3b 0 0 12px',
-          width: '300px'
-        },
-        error: {
+      [`.${PACKAGE_NAME}__notification`]: {
+        cursor: 'pointer',
+        padding: '12px 18px',
+        margin: '0 0 6px 0',
+        'background-color': '#000',
+        opacity: 0.8,
+        color: '#fff',
+        // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
+        'border-radius': '3px',
+        'box-shadow': '#3c3b3b 0 0 12px',
+        width: '300px',
+        [`.${CLASSES.error}`]: {
           'background-color': '#FF0000'
         },
-        warn: {
+        [`.${CLASSES.warn}`]: {
           'background-color': '#f9a937'
         },
-        success: {
+        [`.${CLASSES.success}`]: {
           'background-color': '#73b573'
         },
-        info: {
+        [`.${CLASSES.info}`]: {
           'background-color': '#58abc3'
         },
-        hover: {
+        ':hover': {
           opacity: 1,
           'box-shadow': '#000 0 0 12px'
         }
       },
-      title: {
+      [`.${PACKAGE_NAME}-notification__title`]: {
         'font-weight': '500'
       },
-      text: {
+      [`.${PACKAGE_NAME}-text`]: {
         display: 'inline-block',
         'vertical-align': 'middle',
         width: '240px',
@@ -194,9 +239,11 @@ var miniToastr = (function () {
      */
     init (config) {
       this.config = config || defaultConfig
-      const cssObj = getCss(this.config)
-      const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
+      // const cssObj = getCss(this.config)
+      // const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
 
+      const cssStr = makeCss(this.config.style)
+      console.info(cssStr)
       appendStyles(cssStr)
       this.config.node.id = `${PACKAGE_NAME}-container`
       this.config.node.className = `${PACKAGE_NAME}-container`
