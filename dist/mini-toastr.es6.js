@@ -74,10 +74,10 @@ var miniToastr = (function () {
     const flat = flatten(obj)
     let str = JSON.stringify(flat, null, 2)
     str = str.replace(/"([^"]*)": \{/g, '$1 {')
-    str = str.replace(/"([^"]*)"/g, '$1')
-    str = str.replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
-    str = str.replace(/},/g, '}\n')
-    str = str.replace(/( &\.)/g, '.')
+      .replace(/"([^"]*)"/g, '$1')
+      .replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
+      .replace(/},/g, '}\n')
+      .replace(/ &([.:])/g, '$1')
 
     str = str.substr(1, str.lastIndexOf('}') - 1)
 
@@ -136,7 +136,7 @@ var miniToastr = (function () {
         [`&.${CLASSES.info}`]: {
           'background-color': '#58abc3'
         },
-        ':hover': {
+        '&:hover': {
           opacity: 1,
           'box-shadow': '#000 0 0 12px'
         }
@@ -167,15 +167,8 @@ var miniToastr = (function () {
     const notificationElem = document.createElement('div')
     notificationElem.className = `${CLASSES.notification} ${CLASSES[type]}`
 
-    // notificationElem.onmouseover = function () {
-    //   // applyStyles(this, config.style.box.hover)
-    // }
-    // notificationElem.onmouseout = function () {
-    //   // applyStyles(this, config.style.box.base)
-    // }
-
     notificationElem.onclick = function () {
-      this.style.display = 'none'
+      fadeOut(notificationElem)
     }
 
     if (title) {
@@ -191,12 +184,9 @@ var miniToastr = (function () {
       messageText.appendChild(document.createTextNode(message))
       notificationElem.appendChild(messageText)
     }
-    config.node.insertBefore(notificationElem, config.node.firstChild);
 
-    // TODO (S.Panfilov) revert
-    // setTimeout(function () {
-    //   fadeOut(notificationElem)
-    // }, timeout || config.timeOut)
+    config.node.insertBefore(notificationElem, config.node.firstChild);
+    setTimeout(() => fadeOut(notificationElem), timeout || config.timeOut)
 
     if (cb) cb()
   }
@@ -209,12 +199,9 @@ var miniToastr = (function () {
      */
     init (config) {
       this.config = config || defaultConfig
-      // const cssObj = getCss(this.config)
-      // const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
-
       const cssStr = makeCss(this.config.style)
-      console.info(cssStr)
       appendStyles(cssStr)
+
       this.config.node.id = `${CLASSES.container}`
       this.config.node.className = `${CLASSES.container}`
       this.config.appendTarget.appendChild(this.config.node)

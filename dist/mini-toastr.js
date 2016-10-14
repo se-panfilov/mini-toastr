@@ -155,11 +155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function makeCss(obj) {
 	    var flat = flatten(obj);
 	    var str = (0, _stringify2['default'])(flat, null, 2);
-	    str = str.replace(/"([^"]*)": \{/g, '$1 {');
-	    str = str.replace(/"([^"]*)"/g, '$1');
-	    str = str.replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;');
-	    str = str.replace(/},/g, '}\n');
-	    str = str.replace(/( &\.)/g, '.');
+	    str = str.replace(/"([^"]*)": \{/g, '$1 {').replace(/"([^"]*)"/g, '$1').replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;').replace(/},/g, '}\n').replace(/ &([.:])/g, '$1');
 
 	    str = str.substr(1, str.lastIndexOf('}') - 1);
 
@@ -212,7 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'background-color': '#73b573'
 	    }), (0, _defineProperty3['default'])(_ref, '&.' + CLASSES.info, {
 	      'background-color': '#58abc3'
-	    }), (0, _defineProperty3['default'])(_ref, ':hover', {
+	    }), (0, _defineProperty3['default'])(_ref, '&:hover', {
 	      opacity: 1,
 	      'box-shadow': '#000 0 0 12px'
 	    }), _ref)), (0, _defineProperty3['default'])(_style, '.' + CLASSES.title, {
@@ -239,15 +235,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var notificationElem = document.createElement('div');
 	    notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
 
-	    // notificationElem.onmouseover = function () {
-	    //   // applyStyles(this, config.style.box.hover)
-	    // }
-	    // notificationElem.onmouseout = function () {
-	    //   // applyStyles(this, config.style.box.base)
-	    // }
-
 	    notificationElem.onclick = function () {
-	      this.style.display = 'none';
+	      fadeOut(notificationElem);
 	    };
 
 	    if (title) {
@@ -263,12 +252,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      messageText.appendChild(document.createTextNode(message));
 	      notificationElem.appendChild(messageText);
 	    }
-	    config.node.insertBefore(notificationElem, config.node.firstChild);
 
-	    // TODO (S.Panfilov) revert
-	    // setTimeout(function () {
-	    //   fadeOut(notificationElem)
-	    // }, timeout || config.timeOut)
+	    config.node.insertBefore(notificationElem, config.node.firstChild);
+	    setTimeout(function () {
+	      return fadeOut(notificationElem);
+	    }, timeout || config.timeOut);
 
 	    if (cb) cb();
 	  }
@@ -281,12 +269,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    init: function init(config) {
 	      this.config = config || defaultConfig;
-	      // const cssObj = getCss(this.config)
-	      // const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
-
 	      var cssStr = makeCss(this.config.style);
-	      console.info(cssStr);
 	      appendStyles(cssStr);
+
 	      this.config.node.id = '' + CLASSES.container;
 	      this.config.node.className = '' + CLASSES.container;
 	      this.config.appendTarget.appendChild(this.config.node);
