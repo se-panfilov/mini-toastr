@@ -34,6 +34,8 @@ gulp.task('js', () => {
     }))
     .pipe(concat(config.projectName + '.js'))
     .pipe(rename({ basename: `${config.projectName}.es6` }))
+    .pipe(babel({presets: ['babili']}))
+    .pipe(rename({ basename: `${config.projectName}.es6.min` }))
     .pipe(gulp.dest(config.dest))
     .pipe(webpack(require('../webpack.config.js')))
     .pipe(rename({ basename: config.projectName }))
