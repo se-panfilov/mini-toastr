@@ -39,28 +39,6 @@ var miniToastr = (function () {
 
   /**
    * @param  {Object} obj
-   * @return {String}
-   */
-  function makeCssString (obj) {
-    return Object.keys(obj).reduce(function (prev, key) {
-      return prev + key + ':' + obj[key] + '; ';
-    }, '');
-  }
-
-  function getCss (config) {
-    return {
-      [CLASSES.container]: makeCssString(config.style.container),
-      [CLASSES.base]: makeCssString(config.style.box.base),
-      [CLASSES.error]: makeCssString(config.style.box.error),
-      [CLASSES.warn]: makeCssString(config.style.box.warn),
-      [CLASSES.success]: makeCssString(config.style.box.success),
-      [CLASSES.info]: makeCssString(config.style.box.info)
-    }
-  }
-
-
-  /**
-   * @param  {Object} obj
    * @param  {Object} into
    * @param  {String} prefix
    * @return {Object}
@@ -95,10 +73,11 @@ var miniToastr = (function () {
   function makeCss (obj) {
     const flat = flatten(obj)
     let str = JSON.stringify(flat, null, 2)
-    str = str.replace(/"(.+)": \{/g, '\$1 \{')
-    str = str.replace(/"(\w*\-*\w*)": "(.+)",?/g, '$1: $2;')
-    str = str.replace(/"(.+)":/g, '$1:')
+    str = str.replace(/"([^"]*)": \{/g, '$1 {')
+    str = str.replace(/"([^"]*)"/g, '$1')
+    str = str.replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
     str = str.replace(/},/g, '}\n')
+    str = str.replace(/( &\.)/g, '.')
 
     str = str.substr(1, str.lastIndexOf('}') - 1)
 
@@ -145,16 +124,16 @@ var miniToastr = (function () {
         'border-radius': '3px',
         'box-shadow': '#3c3b3b 0 0 12px',
         width: '300px',
-        [`.${CLASSES.error}`]: {
+        [`&.${CLASSES.error}`]: {
           'background-color': '#FF0000'
         },
-        [`.${CLASSES.warn}`]: {
+        [`&.${CLASSES.warn}`]: {
           'background-color': '#f9a937'
         },
-        [`.${CLASSES.success}`]: {
+        [`&.${CLASSES.success}`]: {
           'background-color': '#73b573'
         },
-        [`.${CLASSES.info}`]: {
+        [`&.${CLASSES.info}`]: {
           'background-color': '#58abc3'
         },
         ':hover': {
@@ -234,6 +213,7 @@ var miniToastr = (function () {
       // const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
 
       const cssStr = makeCss(this.config.style)
+      console.info(cssStr)
       appendStyles(cssStr)
       this.config.node.id = `${CLASSES.container}`
       this.config.node.className = `${CLASSES.container}`
