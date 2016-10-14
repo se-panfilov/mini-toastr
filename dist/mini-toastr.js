@@ -113,8 +113,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var CLASSES = {
-	    container: PACKAGE_NAME + '-container',
-	    base: PACKAGE_NAME + '-notification',
+	    container: '' + PACKAGE_NAME,
+	    notification: PACKAGE_NAME + '__notification',
+	    title: PACKAGE_NAME + '-notification__title',
+	    message: PACKAGE_NAME + '-notification__message',
 	    error: '-' + TYPES.error,
 	    warn: '-' + TYPES.warn,
 	    success: '-' + TYPES.success,
@@ -205,12 +207,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    timeOut: 5000,
 	    appendTarget: document.body,
 	    node: document.createElement('div'),
-	    style: (_style = {}, (0, _defineProperty3['default'])(_style, '.' + PACKAGE_NAME, {
+	    style: (_style = {}, (0, _defineProperty3['default'])(_style, '.' + CLASSES.container, {
 	      position: 'fixed',
 	      'z-index': 99999,
 	      right: '12px',
 	      top: '12px'
-	    }), (0, _defineProperty3['default'])(_style, '.' + PACKAGE_NAME + '__notification', (_ref2 = {
+	    }), (0, _defineProperty3['default'])(_style, '.' + CLASSES.notification, (_ref2 = {
 	      cursor: 'pointer',
 	      padding: '12px 18px',
 	      margin: '0 0 6px 0',
@@ -232,23 +234,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }), (0, _defineProperty3['default'])(_ref2, ':hover', {
 	      opacity: 1,
 	      'box-shadow': '#000 0 0 12px'
-	    }), _ref2)), (0, _defineProperty3['default'])(_style, '.' + PACKAGE_NAME + '-notification__title', {
+	    }), _ref2)), (0, _defineProperty3['default'])(_style, '.' + CLASSES.title, {
 	      'font-weight': '500'
-	    }), (0, _defineProperty3['default'])(_style, '.' + PACKAGE_NAME + '-text', {
+	    }), (0, _defineProperty3['default'])(_style, '.' + CLASSES.message, {
 	      display: 'inline-block',
 	      'vertical-align': 'middle',
 	      width: '240px',
 	      padding: '0 12px'
 	    }), _style)
 	  };
-
-	  /**
-	   * @param  {String} type
-	   * @return  {String}
-	   */
-	  function makeClassStr(type) {
-	    return CLASSES.base + ' ' + CLASSES[type];
-	  }
 
 	  /**
 	   * @param  {String} message
@@ -262,34 +256,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config = config || exports.config;
 
 	    var notificationElem = document.createElement('div');
-	    notificationElem.className = makeClassStr(type);
+	    notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
 
-	    notificationElem.onmouseover = function () {
-	      // applyStyles(this, config.style.box.hover)
-	    };
-	    notificationElem.onmouseout = function () {
-	      // applyStyles(this, config.style.box.base)
-	    };
+	    // notificationElem.onmouseover = function () {
+	    //   // applyStyles(this, config.style.box.hover)
+	    // }
+	    // notificationElem.onmouseout = function () {
+	    //   // applyStyles(this, config.style.box.base)
+	    // }
+
 	    notificationElem.onclick = function () {
 	      this.style.display = 'none';
 	    };
 
-	    var textElem = document.createElement('div');
-	    // applyStyles(textElem, config.style.text)
-
-	    notificationElem.appendChild(textElem);
-
 	    if (title) {
-	      var titleText = document.createElement('div');
-	      // applyStyles(titleText, config.style.title)
-	      titleText.appendChild(document.createTextNode(title));
-	      textElem.appendChild(titleText);
+	      var titleElem = document.createElement('div');
+	      titleElem.className = CLASSES.title;
+	      titleElem.appendChild(document.createTextNode(title));
+	      notificationElem.appendChild(titleElem);
 	    }
 
 	    if (message) {
 	      var messageText = document.createElement('div');
+	      messageText.className = CLASSES.message;
 	      messageText.appendChild(document.createTextNode(message));
-	      textElem.appendChild(messageText);
+	      notificationElem.appendChild(messageText);
 	    }
 	    config.node.insertBefore(notificationElem, config.node.firstChild);
 
@@ -313,10 +304,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // const cssStr = Object.keys(cssObj).map(v => `.${v} \{ ${cssObj[v]} \}`).join(' ')
 
 	      var cssStr = makeCss(this.config.style);
-	      console.info(cssStr);
 	      appendStyles(cssStr);
-	      this.config.node.id = PACKAGE_NAME + '-container';
-	      this.config.node.className = PACKAGE_NAME + '-container';
+	      this.config.node.id = '' + CLASSES.container;
+	      this.config.node.className = '' + CLASSES.container;
 	      this.config.appendTarget.appendChild(this.config.node);
 	      return this;
 	    },
