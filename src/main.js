@@ -239,9 +239,6 @@ var miniToastr = (function () {
      * @return  {exports}
      */
     success (message, title, timeout, cb, config) {
-      console.info('---111---')
-      console.warn(timeout)
-      console.info('---111---')
       showMessage(message, title, TYPES.success, timeout, cb, config)
     },
     /**

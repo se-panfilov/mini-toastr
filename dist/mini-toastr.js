@@ -312,9 +312,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return  {exports}
 	     */
 	    success: function success(message, title, timeout, cb, config) {
-	      console.info('---111---');
-	      console.warn(timeout);
-	      console.info('---111---');
 	      showMessage(message, title, TYPES.success, timeout, cb, config);
 	    },
 
