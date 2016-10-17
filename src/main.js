@@ -1,5 +1,5 @@
 var miniToastr = (function () {
-  'use strict';
+  'use strict'
 
   const PACKAGE_NAME = 'mini-toastr'
 
@@ -63,7 +63,7 @@ var miniToastr = (function () {
       }
     }
 
-    return into;
+    return into
   }
 
   /**
@@ -91,19 +91,19 @@ var miniToastr = (function () {
     let head = document.head || document.getElementsByTagName('head')[0]
     let styleElem = document.createElement('style')
     styleElem.id = `${PACKAGE_NAME}-styles`
-    styleElem.type = 'text/css';
+    styleElem.type = 'text/css'
 
     if (styleElem.styleSheet) {
-      styleElem.styleSheet.cssText = css;
+      styleElem.styleSheet.cssText = css
     } else {
-      styleElem.appendChild(document.createTextNode(css));
+      styleElem.appendChild(document.createTextNode(css))
     }
 
-    head.appendChild(styleElem);
+    head.appendChild(styleElem)
   }
 
   const defaultConfig = {
-    timeOut: 5000,
+    timeout: 60,
     appendTarget: document.body,
     node: document.createElement('div'),
     style: {
@@ -185,8 +185,8 @@ var miniToastr = (function () {
       notificationElem.appendChild(messageText)
     }
 
-    config.node.insertBefore(notificationElem, config.node.firstChild);
-    setTimeout(() => fadeOut(notificationElem), timeout || config.timeOut)
+    config.node.insertBefore(notificationElem, config.node.firstChild)
+    setTimeout(() => fadeOut(notificationElem), timeout || config.timeout)
 
     if (cb) cb()
   }
@@ -239,6 +239,9 @@ var miniToastr = (function () {
      * @return  {exports}
      */
     success (message, title, timeout, cb, config) {
+      console.info('---111---')
+      console.warn(timeout)
+      console.info('---111---')
       showMessage(message, title, TYPES.success, timeout, cb, config)
     },
     /**

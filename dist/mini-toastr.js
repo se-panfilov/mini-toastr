@@ -181,7 +181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  var defaultConfig = {
-	    timeOut: 5000,
+	    timeout: 60,
 	    appendTarget: document.body,
 	    node: document.createElement('div'),
 	    style: (_style = {}, (0, _defineProperty3['default'])(_style, '.' + CLASSES.container, {
@@ -256,7 +256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config.node.insertBefore(notificationElem, config.node.firstChild);
 	    setTimeout(function () {
 	      return fadeOut(notificationElem);
-	    }, timeout || config.timeOut);
+	    }, timeout || config.timeout);
 
 	    if (cb) cb();
 	  }
@@ -312,6 +312,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return  {exports}
 	     */
 	    success: function success(message, title, timeout, cb, config) {
+	      console.info('---111---');
+	      console.warn(timeout);
+	      console.info('---111---');
 	      showMessage(message, title, TYPES.success, timeout, cb, config);
 	    },
 
