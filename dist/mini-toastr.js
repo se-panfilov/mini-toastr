@@ -9,6 +9,14 @@
 }(this, function() {
 'use strict';
 
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -32,8 +40,9 @@ var miniToastr = function () {
 
   /**
    * @param  {Node} element
+   * @param  {Function} cb
    */
-  function fadeOut(element) {
+  function fadeOut(element, cb) {
     var _this = this;
 
     if (element.style.opacity && element.style.opacity > 0.05) {
@@ -41,12 +50,13 @@ var miniToastr = function () {
     } else if (element.style.opacity && element.style.opacity <= 0.1) {
       if (element.parentNode) {
         element.parentNode.removeChild(element);
+        if (cb) cb();
       }
     } else {
       element.style.opacity = 0.9;
     }
     setTimeout(function () {
-      return fadeOut.apply(_this, [element]);
+      return fadeOut.apply(_this, [element, cb]);
     }, 1000 / 30);
   }
 
@@ -130,6 +140,8 @@ var miniToastr = function () {
   }
 
   var defaultConfig = {
+    types: TYPES,
+    animation: fadeOut,
     timeout: 60,
     appendTarget: document.body,
     node: document.createElement('div'),
@@ -145,7 +157,6 @@ var miniToastr = function () {
       'background-color': '#000',
       opacity: 0.8,
       color: '#fff',
-      // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
       'border-radius': '3px',
       'box-shadow': '#3c3b3b 0 0 12px',
       width: '300px'
@@ -170,110 +181,85 @@ var miniToastr = function () {
     }), _style)
   };
 
-  /**
-   * @param  {String} message
-   * @param  {String} title
-   * @param  {String} type
-   * @param  {Number} timeout
-   * @param  {Function} cb
-   * @param  {Object} config
-   */
-  function showMessage(message, title, type, timeout, cb, config) {
-    config = config || exports.config;
-
-    var notificationElem = document.createElement('div');
-    notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
-
-    notificationElem.onclick = function () {
-      fadeOut(notificationElem);
-    };
-
-    if (title) {
-      var titleElem = document.createElement('div');
-      titleElem.className = CLASSES.title;
-      titleElem.appendChild(document.createTextNode(title));
-      notificationElem.appendChild(titleElem);
-    }
-
-    if (message) {
-      var messageText = document.createElement('div');
-      messageText.className = CLASSES.message;
-      messageText.appendChild(document.createTextNode(message));
-      notificationElem.appendChild(messageText);
-    }
-
-    config.node.insertBefore(notificationElem, config.node.firstChild);
-    setTimeout(function () {
-      return fadeOut(notificationElem);
-    }, timeout || config.timeout);
-
-    if (cb) cb();
-  }
-
   var exports = {
     config: defaultConfig,
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {String} type
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @param  {Object} config
+     */
+    showMessage: function showMessage(message, title, type, timeout, cb, config) {
+      var newConfig = {};
+      (0, _assign2['default'])(newConfig, this.config);
+      (0, _assign2['default'])(newConfig, config);
+
+      var notificationElem = document.createElement('div');
+      notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
+
+      notificationElem.onclick = function () {
+        newConfig.animation(notificationElem, null);
+      };
+
+      if (title) {
+        var titleElem = document.createElement('div');
+        titleElem.className = CLASSES.title;
+        titleElem.appendChild(document.createTextNode(title));
+        notificationElem.appendChild(titleElem);
+      }
+
+      if (message) {
+        var messageText = document.createElement('div');
+        messageText.className = CLASSES.message;
+        messageText.appendChild(document.createTextNode(message));
+        notificationElem.appendChild(messageText);
+      }
+
+      newConfig.node.insertBefore(notificationElem, newConfig.node.firstChild);
+      setTimeout(function () {
+        return newConfig.animation(notificationElem, cb);
+      }, timeout || newConfig.timeout);
+
+      if (cb) cb();
+      return this;
+    },
+
     /**
      * @param  {Object} config
      * @return  {exports}
      */
     init: function init(config) {
-      this.config = config || defaultConfig;
-      var cssStr = makeCss(this.config.style);
+      var _this2 = this;
+
+      var newConfig = {};
+      (0, _assign2['default'])(newConfig, defaultConfig);
+      (0, _assign2['default'])(newConfig, config);
+
+      var cssStr = makeCss(newConfig.style);
       appendStyles(cssStr);
 
-      this.config.node.id = '' + CLASSES.container;
-      this.config.node.className = '' + CLASSES.container;
-      this.config.appendTarget.appendChild(this.config.node);
+      newConfig.node.id = '' + CLASSES.container;
+      newConfig.node.className = '' + CLASSES.container;
+      newConfig.appendTarget.appendChild(newConfig.node);
+
+      (0, _keys2['default'])(newConfig.types).forEach(function (v) {
+        /**
+         * @param  {String} message
+         * @param  {String} title
+         * @param  {Number} timeout
+         * @param  {Function} cb
+         * @param  {Object} config
+         * @return  {exports}
+         */
+        exports[newConfig.types[v]] = function (message, title, timeout, cb, config) {
+          this.showMessage(message, title, newConfig.types[v], timeout, cb, config);
+          return this;
+        }.bind(_this2);
+      });
+
       return this;
-    },
-
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    info: function info(message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.info, timeout, cb, config);
-      return this;
-    },
-
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    warn: function warn(message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.warn, timeout, cb, config);
-    },
-
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    success: function success(message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.success, timeout, cb, config);
-    },
-
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    error: function error(message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.error, timeout, cb, config);
     }
   };
 

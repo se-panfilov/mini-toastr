@@ -5,18 +5,20 @@ var miniToastr = (function () {
 
   /**
    * @param  {Node} element
+   * @param  {Function} cb
    */
-  function fadeOut (element) {
+  function fadeOut (element, cb) {
     if (element.style.opacity && element.style.opacity > 0.05) {
       element.style.opacity = element.style.opacity - 0.05
     } else if (element.style.opacity && element.style.opacity <= 0.1) {
       if (element.parentNode) {
         element.parentNode.removeChild(element)
+        if (cb) cb()
       }
     } else {
       element.style.opacity = 0.9
     }
-    setTimeout(() => fadeOut.apply(this, [element]), 1000 / 30)
+    setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30)
   }
 
   const TYPES = {
@@ -103,6 +105,8 @@ var miniToastr = (function () {
   }
 
   const defaultConfig = {
+    types: TYPES,
+    animation: fadeOut,
     timeout: 60,
     appendTarget: document.body,
     node: document.createElement('div'),
@@ -120,7 +124,6 @@ var miniToastr = (function () {
         'background-color': '#000',
         opacity: 0.8,
         color: '#fff',
-        // font: 'normal 13px \'Lucida Sans Unicode\', \'Lucida Grande\', Verdana, Arial, Helvetica, sans-serif',
         'border-radius': '3px',
         'box-shadow': '#3c3b3b 0 0 12px',
         width: '300px',
@@ -153,104 +156,80 @@ var miniToastr = (function () {
     }
   }
 
-  /**
-   * @param  {String} message
-   * @param  {String} title
-   * @param  {String} type
-   * @param  {Number} timeout
-   * @param  {Function} cb
-   * @param  {Object} config
-   */
-  function showMessage (message, title, type, timeout, cb, config) {
-    config = config || exports.config
-
-    const notificationElem = document.createElement('div')
-    notificationElem.className = `${CLASSES.notification} ${CLASSES[type]}`
-
-    notificationElem.onclick = function () {
-      fadeOut(notificationElem)
-    }
-
-    if (title) {
-      const titleElem = document.createElement('div')
-      titleElem.className = CLASSES.title
-      titleElem.appendChild(document.createTextNode(title))
-      notificationElem.appendChild(titleElem)
-    }
-
-    if (message) {
-      const messageText = document.createElement('div')
-      messageText.className = CLASSES.message
-      messageText.appendChild(document.createTextNode(message))
-      notificationElem.appendChild(messageText)
-    }
-
-    config.node.insertBefore(notificationElem, config.node.firstChild)
-    setTimeout(() => fadeOut(notificationElem), timeout || config.timeout)
-
-    if (cb) cb()
-  }
-
   const exports = {
     config: defaultConfig,
+    /**
+     * @param  {String} message
+     * @param  {String} title
+     * @param  {String} type
+     * @param  {Number} timeout
+     * @param  {Function} cb
+     * @param  {Object} config
+     */
+    showMessage (message, title, type, timeout, cb, config) {
+      const newConfig = {}
+      Object.assign(newConfig, this.config)
+      Object.assign(newConfig, config)
+
+      const notificationElem = document.createElement('div')
+      notificationElem.className = `${CLASSES.notification} ${CLASSES[type]}`
+
+      notificationElem.onclick = function () {
+        newConfig.animation(notificationElem, null)
+      }
+
+      if (title) {
+        const titleElem = document.createElement('div')
+        titleElem.className = CLASSES.title
+        titleElem.appendChild(document.createTextNode(title))
+        notificationElem.appendChild(titleElem)
+      }
+
+      if (message) {
+        const messageText = document.createElement('div')
+        messageText.className = CLASSES.message
+        messageText.appendChild(document.createTextNode(message))
+        notificationElem.appendChild(messageText)
+      }
+
+      newConfig.node.insertBefore(notificationElem, newConfig.node.firstChild)
+      setTimeout(() => newConfig.animation(notificationElem, cb), timeout || newConfig.timeout)
+
+      if (cb) cb()
+      return this
+    },
     /**
      * @param  {Object} config
      * @return  {exports}
      */
     init (config) {
-      this.config = config || defaultConfig
-      const cssStr = makeCss(this.config.style)
+      const newConfig = {}
+      Object.assign(newConfig, defaultConfig)
+      Object.assign(newConfig, config)
+
+      const cssStr = makeCss(newConfig.style)
       appendStyles(cssStr)
 
-      this.config.node.id = `${CLASSES.container}`
-      this.config.node.className = `${CLASSES.container}`
-      this.config.appendTarget.appendChild(this.config.node)
+      newConfig.node.id = `${CLASSES.container}`
+      newConfig.node.className = `${CLASSES.container}`
+      newConfig.appendTarget.appendChild(newConfig.node)
+
+      Object.keys(newConfig.types).forEach(v => {
+        /**
+         * @param  {String} message
+         * @param  {String} title
+         * @param  {Number} timeout
+         * @param  {Function} cb
+         * @param  {Object} config
+         * @return  {exports}
+         */
+        exports[newConfig.types[v]] = function (message, title, timeout, cb, config) {
+          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
+          return this
+        }.bind(this)
+      })
+
       return this
-    },
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    info (message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.info, timeout, cb, config)
-      return this
-    },
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    warn (message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.warn, timeout, cb, config)
-    },
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    success (message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.success, timeout, cb, config)
-    },
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} config
-     * @return  {exports}
-     */
-    error (message, title, timeout, cb, config) {
-      showMessage(message, title, TYPES.error, timeout, cb, config)
     }
   }
 
