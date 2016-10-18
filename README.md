@@ -63,7 +63,7 @@ miniToastr.warn(message, title, timeout, cb, config)
 miniToastr.error(message, title, timeout, cb, config)
 ```
 
-*Attention:* You can specify your own types in global config: `miniToastr.init({types: debug: 'debug'})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
+*Attention:* You can specify your own types in global config: `miniToastr.init({types: {debug: 'debug'}})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
 
 ##Methods arguments
 
@@ -123,6 +123,19 @@ const defaultConfig = {
     </div>
 </div>
 ```
+
+You can override those classes in your styles or in global config:
+
+```JS
+`miniToastr.init({
+    style: 'mini-toastr__notification': {
+        mini-toastr-notification__message: {
+            color: 'red'
+        }
+    }
+})`
+```
+
 
 ##License
 
