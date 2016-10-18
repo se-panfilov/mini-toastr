@@ -129,7 +129,8 @@ You can override those classes in your styles or in global config:
 ```JS
 miniToastr.init({
     style: 'mini-toastr__notification': {
-        mini-toastr-notification__message: {
+        'mini-toastr-notification__message': {
+            'border-radius': '5px',
             color: 'red'
         }
     }
