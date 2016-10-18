@@ -128,16 +128,16 @@ var miniToastr = (function () {
         'box-shadow': '#3c3b3b 0 0 12px',
         width: '300px',
         [`&.${CLASSES.error}`]: {
-          'background-color': '#FF0000'
+          'background-color': '#D5122B'
         },
         [`&.${CLASSES.warn}`]: {
-          'background-color': '#f9a937'
+          'background-color': '#F5AA1E'
         },
         [`&.${CLASSES.success}`]: {
-          'background-color': '#73b573'
+          'background-color': '#7AC13E'
         },
         [`&.${CLASSES.info}`]: {
-          'background-color': '#58abc3'
+          'background-color': '#4196E1'
         },
         '&:hover': {
           opacity: 1,
