@@ -1,6 +1,6 @@
 {
   "name": "mini-toastr",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.js",
   "scripts": {
@@ -15,12 +15,19 @@
     "url": "git+https://github.com/se-panfilov/mini-toastr.git"
   },
   "keywords": [
-    "vue",
+    "non-blocking",
+    "notification",
     "notifications",
     "toaster",
+    "Toastr",
     "toastr",
-    "vuejs",
-    "vue.js",
+    "mini-toastr",
+    "mini-toaster",
+    "miniToastr",
+    "miniToaster",
+    "toastrjs",
+    "toastr.js",
+    "mini-toastr.js",
     "messages",
     "errors"
   ],
