@@ -127,13 +127,13 @@ const defaultConfig = {
 You can override those classes in your styles or in global config:
 
 ```JS
-`miniToastr.init({
+miniToastr.init({
     style: 'mini-toastr__notification': {
         mini-toastr-notification__message: {
             color: 'red'
         }
     }
-})`
+})
 ```
 
 
