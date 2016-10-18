@@ -107,7 +107,7 @@ var miniToastr = (function () {
   const defaultConfig = {
     types: TYPES,
     animation: fadeOut,
-    timeout: 60,
+    timeout: 3000,
     appendTarget: document.body,
     node: document.createElement('div'),
     style: {
