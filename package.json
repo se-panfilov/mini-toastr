@@ -59,6 +59,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-todo": "^5.0.0",
     "gulp-uglify": "^2.0.0",
+    "gulp-umd": "^0.2.0",
     "gulp-watch": "^4.3.10",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",

@@ -1,5 +1,5 @@
 var miniToastr = (function () {
-  'use strict';
+  'use strict'
 
   const PACKAGE_NAME = 'mini-toastr'
 
@@ -45,13 +45,13 @@ var miniToastr = (function () {
    */
   function flatten (obj, into, prefix) {
     into = into || {}
-    prefix = prefix || ""
+    prefix = prefix || ''
 
-    for (var k in obj) {
+    for (let k in obj) {
       if (obj.hasOwnProperty(k)) {
         var prop = obj[k]
-        if (prop && typeof prop === "object" && !(prop instanceof Date || prop instanceof RegExp)) {
-          flatten(prop, into, prefix + k + " ")
+        if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
+          flatten(prop, into, prefix + k + ' ')
         } else {
           if (into[prefix] && typeof into[prefix] === 'object') {
             into[prefix][k] = prop
@@ -63,7 +63,7 @@ var miniToastr = (function () {
       }
     }
 
-    return into;
+    return into
   }
 
   /**
@@ -91,19 +91,19 @@ var miniToastr = (function () {
     let head = document.head || document.getElementsByTagName('head')[0]
     let styleElem = document.createElement('style')
     styleElem.id = `${PACKAGE_NAME}-styles`
-    styleElem.type = 'text/css';
+    styleElem.type = 'text/css'
 
     if (styleElem.styleSheet) {
-      styleElem.styleSheet.cssText = css;
+      styleElem.styleSheet.cssText = css
     } else {
-      styleElem.appendChild(document.createTextNode(css));
+      styleElem.appendChild(document.createTextNode(css))
     }
 
-    head.appendChild(styleElem);
+    head.appendChild(styleElem)
   }
 
   const defaultConfig = {
-    timeOut: 5000,
+    timeout: 60,
     appendTarget: document.body,
     node: document.createElement('div'),
     style: {
@@ -172,21 +172,21 @@ var miniToastr = (function () {
     }
 
     if (title) {
-      var titleElem = document.createElement('div')
+      const titleElem = document.createElement('div')
       titleElem.className = CLASSES.title
       titleElem.appendChild(document.createTextNode(title))
       notificationElem.appendChild(titleElem)
     }
 
     if (message) {
-      var messageText = document.createElement('div')
+      const messageText = document.createElement('div')
       messageText.className = CLASSES.message
       messageText.appendChild(document.createTextNode(message))
       notificationElem.appendChild(messageText)
     }
 
-    config.node.insertBefore(notificationElem, config.node.firstChild);
-    setTimeout(() => fadeOut(notificationElem), timeout || config.timeOut)
+    config.node.insertBefore(notificationElem, config.node.firstChild)
+    setTimeout(() => fadeOut(notificationElem), timeout || config.timeout)
 
     if (cb) cb()
   }
@@ -256,5 +256,3 @@ var miniToastr = (function () {
 
   return exports
 })()
-
-export default miniToastr

@@ -256,5 +256,3 @@ var miniToastr = (function () {
 
   return exports
 })()
-
-export default miniToastr
