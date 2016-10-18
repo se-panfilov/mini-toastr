@@ -104,6 +104,25 @@ const defaultConfig = {
 | `node` | `Node` | `document.createElement('div')` | Dom element for notification's container |
 | `style` | `Object` | Object of objects | Styles that would be applyied for notifications (after they wuld be translated from `js` to `css`  |
 
+#Notifications structure
+
+```HTML
+<!-- Container-->
+<div id="mini-toastr" class="mini-toastr"> 
+
+    <!-- Notification 1-->
+    <div class="mini-toastr__notification -error">
+        <div class="mini-toastr-notification__title">My Title</div>
+        <div class="mini-toastr-notification__message">My message</div>
+    </div>
+    
+    <!-- Notification 2-->
+    <div class="mini-toastr__notification -success">
+        <div class="mini-toastr-notification__title">My Title 2</div>
+        <div class="mini-toastr-notification__message">My message 2</div>
+    </div>
+</div>
+```
 
 ##License
 
