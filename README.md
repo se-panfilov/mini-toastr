@@ -75,6 +75,36 @@ miniToastr.error(message, title, timeout, cb, config)
 | `cb` | `Function` | `undefined` | No | Callback function |
 | `config` | `Object` | `undefined` | No | Local config for this menthod call |
 
+##Global config
+
+You can specify global config.
+
+Here is default config:
+
+
+```JS
+const defaultConfig = {
+    types: TYPES,
+    animation: fadeOut,
+    timeout: 3000,
+    appendTarget: document.body,
+    node: document.createElement('div'),
+    style: {
+      //Styles
+    }
+  }
+```
+
+| Name | Type | Default  | Description | 
+|---|---|---|---|
+| `types` | `Object` | `{error: 'error', warn: 'warn', success: 'success', info: 'info'}` | List of methods that would be accessable via `miniToastr` i.e. `miniToastr.success()`, `miniToastr.info()`, etc |
+| `animation` | `Function` | `fadeOut` | Function for remove notification. Can be overrrided |
+| `timeout` | `Number` | `3000` | Notification time of life |
+| `appendTarget` | `Node` | `document.body` | Dom element that miniToastr will be attached to |
+| `node` | `Node` | `document.createElement('div')` | Dom element for notification's container |
+| `style` | `Object` | Object of objects | Styles that would be applyied for notifications (after they wuld be translated from `js` to `css`  |
+
+
 ##License
 
 MIT License
