@@ -45,13 +45,13 @@ var miniToastr = (function () {
    */
   function flatten (obj, into, prefix) {
     into = into || {}
-    prefix = prefix || ""
+    prefix = prefix || ''
 
-    for (var k in obj) {
+    for (let k in obj) {
       if (obj.hasOwnProperty(k)) {
         var prop = obj[k]
-        if (prop && typeof prop === "object" && !(prop instanceof Date || prop instanceof RegExp)) {
-          flatten(prop, into, prefix + k + " ")
+        if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
+          flatten(prop, into, prefix + k + ' ')
         } else {
           if (into[prefix] && typeof into[prefix] === 'object') {
             into[prefix][k] = prop
@@ -172,14 +172,14 @@ var miniToastr = (function () {
     }
 
     if (title) {
-      var titleElem = document.createElement('div')
+      const titleElem = document.createElement('div')
       titleElem.className = CLASSES.title
       titleElem.appendChild(document.createTextNode(title))
       notificationElem.appendChild(titleElem)
     }
 
     if (message) {
-      var messageText = document.createElement('div')
+      const messageText = document.createElement('div')
       messageText.className = CLASSES.message
       messageText.appendChild(document.createTextNode(message))
       notificationElem.appendChild(messageText)
