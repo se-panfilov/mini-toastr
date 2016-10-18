@@ -63,7 +63,7 @@ miniToastr.warn(message, title, timeout, cb, config)
 miniToastr.error(message, title, timeout, cb, config)
 ```
 
-*Attention:* You can specify your own types in global config: `miniToastr.init({types: debug: 'debug'})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
+*Attention:* You can specify your own types in global config: `miniToastr.init({types: {debug: 'debug'}})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
 
 ##Methods arguments
 
@@ -74,6 +74,72 @@ miniToastr.error(message, title, timeout, cb, config)
 | `timeout` | `Number` | `3000` | No | Time before notification gone |
 | `cb` | `Function` | `undefined` | No | Callback function |
 | `config` | `Object` | `undefined` | No | Local config for this menthod call |
+
+##Global config
+
+You can specify global config.
+
+Here is default config:
+
+
+```JS
+const defaultConfig = {
+    types: TYPES,
+    animation: fadeOut,
+    timeout: 3000,
+    appendTarget: document.body,
+    node: document.createElement('div'),
+    style: {
+      //Styles
+    }
+  }
+```
+
+| Name | Type | Default  | Description | 
+|---|---|---|---|
+| `types` | `Object` | `{error: 'error', warn: 'warn', success: 'success', info: 'info'}` | List of methods that would be accessable via `miniToastr` i.e. `miniToastr.success()`, `miniToastr.info()`, etc |
+| `animation` | `Function` | `fadeOut` | Function for remove notification. Can be overrrided |
+| `timeout` | `Number` | `3000` | Notification time of life |
+| `appendTarget` | `Node` | `document.body` | Dom element that miniToastr will be attached to |
+| `node` | `Node` | `document.createElement('div')` | Dom element for notification's container |
+| `style` | `Object` | Object of objects | Styles that would be applyied for notifications (after they wuld be translated from `js` to `css`  |
+
+#Notifications structure
+
+```HTML
+<!-- Container-->
+<div id="mini-toastr" class="mini-toastr"> 
+
+    <!-- Notification 1-->
+    <div class="mini-toastr__notification -error">
+        <div class="mini-toastr-notification__title">My Title</div>
+        <div class="mini-toastr-notification__message">My message</div>
+    </div>
+    
+    <!-- Notification 2-->
+    <div class="mini-toastr__notification -success">
+        <div class="mini-toastr-notification__title">My Title 2</div>
+        <div class="mini-toastr-notification__message">My message 2</div>
+    </div>
+</div>
+```
+
+You can override those classes in your styles or in global config:
+
+```JS
+miniToastr.init({
+    style: 'mini-toastr__notification': {
+        'mini-toastr-notification__message': {
+            'border-radius': '5px',
+            color: 'red'
+        }
+    }
+})
+```
+
+##Browser support.
+Not tested atm. But all modern at least.
+You can use `ES5` or `ES6` versions as well. 
 
 ##License
 
