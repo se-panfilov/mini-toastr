@@ -8,12 +8,19 @@
     "url": "git+https://github.com/se-panfilov/vue-notifications.git"
   },
   "keywords": [
-    "vue",
+    "non-blocking",
+    "notification",
     "notifications",
     "toaster",
+    "Toastr",
     "toastr",
-    "vuejs",
-    "vue.js",
+    "mini-toastr",
+    "mini-toaster",
+    "miniToastr",
+    "miniToaster",
+    "toastrjs",
+    "toastr.js",
+    "mini-toastr.js",
     "messages",
     "errors"
   ],
