@@ -63,6 +63,18 @@ miniToastr.warn(message, title, timeout, cb, config)
 miniToastr.error(message, title, timeout, cb, config)
 ```
 
+*Attention:* You can specify your own types in global config: `miniToastr.init({types: debug: 'debug'})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
+
+##Methods arguments
+
+| Name | Type | Default | Required | Description | 
+|---|---|---|---|---|
+| `message` | `String` | `undefined` | Yes | Message in notification |
+| `title` | `String` | `undefined` | No | Title for notification |
+| `timeout` | `Number` | `3000` | No | Time before notification gone |
+| `cb` | `Function` | `undefined` | No | Callback function |
+| `config` | `Object` | `undefined` | No | Local config for this menthod call |
+
 ##License
 
 MIT License
