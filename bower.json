@@ -1,11 +1,11 @@
 {
   "name": "mini-toastr",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/se-panfilov/vue-notifications.git"
+    "url": "git+https://github.com/se-panfilov/mini-toastr.git"
   },
   "keywords": [
     "non-blocking",
@@ -30,7 +30,7 @@
   "license": "MIT",
   "private": false,
   "bugs": {
-    "url": "https://github.com/se-panfilov/vue-notifications/issues"
+    "url": "https://github.com/se-panfilov/mini-toastr/issues"
   },
   "homepage": "https://github.com/se-panfilov/mini-toastr",
   "ignore": [
