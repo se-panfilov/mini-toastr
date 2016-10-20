@@ -1,8 +1,8 @@
 {
   "name": "mini-toastr",
-  "version": "0.3.2",
+  "version": "0.3.8",
   "description": "Non-blocking toaster notifications",
-  "main": "dist/mini-toastr.js",
+  "main": "dist/mini-toastr.es5.js",
   "scripts": {
     "start": "gulp",
     "build": "gulp make",
