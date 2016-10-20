@@ -12,6 +12,8 @@ const plumber = require('gulp-plumber')
 const babel = require('gulp-babel')
 const source = require('vinyl-source-stream')
 const umd = require('gulp-umd')
+const to = require('to-case')
+const stripCode = require('gulp-strip-code')
 
 gulp.task('es5', () => {
   return gulp.src(config.js.src)
@@ -24,13 +26,17 @@ gulp.task('es5', () => {
       })
     }))
     .pipe(concat(`${config.projectName}.js`))
+    .pipe(stripCode({
+      start_comment: "START.TESTS_ONLY",
+      end_comment: "END.TESTS_ONLY"
+    }))
     .pipe(babel())
     .pipe(umd({
       exports: function (file) {
-        return 'miniToastr'
+        return to.camel(config.projectName)
       },
       namespace: function (file) {
-        return 'miniToastr'
+        return to.camel(config.projectName)
       }
     }))
     .pipe(gulp.dest(config.dest))
