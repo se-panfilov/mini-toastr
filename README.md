@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/se-panfilov/mini-toastr.svg?branch=master)](https://travis-ci.org/se-panfilov/mini-toastr)
 [![devDependency Status](https://david-dm.org/se-panfilov/mini-toastr/dev-status.svg)](https://david-dm.org/se-panfilov/mini-toastr#info=devDependencies)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/se-panfilov/mini-toastr/blob/master/LICENSE)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 [![NPM](https://nodei.co/npm/mini-toastr.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mini-toastr/)
 
@@ -67,7 +68,7 @@ miniToastr.error(message, title, timeout, cb, config)
 
 ##Methods arguments
 
-| Name | Type | Default | Required | Description | 
+| Name | Type | Default | Required | Description |
 |---|---|---|---|---|
 | `message` | `String` | `undefined` | Yes | Message in notification |
 | `title` | `String` | `undefined` | No | Title for notification |
@@ -95,7 +96,7 @@ const defaultConfig = {
   }
 ```
 
-| Name | Type | Default  | Description | 
+| Name | Type | Default  | Description |
 |---|---|---|---|
 | `types` | `Object` | `{error: 'error', warn: 'warn', success: 'success', info: 'info'}` | List of methods that would be accessable via `miniToastr` i.e. `miniToastr.success()`, `miniToastr.info()`, etc |
 | `animation` | `Function` | `fadeOut` | Function for remove notification. Can be overrrided |
@@ -108,14 +109,14 @@ const defaultConfig = {
 
 ```HTML
 <!-- Container-->
-<div id="mini-toastr" class="mini-toastr"> 
+<div id="mini-toastr" class="mini-toastr">
 
     <!-- Notification 1-->
     <div class="mini-toastr__notification -error">
         <div class="mini-toastr-notification__title">My Title</div>
         <div class="mini-toastr-notification__message">My message</div>
     </div>
-    
+
     <!-- Notification 2-->
     <div class="mini-toastr__notification -success">
         <div class="mini-toastr-notification__title">My Title 2</div>
@@ -139,7 +140,7 @@ miniToastr.init({
 
 ##Browser support.
 Not tested atm. But all modern at least.
-You can use `ES5` or `ES6` versions as well. 
+You can use `ES5` or `ES6` versions as well.
 
 ##License
 
