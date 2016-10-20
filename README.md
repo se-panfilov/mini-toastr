@@ -2,7 +2,6 @@
 [![bitHound Overall Score](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/score.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr) [![bitHound Code](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/code.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr)
 [![Code Climate](https://codeclimate.com/github/se-panfilov/mini-toastr/badges/gpa.svg)](https://codeclimate.com/github/se-panfilov/mini-toastr)
 [![Build Status](https://travis-ci.org/se-panfilov/mini-toastr.svg?branch=master)](https://travis-ci.org/se-panfilov/mini-toastr)
-[![devDependency Status](https://david-dm.org/se-panfilov/mini-toastr/dev-status.svg)](https://david-dm.org/se-panfilov/mini-toastr#info=devDependencies)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/se-panfilov/mini-toastr/blob/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/mini-toastr.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mini-toastr/)
