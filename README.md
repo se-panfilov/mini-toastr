@@ -4,9 +4,9 @@
 [![Build Status](https://travis-ci.org/se-panfilov/mini-toastr.svg?branch=master)](https://travis-ci.org/se-panfilov/mini-toastr)
 [![devDependency Status](https://david-dm.org/se-panfilov/mini-toastr/dev-status.svg)](https://david-dm.org/se-panfilov/mini-toastr#info=devDependencies)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/se-panfilov/mini-toastr/blob/master/LICENSE)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 [![NPM](https://nodei.co/npm/mini-toastr.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mini-toastr/)
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 # mini-toastr
 
