@@ -44,10 +44,6 @@ or
 import miniToastr from 'mini-toastr' //ES6
 ```
 
-```JS
-Vue.use(VueNotifications, options)
-```
-
 3. Init
 
 ```JS
