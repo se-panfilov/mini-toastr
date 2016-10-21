@@ -1,0 +1,44 @@
+{
+  "name": "mini-tosatr-demo",
+  "version": "0.0.1",
+  "description": "demo site",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/se-panfilov/mini-toastr.git"
+  },
+  "keywords": [
+    "non-blocking",
+    "notification",
+    "notifications",
+    "toaster",
+    "Toastr",
+    "toastr",
+    "mini-toastr",
+    "mini-toaster",
+    "miniToastr",
+    "miniToaster",
+    "toastrjs",
+    "toastr.js",
+    "mini-toastr.js",
+    "messages",
+    "errors"
+  ],
+  "authors": [
+    "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/se-panfilov/mini-toastr/issues"
+  },
+  "homepage": "https://github.com/se-panfilov/mini-toastr",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {},
+  "dependencies": {}
+}
