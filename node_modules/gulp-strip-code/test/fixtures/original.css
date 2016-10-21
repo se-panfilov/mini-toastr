@@ -1,0 +1,15 @@
+/*! i18n EN start */
+.test {
+    color: red;
+}
+/*! i18n EN end */
+/*! i18n IT start */
+.test {
+    color: blue;
+}
+/*! i18n IT end */
+/*! i18n DE start */
+.test {
+    color: green;
+}
+/*! i18n DE end */

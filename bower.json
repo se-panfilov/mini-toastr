@@ -40,5 +40,7 @@
     "tests"
   ],
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "mini-toastr": "^0.3.9"
+  }
 }

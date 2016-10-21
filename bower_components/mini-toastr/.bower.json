@@ -1,0 +1,55 @@
+{
+  "name": "mini-toastr",
+  "version": "0.3.9",
+  "description": "Non-blocking toaster notifications",
+  "main": "dist/mini-toastr.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/se-panfilov/mini-toastr.git"
+  },
+  "keywords": [
+    "non-blocking",
+    "notification",
+    "notifications",
+    "toaster",
+    "Toastr",
+    "toastr",
+    "mini-toastr",
+    "mini-toaster",
+    "miniToastr",
+    "miniToaster",
+    "toastrjs",
+    "toastr.js",
+    "mini-toastr.js",
+    "messages",
+    "errors"
+  ],
+  "authors": [
+    "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)"
+  ],
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/se-panfilov/mini-toastr/issues"
+  },
+  "homepage": "https://github.com/se-panfilov/mini-toastr",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {},
+  "dependencies": {},
+  "_release": "0.3.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.9",
+    "commit": "e3521cb126e1a14bd9c51054dc91937e653b130a"
+  },
+  "_source": "https://github.com/se-panfilov/mini-toastr.git",
+  "_target": "^0.3.9",
+  "_originalSource": "mini-toastr",
+  "_direct": true
+}
