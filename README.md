@@ -10,6 +10,7 @@
 # mini-toastr
 
 **mini-toastr** - it's a small non-blocking notification library. No dependencies.
+
 [Demo][2]
 
 ================
