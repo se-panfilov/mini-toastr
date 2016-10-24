@@ -9,27 +9,9 @@
 }(this, function() {
 'use strict';
 
-var _keys = require('babel-runtime/core-js/object/keys');
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _keys2 = _interopRequireDefault(_keys);
-
-var _assign = require('babel-runtime/core-js/object/assign');
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
-var _typeof2 = require('babel-runtime/helpers/typeof');
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 // eslint-disable-next-line no-unused-vars
 var miniToastr = function () {
@@ -92,10 +74,10 @@ var miniToastr = function () {
     for (var k in obj) {
       if (obj.hasOwnProperty(k)) {
         var prop = obj[k];
-        if (prop && (typeof prop === 'undefined' ? 'undefined' : (0, _typeof3['default'])(prop)) === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
+        if (prop && (typeof prop === 'undefined' ? 'undefined' : _typeof(prop)) === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
           flatten(prop, into, prefix + k + ' ');
         } else {
-          if (into[prefix] && (0, _typeof3['default'])(into[prefix]) === 'object') {
+          if (into[prefix] && _typeof(into[prefix]) === 'object') {
             into[prefix][k] = prop;
           } else {
             into[prefix] = {};
@@ -114,7 +96,7 @@ var miniToastr = function () {
    */
   function makeCss(obj) {
     var flat = flatten(obj);
-    var str = (0, _stringify2['default'])(flat, null, 2);
+    var str = JSON.stringify(flat, null, 2);
     str = str.replace(/"([^"]*)": \{/g, '$1 {').replace(/"([^"]*)"/g, '$1').replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;').replace(/},/g, '}\n').replace(/ &([.:])/g, '$1');
 
     str = str.substr(1, str.lastIndexOf('}') - 1);
@@ -146,12 +128,12 @@ var miniToastr = function () {
     timeout: 3000,
     appendTarget: document.body,
     node: document.createElement('div'),
-    style: (_style = {}, (0, _defineProperty3['default'])(_style, '.' + CLASSES.container, {
+    style: (_style = {}, _defineProperty(_style, '.' + CLASSES.container, {
       position: 'fixed',
       'z-index': 99999,
       right: '12px',
       top: '12px'
-    }), (0, _defineProperty3['default'])(_style, '.' + CLASSES.notification, (_ref = {
+    }), _defineProperty(_style, '.' + CLASSES.notification, (_ref = {
       cursor: 'pointer',
       padding: '12px 18px',
       margin: '0 0 6px 0',
@@ -161,20 +143,20 @@ var miniToastr = function () {
       'border-radius': '3px',
       'box-shadow': '#3c3b3b 0 0 12px',
       width: '300px'
-    }, (0, _defineProperty3['default'])(_ref, '&.' + CLASSES.error, {
+    }, _defineProperty(_ref, '&.' + CLASSES.error, {
       'background-color': '#D5122B'
-    }), (0, _defineProperty3['default'])(_ref, '&.' + CLASSES.warn, {
+    }), _defineProperty(_ref, '&.' + CLASSES.warn, {
       'background-color': '#F5AA1E'
-    }), (0, _defineProperty3['default'])(_ref, '&.' + CLASSES.success, {
+    }), _defineProperty(_ref, '&.' + CLASSES.success, {
       'background-color': '#7AC13E'
-    }), (0, _defineProperty3['default'])(_ref, '&.' + CLASSES.info, {
+    }), _defineProperty(_ref, '&.' + CLASSES.info, {
       'background-color': '#4196E1'
-    }), (0, _defineProperty3['default'])(_ref, '&:hover', {
+    }), _defineProperty(_ref, '&:hover', {
       opacity: 1,
       'box-shadow': '#000 0 0 12px'
-    }), _ref)), (0, _defineProperty3['default'])(_style, '.' + CLASSES.title, {
+    }), _ref)), _defineProperty(_style, '.' + CLASSES.title, {
       'font-weight': '500'
-    }), (0, _defineProperty3['default'])(_style, '.' + CLASSES.message, {
+    }), _defineProperty(_style, '.' + CLASSES.message, {
       display: 'inline-block',
       'vertical-align': 'middle',
       width: '240px',
@@ -194,8 +176,8 @@ var miniToastr = function () {
      */
     showMessage: function showMessage(message, title, type, timeout, cb, config) {
       var newConfig = {};
-      (0, _assign2['default'])(newConfig, this.config);
-      (0, _assign2['default'])(newConfig, config);
+      Object.assign(newConfig, this.config);
+      Object.assign(newConfig, config);
 
       var notificationElem = document.createElement('div');
       notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
@@ -235,8 +217,8 @@ var miniToastr = function () {
       var _this2 = this;
 
       var newConfig = {};
-      (0, _assign2['default'])(newConfig, defaultConfig);
-      (0, _assign2['default'])(newConfig, config);
+      Object.assign(newConfig, defaultConfig);
+      Object.assign(newConfig, config);
 
       var cssStr = makeCss(newConfig.style);
       appendStyles(cssStr);
@@ -245,7 +227,7 @@ var miniToastr = function () {
       newConfig.node.className = '' + CLASSES.container;
       newConfig.appendTarget.appendChild(newConfig.node);
 
-      (0, _keys2['default'])(newConfig.types).forEach(function (v) {
+      Object.keys(newConfig.types).forEach(function (v) {
         /**
          * @param  {String} message
          * @param  {String} title

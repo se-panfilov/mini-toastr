@@ -41,6 +41,6 @@
   ],
   "devDependencies": {},
   "dependencies": {
-    "mini-toastr": "^0.3.9"
+    "mini-toastr": "^0.3.10"
   }
 }
