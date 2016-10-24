@@ -39,6 +39,7 @@
     "test",
     "tests"
   ],
+  "private": true,
   "devDependencies": {},
   "dependencies": {
     "mini-toastr": "^0.3.10"
