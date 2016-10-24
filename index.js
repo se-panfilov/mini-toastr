@@ -14,10 +14,11 @@ var indexPage = (function () {
     showToast: function () {
       var title = document.getElementById('title').value
       var msg = document.getElementById('msg').value
+      var timeout = document.getElementById('timeout').value
       var type = getRadioValue('type')
 
       // miniToastr[type](msg, title, timeout, cb)
-      miniToastr[type](msg, title)
+      miniToastr[type](msg, title, +timeout)
 
     }
   }

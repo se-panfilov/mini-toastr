@@ -28,6 +28,8 @@
     </header>
 
     <section>
+        <h3>Demo</h3>
+
         <div>
             <label>Title
                 <input type="text" id="title" value="Hey"/>
@@ -63,6 +65,9 @@
             </label>
         </div>
         <div>
+            <input type="text" id="timeout" value="3000"/>
+        </div>
+        <div>
             <button type="button" onclick="indexPage.showToast()">Show toast</button>
         </div>
     </section>
@@ -76,9 +81,9 @@
     </footer>
 </div>
 <script src="javascripts/scale.fix.js"></script>
-<script src="/dist/mini-toastr.es5.js"></script>
+<!--<script src="/dist/mini-toastr.es5.js"></script>-->
+<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js"></script>
 <script src="index.js"></script>
-<!--<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js"></script>-->
 
 </body>
 </html>
