@@ -18,7 +18,10 @@
         <h1>mini-toastr</h1>
         <p>Small non-blocking notification library. No dependencies</p>
 
-        <p class="view"><a href="https://github.com/se-panfilov/mini-toastr">View the Project on GitHub <small>se-panfilov/mini-toastr</small></a></p>
+        <p class="view">
+            <a href="https://github.com/se-panfilov/mini-toastr">View the Project on GitHub
+                <small>se-panfilov/mini-toastr</small>
+            </a></p>
         <ul>
             <li><a href="https://github.com/se-panfilov/mini-toastr">View On <strong>GitHub</strong></a></li>
         </ul>
@@ -26,14 +29,41 @@
 
     <section>
 
-        <input type="text" value="Hey"/>
-        <input type="text" value="You message"/>
+        <label>Title
+            <input type="text" value="Hey"/>
+        </label>
+
+        <label>Message text
+            <input type="text" value="Your message"/>
+        </label>
+
+        <label>
+            <input type="radio" name="type" value="success" checked/>
+            <span>Success</span>
+        </label>
+        <label>
+            <input type="radio" name="type" value="info"/>
+            <span>Info</span>
+        </label>
+        <label>
+            <input type="radio" name="type" value="warn"/>
+            <span>Warn</span>
+        </label>
+        <label>
+            <input type="radio" name="type" value="error"/>
+            <span>Error</span>
+        </label>
+
+        <button type="button" onclick="showToast()">Show toast</button>
 
     </section>
 
     <footer>
         <p>This project is maintained by <a href="https://github.com/se-panfilov">se-panfilov</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p>
+            <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a>
+            </small>
+        </p>
     </footer>
 </div>
 <script src="javascripts/scale.fix.js"></script>

@@ -1,8 +1,12 @@
 ;(function () {
   // miniToastr.success(message, title, timeout, cb, config)
 
-  document.getElementById('')
+  // document.getElementById('')
+  //
+  // miniToastr.success(message, title, timeout, cb)
 
-  miniToastr.success(message, title, timeout, cb)
+  function showToast () {
+    console.log(1)
+  }
 
 }());
