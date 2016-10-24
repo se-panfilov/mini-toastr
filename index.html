@@ -28,34 +28,43 @@
     </header>
 
     <section>
-
-        <label>Title
-            <input type="text" value="Hey"/>
-        </label>
-
-        <label>Message text
-            <input type="text" value="Your message"/>
-        </label>
-
-        <label>
-            <input type="radio" name="type" value="success" checked/>
-            <span>Success</span>
-        </label>
-        <label>
-            <input type="radio" name="type" value="info"/>
-            <span>Info</span>
-        </label>
-        <label>
-            <input type="radio" name="type" value="warn"/>
-            <span>Warn</span>
-        </label>
-        <label>
-            <input type="radio" name="type" value="error"/>
-            <span>Error</span>
-        </label>
-
-        <button type="button" onclick="showToast()">Show toast</button>
-
+        <div>
+            <label>Title
+                <input type="text" id="title" value="Hey"/>
+            </label>
+        </div>
+        <div>
+            <label>Message text
+                <input type="text" id="msg" value="Your message"/>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="type" value="success" checked/>
+                <span>Success</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="type" value="info"/>
+                <span>Info</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="type" value="warn"/>
+                <span>Warn</span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="type" value="error"/>
+                <span>Error</span>
+            </label>
+        </div>
+        <div>
+            <button type="button" onclick="indexPage.showToast()">Show toast</button>
+        </div>
     </section>
 
     <footer>
@@ -67,7 +76,9 @@
     </footer>
 </div>
 <script src="javascripts/scale.fix.js"></script>
-<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js"></script>
+<script src="/dist/mini-toastr.es5.js"></script>
+<script src="index.js"></script>
+<!--<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js"></script>-->
 
 </body>
 </html>

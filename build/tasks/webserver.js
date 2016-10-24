@@ -6,7 +6,7 @@ const connect = require('gulp-connect')
 
 gulp.task('webserver', function () {
   return connect.server({
-    root: ['./'],
+    root: ['./', '../mini-toastr', 'p/mini-toastr'],
     port: 8001,
     livereload: true
   })
