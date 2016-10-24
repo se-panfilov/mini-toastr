@@ -136,7 +136,7 @@ miniToastr.init({
 ```
 
 ##Browser support.
-Not tested atm. But all modern at least.
+All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].
 You can use `ES5` or `ES6` versions as well.
 
 ##License
@@ -166,3 +166,4 @@ SOFTWARE.
 
 [1]: https://github.com/se-panfilov/mini-toastr/releases
 [2]: https://se-panfilov.github.io/mini-toastr/
+[3]: http://caniuse.com/#feat=es5
