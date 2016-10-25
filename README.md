@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/874e7dce623149e18807bdc0a02671c2)](https://www.codacy.com/app/se-panfilov/mini-toastr)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/43efe3dd02c047f39bb3435e9c577092)](https://www.codacy.com/app/se-panfilov/mini-toastr?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=se-panfilov/mini-toastr&amp;utm_campaign=Badge_Grade)
 [![bitHound Overall Score](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/score.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr) [![bitHound Code](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/code.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr)
 [![Code Climate](https://codeclimate.com/github/se-panfilov/mini-toastr/badges/gpa.svg)](https://codeclimate.com/github/se-panfilov/mini-toastr)
 [![Build Status](https://travis-ci.org/se-panfilov/mini-toastr.svg?branch=master)](https://travis-ci.org/se-panfilov/mini-toastr)
