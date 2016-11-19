@@ -73,7 +73,7 @@
     "gulp-todo": "^5.1.0",
     "gulp-uglify": "^2.0.0",
     "gulp-umd": "^0.2.0",
-    "gulp-watch": "^4.3.10",
+    "gulp-watch": "^4.3.11",
     "mocha": "^3.1.2",
     "require-dir": "^0.3.1",
     "run-sequence": "^1.2.2",
