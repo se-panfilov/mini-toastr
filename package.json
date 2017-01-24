@@ -71,7 +71,7 @@
     "gulp-sourcemaps": "^2.4.0",
     "gulp-strip-code": "^0.1.4",
     "gulp-todo": "^5.2.0",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^2.0.1",
     "gulp-umd": "^0.2.0",
     "gulp-watch": "^4.3.11",
     "mocha": "^3.2.0",
