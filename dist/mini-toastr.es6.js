@@ -2,7 +2,7 @@
 var miniToastr = (function () {
   'use strict'
 
-  if(typeof window === 'undefined') return
+  if (typeof window === 'undefined') return
 
   const PACKAGE_NAME = 'mini-toastr'
 
