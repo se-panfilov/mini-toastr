@@ -19,6 +19,8 @@ var miniToastr = function () {
 
   var _ref, _style;
 
+  if (typeof window === 'undefined') return;
+
   var PACKAGE_NAME = 'mini-toastr';
 
   /**
