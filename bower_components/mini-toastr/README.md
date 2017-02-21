@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/874e7dce623149e18807bdc0a02671c2)](https://www.codacy.com/app/se-panfilov/mini-toastr)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/43efe3dd02c047f39bb3435e9c577092)](https://www.codacy.com/app/se-panfilov/mini-toastr?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=se-panfilov/mini-toastr&amp;utm_campaign=Badge_Grade)
 [![bitHound Overall Score](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/score.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr) [![bitHound Code](https://www.bithound.io/github/se-panfilov/mini-toastr/badges/code.svg)](https://www.bithound.io/github/se-panfilov/mini-toastr)
 [![Code Climate](https://codeclimate.com/github/se-panfilov/mini-toastr/badges/gpa.svg)](https://codeclimate.com/github/se-panfilov/mini-toastr)
 [![Build Status](https://travis-ci.org/se-panfilov/mini-toastr.svg?branch=master)](https://travis-ci.org/se-panfilov/mini-toastr)
@@ -10,6 +10,8 @@
 # mini-toastr
 
 **mini-toastr** - it's a small non-blocking notification library. No dependencies.
+
+[Demo][2]
 
 ================
 
@@ -134,7 +136,7 @@ miniToastr.init({
 ```
 
 ##Browser support.
-Not tested atm. But all modern at least.
+All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].
 You can use `ES5` or `ES6` versions as well.
 
 ##License
@@ -163,3 +165,5 @@ SOFTWARE.
 
 
 [1]: https://github.com/se-panfilov/mini-toastr/releases
+[2]: https://se-panfilov.github.io/mini-toastr/
+[3]: http://caniuse.com/#feat=es5

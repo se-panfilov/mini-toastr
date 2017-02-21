@@ -1,6 +1,6 @@
 {
   "name": "mini-toastr",
-  "version": "0.3.10",
+  "version": "0.5.0",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.js",
   "repository": {
@@ -42,14 +42,13 @@
   ],
   "devDependencies": {},
   "dependencies": {},
-  "_release": "0.3.10",
+  "_release": "0.5.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.10",
-    "commit": "b42bac0524ebef618d4c0840e701d14730980d06"
+    "tag": "v0.5.0",
+    "commit": "e48e5cb426444065235bd22f57440994c60f6136"
   },
   "_source": "https://github.com/se-panfilov/mini-toastr.git",
-  "_target": "^0.3.10",
-  "_originalSource": "mini-toastr",
-  "_direct": true
+  "_target": "^0.5.0",
+  "_originalSource": "mini-toastr"
 }
