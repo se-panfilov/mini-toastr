@@ -17,6 +17,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var miniToastr = function () {
   'use strict';
 
+  //fix for server-side rendering
+
   var _ref, _style;
 
   if (typeof window === 'undefined') return;
