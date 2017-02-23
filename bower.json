@@ -1,6 +1,6 @@
 {
   "name": "mini-toastr",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.js",
   "repository": {
