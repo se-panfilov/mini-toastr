@@ -5,10 +5,11 @@ var miniToastr = (function () {
   //fix for server-side rendering
   if (typeof window === 'undefined') {
     return {
-      init: () => {}
+      init: () => {
+      }
     }
   }
-  
+
   const PACKAGE_NAME = 'mini-toastr'
 
   /**
