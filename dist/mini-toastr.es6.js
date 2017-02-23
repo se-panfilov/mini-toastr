@@ -3,7 +3,12 @@ var miniToastr = (function () {
   'use strict'
 
   //fix for server-side rendering
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined') {
+    return {
+      init: () => {
+      }
+    }
+  }
 
   const PACKAGE_NAME = 'mini-toastr'
 
