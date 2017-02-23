@@ -21,7 +21,11 @@ var miniToastr = function () {
 
   var _ref, _style;
 
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    return {
+      init: function init() {}
+    };
+  }
 
   var PACKAGE_NAME = 'mini-toastr';
 
