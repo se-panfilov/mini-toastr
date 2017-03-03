@@ -119,6 +119,13 @@ const defaultConfig = {
         <div class="mini-toastr-notification__title">My Title 2</div>
         <div class="mini-toastr-notification__message">My message 2</div>
     </div>
+
+    <!-- Notification 3-->
+    <div class="mini-toastr__notification -warning">
+        <div class="mini-toastr-notification__title">My Title 3</div>
+        <i class="your_class mini-toastr-notification__icon"></i> <!-- You're able to use "img"or whatever instead-->
+        <div class="mini-toastr-notification__message">My message 3</div>
+    </div>
 </div>
 ```
 
@@ -126,14 +133,44 @@ You can override those classes in your styles or in global config:
 
 ```JS
 miniToastr.init({
-    style: 'mini-toastr__notification': {
-        'mini-toastr-notification__message': {
-            'border-radius': '5px',
-            color: 'red'
+    style: {
+        'mini-toastr__notification': {
+          'mini-toastr-notification__message': {
+              'border-radius': '5px',
+              color: 'red'
+          }
         }
     }
 })
 ```
+
+##Adding an icon
+
+You're able to add icons
+
+```javascript
+//You can use any font icon
+miniToastr.setIcon('error', 'i', {'class': 'fa fa-warning'})
+miniToastr.setIcon('info', 'i', {'class': 'fa fa-info-circle'})
+miniToastr.setIcon('success', 'i', {'class': 'fa fa-check-circle-o'})
+
+//Or image (or any other element)
+miniToastr.setIcon('warn', 'img', {src: 'assets/img/demo-warn.png', style: 'vertical-align: bottom;'})
+```
+
+Basically `setIcon` get 3 params:
+ 
+ - `type`(`String`) - `error`, `info`, `success`, or `warn`. So you can specify each event with custom icon
+ - `nodeType`(`String`) - basically what kind of element it's has to be, e.g. `<i></i>` or `<img/>`
+ - `attrs`(`Object`) - object with attributes for icon, such as `class`, `style`, or `src` (for `<img/>`)
+ 
+ Usually you have to set `miniToastr.setIcon()` after `miniToastr.init()` but also you can do it on each toast call.
+ 
+ Keep in mind, that if you will add class like `miniToastr.setIcon('info', 'i', {'class': 'fa fa-info-circle'})`,
+ your actual class will be `fa fa-info-circle mini-toastr-notification__icon`.
+ 
+ So you'll be able to customize all the icons with css
+
 
 ##Browser support.
 All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].

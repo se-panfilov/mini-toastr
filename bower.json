@@ -1,6 +1,6 @@
 {
   "name": "mini-tosatr-demo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "demo site",
   "main": "index.html",
   "repository": {
@@ -42,6 +42,6 @@
   "private": true,
   "devDependencies": {},
   "dependencies": {
-    "mini-toastr": "^0.5.1"
+    "mini-toastr": "^0.6.1"
   }
 }
