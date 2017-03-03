@@ -21,10 +21,10 @@ var indexPage = (function () {
       miniToastr.config.icons = {}
 
       if (isIcon) {
-        miniToastr.setIcon('error', 'i', 'fa fa-warning')
-        miniToastr.setIcon('warn', 'img', null, {'src': 'assets/img/demo-warn.png'})
-        miniToastr.setIcon('info', 'i', 'fa fa-info-circle')
-        miniToastr.setIcon('success', 'i', 'fa fa-check-circle-o')
+        miniToastr.setIcon('error', 'i', {'class': 'fa fa-warning'})
+        miniToastr.setIcon('warn', 'img', {src: 'assets/img/demo-warn.png', style: 'vertical-align: bottom;'})
+        miniToastr.setIcon('info', 'i', {'class': 'fa fa-info-circle'})
+        miniToastr.setIcon('success', 'i', {'class': 'fa fa-check-circle-o'})
       }
 
       miniToastr[type](msg, title, +timeout)
