@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,6 +66,12 @@
             </label>
         </div>
         <div>
+          <label>
+            <input type="checkbox" id="is_icon" value="true"/>
+            <span>show icons?</span>
+          </label>
+        </div>
+        <div>
             <input type="text" id="timeout" value="3000"/>
         </div>
         <div>
@@ -80,10 +87,11 @@
         </p>
     </footer>
 </div>
-<script src="javascripts/scale.fix.js"></script>
-<!--<script src="/dist/mini-toastr.es5.js"></script>-->
-<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js"></script>
-<script src="index.js"></script>
+<script src="javascripts/scale.fix.js" defer></script>
+<!--<script src="/dist/mini-toastr.es5.js" defer></script>-->
+<script src="bower_components/mini-toastr/dist/mini-toastr.es5.js" defer></script>
+<!--<script src="../mini-toastr/dist/mini-toastr.es6.js" defer></script>-->
+<script src="index.js" defer></script>
 
 </body>
 </html>
