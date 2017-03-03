@@ -166,7 +166,16 @@ var miniToastr = function () {
   function createIcon(node, type, config) {
     var elem = makeNode();
     elem.className = config.icons[type].classStr;
-    elem.appendChild(makeNode(config.icons[type].nodeType));
+    var iconNode = makeNode(config.icons[type].nodeType);
+    var attrs = config.icons[type].attrs;
+
+    for (var k in attrs) {
+      if (attrs.hasOwnProperty(k)) {
+        iconNode.setAttribute(k, attrs[k]);
+      }
+    }
+
+    elem.appendChild(iconNode);
     node.appendChild(elem);
   }
 
@@ -228,10 +237,10 @@ var miniToastr = function () {
     },
     setIcon: function setIcon(type) {
       var nodeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'i';
-      var classStr = arguments[2];
+      var classStr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
       var attrs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
 
-      classStr += ' ' + CLASSES.icon;
+      classStr = classStr ? ' ' + CLASSES.icon : CLASSES.icon;
 
       this.config.icons[type] = {
         nodeType: nodeType,
