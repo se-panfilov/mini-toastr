@@ -62,6 +62,7 @@ var miniToastr = function () {
     container: '' + PACKAGE_NAME,
     notification: PACKAGE_NAME + '__notification',
     title: PACKAGE_NAME + '-notification__title',
+    icon: PACKAGE_NAME + '-notification__icon',
     message: PACKAGE_NAME + '-notification__message',
     error: '-' + TYPES.error,
     warn: '-' + TYPES.warn,
@@ -117,7 +118,7 @@ var miniToastr = function () {
    */
   function appendStyles(css) {
     var head = document.head || document.getElementsByTagName('head')[0];
-    var styleElem = document.createElement('style');
+    var styleElem = makeNode('style');
     styleElem.id = PACKAGE_NAME + '-styles';
     styleElem.type = 'text/css';
 
@@ -134,8 +135,9 @@ var miniToastr = function () {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
+    icons: {},
     appendTarget: document.body,
-    node: document.createElement('div'),
+    node: makeNode(),
     style: (_style = {}, _defineProperty(_style, '.' + CLASSES.container, {
       position: 'fixed',
       'z-index': 99999,
@@ -172,6 +174,26 @@ var miniToastr = function () {
     }), _style)
   };
 
+  function makeNode() {
+    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
+
+    return document.createElement(type);
+  }
+
+  function createIcon(node, type, config) {
+    var elem = makeNode();
+    elem.className = config.icons[type].classStr;
+    elem.appendChild(makeNode(config.icons[type].nodeType));
+    node.appendChild(elem);
+  }
+
+  function addElem(node, text, className) {
+    var elem = makeNode();
+    elem.className = className;
+    elem.appendChild(document.createTextNode(text));
+    node.appendChild(elem);
+  }
+
   var exports = {
     config: defaultConfig,
     /**
@@ -180,38 +202,28 @@ var miniToastr = function () {
      * @param  {String} type
      * @param  {Number} timeout
      * @param  {Function} cb
-     * @param  {Object} config
+     * @param  {Object} overrideConf
      */
-    showMessage: function showMessage(message, title, type, timeout, cb, config) {
-      var newConfig = {};
-      Object.assign(newConfig, this.config);
-      Object.assign(newConfig, config);
+    showMessage: function showMessage(message, title, type, timeout, cb, overrideConf) {
+      var config = {};
+      Object.assign(config, this.config);
+      Object.assign(config, overrideConf);
 
-      var notificationElem = document.createElement('div');
+      var notificationElem = makeNode();
       notificationElem.className = CLASSES.notification + ' ' + CLASSES[type];
 
       notificationElem.onclick = function () {
-        newConfig.animation(notificationElem, null);
+        config.animation(notificationElem, null);
       };
 
-      if (title) {
-        var titleElem = document.createElement('div');
-        titleElem.className = CLASSES.title;
-        titleElem.appendChild(document.createTextNode(title));
-        notificationElem.appendChild(titleElem);
-      }
+      if (title) addElem(notificationElem, title, CLASSES.title);
+      if (config.icons[type]) createIcon(notificationElem, type, config);
+      if (message) addElem(notificationElem, message, CLASSES.message);
 
-      if (message) {
-        var messageText = document.createElement('div');
-        messageText.className = CLASSES.message;
-        messageText.appendChild(document.createTextNode(message));
-        notificationElem.appendChild(messageText);
-      }
-
-      newConfig.node.insertBefore(notificationElem, newConfig.node.firstChild);
+      config.node.insertBefore(notificationElem, config.node.firstChild);
       setTimeout(function () {
-        return newConfig.animation(notificationElem, cb);
-      }, timeout || newConfig.timeout);
+        return config.animation(notificationElem, cb);
+      }, timeout || config.timeout);
 
       if (cb) cb();
       return this;
@@ -251,6 +263,19 @@ var miniToastr = function () {
       });
 
       return this;
+    },
+    setIcon: function setIcon(type) {
+      var nodeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'i';
+      var classStr = arguments[2];
+      var attrs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+      classStr += ' ' + CLASSES.icon;
+
+      this.config.icons[type] = {
+        nodeType: nodeType,
+        classStr: classStr,
+        attrs: attrs
+      };
     }
   };
 

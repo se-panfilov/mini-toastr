@@ -41,6 +41,7 @@ var miniToastr = (function () {
     container: `${PACKAGE_NAME}`,
     notification: `${PACKAGE_NAME}__notification`,
     title: `${PACKAGE_NAME}-notification__title`,
+    icon: `${PACKAGE_NAME}-notification__icon`,
     message: `${PACKAGE_NAME}-notification__message`,
     error: `-${TYPES.error}`,
     warn: `-${TYPES.warn}`,
@@ -100,7 +101,7 @@ var miniToastr = (function () {
    */
   function appendStyles (css) {
     let head = document.head || document.getElementsByTagName('head')[0]
-    let styleElem = document.createElement('style')
+    let styleElem = makeNode('style')
     styleElem.id = `${PACKAGE_NAME}-styles`
     styleElem.type = 'text/css'
 
@@ -117,8 +118,9 @@ var miniToastr = (function () {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
+    icons: {},
     appendTarget: document.body,
-    node: document.createElement('div'),
+    node: makeNode(),
     style: {
       [`.${CLASSES.container}`]: {
         position: 'fixed',
@@ -165,6 +167,24 @@ var miniToastr = (function () {
     }
   }
 
+  function makeNode (type = 'div') {
+    return document.createElement(type)
+  }
+
+  function createIcon (node, type, config) {
+    const elem = makeNode()
+    elem.className = config.icons[type].classStr
+    elem.appendChild(makeNode(config.icons[type].nodeType))
+    node.appendChild(elem)
+  }
+
+  function addElem (node, text, className) {
+    const elem = makeNode()
+    elem.className = className
+    elem.appendChild(document.createTextNode(text))
+    node.appendChild(elem)
+  }
+
   const exports = {
     config: defaultConfig,
     /**
@@ -173,36 +193,26 @@ var miniToastr = (function () {
      * @param  {String} type
      * @param  {Number} timeout
      * @param  {Function} cb
-     * @param  {Object} config
+     * @param  {Object} overrideConf
      */
-    showMessage (message, title, type, timeout, cb, config) {
-      const newConfig = {}
-      Object.assign(newConfig, this.config)
-      Object.assign(newConfig, config)
+    showMessage (message, title, type, timeout, cb, overrideConf) {
+      const config = {}
+      Object.assign(config, this.config)
+      Object.assign(config, overrideConf)
 
-      const notificationElem = document.createElement('div')
+      const notificationElem = makeNode()
       notificationElem.className = `${CLASSES.notification} ${CLASSES[type]}`
 
       notificationElem.onclick = function () {
-        newConfig.animation(notificationElem, null)
+        config.animation(notificationElem, null)
       }
 
-      if (title) {
-        const titleElem = document.createElement('div')
-        titleElem.className = CLASSES.title
-        titleElem.appendChild(document.createTextNode(title))
-        notificationElem.appendChild(titleElem)
-      }
+      if (title) addElem(notificationElem, title, CLASSES.title)
+      if (config.icons[type]) createIcon(notificationElem, type, config)
+      if (message) addElem(notificationElem, message, CLASSES.message)
 
-      if (message) {
-        const messageText = document.createElement('div')
-        messageText.className = CLASSES.message
-        messageText.appendChild(document.createTextNode(message))
-        notificationElem.appendChild(messageText)
-      }
-
-      newConfig.node.insertBefore(notificationElem, newConfig.node.firstChild)
-      setTimeout(() => newConfig.animation(notificationElem, cb), timeout || newConfig.timeout)
+      config.node.insertBefore(notificationElem, config.node.firstChild)
+      setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout)
 
       if (cb) cb()
       return this
@@ -239,6 +249,15 @@ var miniToastr = (function () {
       })
 
       return this
+    },
+    setIcon (type, nodeType = 'i', classStr, attrs = []) {
+      classStr += ' ' + CLASSES.icon
+
+      this.config.icons[type] = {
+        nodeType,
+        classStr,
+        attrs
+      }
     }
   }
 
