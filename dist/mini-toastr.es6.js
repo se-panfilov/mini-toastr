@@ -12,10 +12,6 @@ var miniToastr = (function () {
 
   const PACKAGE_NAME = 'mini-toastr'
 
-  /**
-   * @param  {Node} element
-   * @param  {Function} cb
-   */
   function fadeOut (element, cb) {
     if (element.style.opacity && element.style.opacity > 0.05) {
       element.style.opacity = element.style.opacity - 0.05
@@ -49,12 +45,6 @@ var miniToastr = (function () {
     info: `-${TYPES.info}`
   }
 
-  /**
-   * @param  {Object} obj
-   * @param  {Object} into
-   * @param  {String} prefix
-   * @return {Object}
-   */
   function flatten (obj, into, prefix) {
     into = into || {}
     prefix = prefix || ''
@@ -78,10 +68,6 @@ var miniToastr = (function () {
     return into
   }
 
-  /**
-   * @param  {Object} obj
-   * @return {String}
-   */
   function makeCss (obj) {
     const flat = flatten(obj)
     let str = JSON.stringify(flat, null, 2)
@@ -96,9 +82,6 @@ var miniToastr = (function () {
     return str
   }
 
-  /**
-   * @param  {String} css
-   */
   function appendStyles (css) {
     let head = document.head || document.getElementsByTagName('head')[0]
     let styleElem = makeNode('style')
@@ -187,14 +170,6 @@ var miniToastr = (function () {
 
   const exports = {
     config: defaultConfig,
-    /**
-     * @param  {String} message
-     * @param  {String} title
-     * @param  {String} type
-     * @param  {Number} timeout
-     * @param  {Function} cb
-     * @param  {Object} overrideConf
-     */
     showMessage (message, title, type, timeout, cb, overrideConf) {
       const config = {}
       Object.assign(config, this.config)
@@ -217,10 +192,6 @@ var miniToastr = (function () {
       if (cb) cb()
       return this
     },
-    /**
-     * @param  {Object} config
-     * @return  {exports}
-     */
     init (config) {
       const newConfig = {}
       Object.assign(newConfig, defaultConfig)
@@ -234,14 +205,6 @@ var miniToastr = (function () {
       newConfig.appendTarget.appendChild(newConfig.node)
 
       Object.keys(newConfig.types).forEach(v => {
-        /**
-         * @param  {String} message
-         * @param  {String} title
-         * @param  {Number} timeout
-         * @param  {Function} cb
-         * @param  {Object} config
-         * @return  {exports}
-         */
         exports[newConfig.types[v]] = function (message, title, timeout, cb, config) {
           this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
           return this
