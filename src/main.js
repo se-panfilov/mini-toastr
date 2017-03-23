@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const miniToastr = (function () {
-  'use strict'
 
   //fix for server-side rendering
   if (typeof window === 'undefined') {
