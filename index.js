@@ -1,5 +1,7 @@
 var indexPage = (function () {
-  miniToastr.init()
+  miniToastr.init({
+    timeout: 500
+  })
 
   function getRadioValue (name) {
     var elements = document.getElementsByName(name)
@@ -19,6 +21,7 @@ var indexPage = (function () {
       var isIcon = document.getElementById('is_icon').checked
 
       miniToastr.config.icons = {}
+      // miniToastr.config.timeout = 10000
 
       if (isIcon) {
         miniToastr.setIcon('error', 'i', {'class': 'fa fa-warning'})
@@ -27,7 +30,9 @@ var indexPage = (function () {
         miniToastr.setIcon('success', 'i', {'class': 'fa fa-check-circle-o'})
       }
 
+      miniToastr.error(msg, title)
       miniToastr[type](msg, title, +timeout)
+      miniToastr.info(msg, title)
 
     }
   }
