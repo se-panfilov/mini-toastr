@@ -109,7 +109,7 @@ var miniToastr = function () {
     head.appendChild(styleElem);
   }
 
-  var defaultConfig = {
+  var config = {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
@@ -179,7 +179,7 @@ var miniToastr = function () {
   }
 
   var exports = {
-    config: defaultConfig,
+    config: config,
     showMessage: function showMessage(message, title, type, timeout, cb, overrideConf) {
       var config = {};
       Object.assign(config, this.config);
@@ -204,12 +204,13 @@ var miniToastr = function () {
       if (cb) cb();
       return this;
     },
-    init: function init(config) {
+    init: function init(aConfig) {
       var _this2 = this;
 
       var newConfig = {};
-      Object.assign(newConfig, defaultConfig);
       Object.assign(newConfig, config);
+      Object.assign(newConfig, aConfig);
+      this.config = newConfig;
 
       var cssStr = makeCss(newConfig.style);
       appendStyles(cssStr);

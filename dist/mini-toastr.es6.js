@@ -94,7 +94,7 @@ const miniToastr = (function () {
     head.appendChild(styleElem)
   }
 
-  const defaultConfig = {
+  const config = {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
@@ -172,7 +172,7 @@ const miniToastr = (function () {
   }
 
   const exports = {
-    config: defaultConfig,
+    config,
     showMessage (message, title, type, timeout, cb, overrideConf) {
       const config = {}
       Object.assign(config, this.config)
@@ -195,10 +195,11 @@ const miniToastr = (function () {
       if (cb) cb()
       return this
     },
-    init (config) {
+    init (aConfig) {
       const newConfig = {}
-      Object.assign(newConfig, defaultConfig)
       Object.assign(newConfig, config)
+      Object.assign(newConfig, aConfig)
+      this.config = newConfig
 
       const cssStr = makeCss(newConfig.style)
       appendStyles(cssStr)
