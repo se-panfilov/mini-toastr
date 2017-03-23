@@ -1,231 +1,110 @@
-// eslint-disable-next-line no-unused-vars
-const miniToastr = (function () {
+//fix for server-side rendering
+// if (typeof window === 'undefined') {
+//   return {
+//     init: () => {
+//     }
+//   }
+// }
 
-  //fix for server-side rendering
-  if (typeof window === 'undefined') {
-    return {
-      init: () => {
-      }
-    }
-  }
-
-  function fadeOut (element, cb) {
-    if (element.style.opacity && element.style.opacity > 0.05) {
-      element.style.opacity = element.style.opacity - 0.05
-    } else if (element.style.opacity && element.style.opacity <= 0.1) {
-      if (element.parentNode) {
-        element.parentNode.removeChild(element)
-        if (cb) cb()
-      }
-    } else {
-      element.style.opacity = 0.9
-    }
-    setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30)
-  }
-
-  const TYPES = {
-    error: 'error',
-    warn: 'warn',
-    success: 'success',
-    info: 'info'
-  }
-
-  const CLASSES = {
-    container: 'mini-toastr',
-    notification: 'mini-toastr__notification',
-    title: 'mini-toastr-notification__title',
-    icon: 'mini-toastr-notification__icon',
-    message: 'mini-toastr-notification__message',
-    error: `-${TYPES.error}`,
-    warn: `-${TYPES.warn}`,
-    success: `-${TYPES.success}`,
-    info: `-${TYPES.info}`
-  }
-
-  function flatten (obj, into, prefix) {
-    into = into || {}
-    prefix = prefix || ''
-
-    for (let k in obj) {
-      if (obj.hasOwnProperty(k)) {
-        const prop = obj[k]
-        if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
-          flatten(prop, into, prefix + k + ' ')
-        } else {
-          if (into[prefix] && typeof into[prefix] === 'object') {
-            into[prefix][k] = prop
-          } else {
-            into[prefix] = {}
-            into[prefix][k] = prop
-          }
-        }
-      }
-    }
-
-    return into
-  }
-
-  function makeCss (obj) {
-    const flat = flatten(obj)
-    let str = JSON.stringify(flat, null, 2)
-    str = str.replace(/"([^"]*)": \{/g, '$1 {')
-      .replace(/"([^"]*)"/g, '$1')
-      .replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
-      .replace(/},/g, '}\n')
-      .replace(/ &([.:])/g, '$1')
-
-    str = str.substr(1, str.lastIndexOf('}') - 1)
-
-    return str
-  }
-
-  function appendStyles (css) {
-    let head = document.head || document.getElementsByTagName('head')[0]
-    let styleElem = makeNode('style')
-    styleElem.id = 'mini-toastr-styles'
-    styleElem.type = 'text/css'
-
-    if (styleElem.styleSheet) {
-      styleElem.styleSheet.cssText = css
-    } else {
-      styleElem.appendChild(document.createTextNode(css))
-    }
-
-    head.appendChild(styleElem)
-  }
-
-  const config = {
-    types: TYPES,
-    animation: fadeOut,
+export default {
+  _makeNode (type = 'div') {
+    return document.createElement(type)
+  },
+  config: {
+    name: 'mini-toastr',
+    types: {
+      error: 'error',
+      warn: 'warn',
+      success: 'success',
+      info: 'info'
+    },
+    animation (element, cb) {
+      // TODO (S.Panfilov) fix it with css classes
+      // if (element.style.opacity && element.style.opacity > 0.05) {
+      //   element.style.opacity = element.style.opacity - 0.05
+      // } else if (element.style.opacity && element.style.opacity <= 0.1) {
+      //   if (element.parentNode) {
+      //     element.parentNode.removeChild(element)
+      //     if (cb) cb()
+      //   }
+      // } else {
+      //   element.style.opacity = 0.9
+      // }
+      // setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30)
+    },
     timeout: 3000,
     icons: {},
     appendTarget: document.body,
-    node: makeNode(),
-    style: {
-      [`.${CLASSES.container}`]: {
-        position: 'fixed',
-        'z-index': 99999,
-        right: '12px',
-        top: '12px'
-      },
-      [`.${CLASSES.notification}`]: {
-        cursor: 'pointer',
-        padding: '12px 18px',
-        margin: '0 0 6px 0',
-        'background-color': '#000',
-        opacity: 0.8,
-        color: '#fff',
-        'border-radius': '3px',
-        'box-shadow': '#3c3b3b 0 0 12px',
-        width: '300px',
-        [`&.${CLASSES.error}`]: {
-          'background-color': '#D5122B'
-        },
-        [`&.${CLASSES.warn}`]: {
-          'background-color': '#F5AA1E'
-        },
-        [`&.${CLASSES.success}`]: {
-          'background-color': '#7AC13E'
-        },
-        [`&.${CLASSES.info}`]: {
-          'background-color': '#4196E1'
-        },
-        '&:hover': {
-          opacity: 1,
-          'box-shadow': '#000 0 0 12px'
-        }
-      },
-      [`.${CLASSES.title}`]: {
-        'font-weight': '500'
-      },
-      [`.${CLASSES.message}`]: {
-        display: 'inline-block',
-        'vertical-align': 'middle',
-        width: '240px',
-        padding: '0 12px'
-      }
-    }
-  }
-
-  function makeNode (type = 'div') {
-    return document.createElement(type)
-  }
-
-  function createIcon (node, type, config) {
-    const iconNode = makeNode(config.icons[type].nodeType)
-    const attrs = config.icons[type].attrs
-
-    for (const k in attrs) {
-      if (attrs.hasOwnProperty(k)) {
-        iconNode.setAttribute(k, attrs[k])
-      }
-    }
-
-    node.appendChild(iconNode)
-  }
-
-  function addElem (node, text, className) {
-    const elem = makeNode()
+    node: this._makeNode()
+  },
+  _addElem (node, text, className) {
+    const elem = this._makeNode()
     elem.className = className
     elem.appendChild(document.createTextNode(text))
     node.appendChild(elem)
-  }
+  },
+  _createIcon (node, type, config) {
+    const iconNode = this._makeNode(config.icons[type].nodeType)
+    const attrs = config.icons[type].attrs
 
-  const exports = {
-    config,
-    showMessage (message, title, type, timeout, cb, overrideConf) {
-      const config = {}
-      Object.assign(config, this.config)
-      Object.assign(config, overrideConf)
+    // TODO (S.Panfilov) check
+    for (const k of attrs) {
+      iconNode.setAttribute(k, attrs[k])
+    }
 
-      const notificationElem = makeNode()
-      notificationElem.className = `${CLASSES.notification} ${CLASSES[type]}`
+    node.appendChild(iconNode)
+  },
+  showMessage (message, title, type, timeout, cb, overrideConf) {
+    const config = {}
+    Object.assign(config, this.config)
+    Object.assign(config, overrideConf)
 
-      notificationElem.onclick = function () {
-        config.animation(notificationElem, null)
-      }
+    const notificationElem = _makeNode()
+    notificationElem.className = `${this.name}__notification -${type}`
 
-      if (title) addElem(notificationElem, title, CLASSES.title)
-      if (config.icons[type]) createIcon(notificationElem, type, config)
-      if (message) addElem(notificationElem, message, CLASSES.message)
+    notificationElem.onclick = function () {
+      config.animation(notificationElem, null)
+    }
 
-      config.node.insertBefore(notificationElem, config.node.firstChild)
-      setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout)
+    if (title) this._addElem(notificationElem, title, `${this.name}-notification__title`)
+    if (config.icons[type]) this._createIcon(notificationElem, type, config)
+    if (message) this._addElem(notificationElem, message, `${this.name}-notification__message`)
 
-      if (cb) cb()
-      return this
-    },
-    init (aConfig) {
-      const newConfig = {}
-      Object.assign(newConfig, config)
-      Object.assign(newConfig, aConfig)
-      this.config = newConfig
+    config.node.insertBefore(notificationElem, config.node.firstChild)
+    setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout)
 
-      const cssStr = makeCss(newConfig.style)
-      appendStyles(cssStr)
+    if (cb) cb()
+    return this
+  },
+  init (aConfig) {
+    const newConfig = {}
+    Object.assign(newConfig, config)
+    Object.assign(newConfig, aConfig)
+    this.config = newConfig
 
-      newConfig.node.id = `${CLASSES.container}`
-      newConfig.node.className = `${CLASSES.container}`
-      newConfig.appendTarget.appendChild(newConfig.node)
+    // TODO (S.Panfilov) id not uniq
+    // newConfig.node.id = 'mini-toastr'
+    newConfig.node.className = 'mini-toastr'
+    newConfig.appendTarget.appendChild(newConfig.node)
 
-      Object.keys(newConfig.types).forEach(v => {
-        exports[newConfig.types[v]] = function (message, title, timeout, cb, config) {
-          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
-          return this
-        }.bind(this)
-      })
-
-      return this
-    },
-    setIcon (type, nodeType = 'i', attrs = []) {
-      attrs.class = attrs.class ? attrs.class + ' ' + CLASSES.icon : CLASSES.icon
-
-      this.config.icons[type] = {
-        nodeType,
-        attrs
+    for (const k of newConfig.types) {
+      const typeName = newConfig.types[k]
+      // TODO (S.Panfilov) check this
+      this[newConfig.types[typeName]] = (message, title, timeout, cb, config) => {
+        this.showMessage(message, title, newConfig.types[typeName], timeout, cb, config)
+        return this
       }
     }
-  }
 
-  return exports
-})()
+    return this
+  },
+  setIcon (type, nodeType = 'i', attrs = []) {
+    const iconClass = `${this.name}-notification__icon`
+    attrs.class = attrs.class ? `${attrs.class}  ${iconClass}` : iconClass
+
+    this.config.icons[type] = {
+      nodeType,
+      attrs
+    }
+  }
+}
