@@ -236,7 +236,7 @@ var miniToastr = function () {
       var nodeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'i';
       var attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
-      attrs['class'] = !!attrs['class'] ? attrs['class'] + ' ' + CLASSES.icon : CLASSES.icon;
+      attrs['class'] = attrs['class'] ? attrs['class'] + ' ' + CLASSES.icon : CLASSES.icon;
 
       this.config.icons[type] = {
         nodeType: nodeType,

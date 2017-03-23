@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-var miniToastr = (function () {
+const miniToastr = (function () {
   'use strict'
 
   //fix for server-side rendering
@@ -220,7 +220,7 @@ var miniToastr = (function () {
       return this
     },
     setIcon (type, nodeType = 'i', attrs = []) {
-      attrs.class  =  (!!attrs.class) ? attrs.class  + ' ' + CLASSES.icon : CLASSES.icon
+      attrs.class = attrs.class ? attrs.class + ' ' + CLASSES.icon : CLASSES.icon
 
       this.config.icons[type] = {
         nodeType,
