@@ -9,8 +9,6 @@ const miniToastr = (function () {
     }
   }
 
-  const PACKAGE_NAME = 'mini-toastr'
-
   function fadeOut (element, cb) {
     if (element.style.opacity && element.style.opacity > 0.05) {
       element.style.opacity = element.style.opacity - 0.05
@@ -33,11 +31,11 @@ const miniToastr = (function () {
   }
 
   const CLASSES = {
-    container: `${PACKAGE_NAME}`,
-    notification: `${PACKAGE_NAME}__notification`,
-    title: `${PACKAGE_NAME}-notification__title`,
-    icon: `${PACKAGE_NAME}-notification__icon`,
-    message: `${PACKAGE_NAME}-notification__message`,
+    container: 'mini-toastr',
+    notification: 'mini-toastr__notification',
+    title: 'mini-toastr-notification__title',
+    icon: 'mini-toastr-notification__icon',
+    message: 'mini-toastr-notification__message',
     error: `-${TYPES.error}`,
     warn: `-${TYPES.warn}`,
     success: `-${TYPES.success}`,
@@ -50,7 +48,7 @@ const miniToastr = (function () {
 
     for (let k in obj) {
       if (obj.hasOwnProperty(k)) {
-        var prop = obj[k]
+        const prop = obj[k]
         if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
           flatten(prop, into, prefix + k + ' ')
         } else {
@@ -84,7 +82,7 @@ const miniToastr = (function () {
   function appendStyles (css) {
     let head = document.head || document.getElementsByTagName('head')[0]
     let styleElem = makeNode('style')
-    styleElem.id = `${PACKAGE_NAME}-styles`
+    styleElem.id = 'mini-toastr-styles'
     styleElem.type = 'text/css'
 
     if (styleElem.styleSheet) {
