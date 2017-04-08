@@ -15,7 +15,7 @@
 
 ================
 
-##Instalation
+## Instalation
 
 1. Install
 
@@ -52,7 +52,7 @@ import miniToastr from 'mini-toastr' //ES6
 miniToastr.init()// config can be passed here miniToastr.init(config)
 ```
 
-##Usage
+## Usage
 
 ```JS
 miniToastr.success(message, title, timeout, cb, config)
@@ -63,7 +63,7 @@ miniToastr.error(message, title, timeout, cb, config)
 
 *Attention:* You can specify your own types in global config: `miniToastr.init({types: {debug: 'debug'}})` and use it - `miniToastr.debug(message, title, timeout, cb, config)`
 
-##Methods arguments
+## Methods arguments
 
 | Name | Type | Default | Required | Description |
 |---|---|---|---|---|
@@ -73,7 +73,7 @@ miniToastr.error(message, title, timeout, cb, config)
 | `cb` | `Function` | `undefined` | No | Callback function |
 | `config` | `Object` | `undefined` | No | Local config for this menthod call |
 
-##Global config
+## Global config
 
 You can specify global config.
 
@@ -102,7 +102,7 @@ const defaultConfig = {
 | `node` | `Node` | `document.createElement('div')` | Dom element for notification's container |
 | `style` | `Object` | Object of objects | Styles that would be applyied for notifications (after they wuld be translated from `js` to `css`  |
 
-#Notifications structure
+# Notifications structure
 
 ```HTML
 <!-- Container-->
@@ -144,7 +144,7 @@ miniToastr.init({
 })
 ```
 
-##Adding an icon
+## Adding an icon
 
 You're able to add icons
 
@@ -172,15 +172,15 @@ Basically `setIcon` get 3 params:
  So you'll be able to customize all the icons with css
 
 
-##Browser support.
+## Browser support.
 All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].
 You can use `ES5` or `ES6` versions as well.
 
-##License
+## License
 
 MIT License
 
-Copyright (c) 2016 Sergey Panfilov
+Copyright (c) 2016 Sergei Panfilov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
