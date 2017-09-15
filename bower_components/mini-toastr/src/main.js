@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-var miniToastr = (function () {
-  'use strict'
+const miniToastr = (function () {
 
   //fix for server-side rendering
   if (typeof window === 'undefined') {
@@ -9,8 +8,6 @@ var miniToastr = (function () {
       }
     }
   }
-
-  const PACKAGE_NAME = 'mini-toastr'
 
   function fadeOut (element, cb) {
     if (element.style.opacity && element.style.opacity > 0.05) {
@@ -34,11 +31,11 @@ var miniToastr = (function () {
   }
 
   const CLASSES = {
-    container: `${PACKAGE_NAME}`,
-    notification: `${PACKAGE_NAME}__notification`,
-    title: `${PACKAGE_NAME}-notification__title`,
-    icon: `${PACKAGE_NAME}-notification__icon`,
-    message: `${PACKAGE_NAME}-notification__message`,
+    container: 'mini-toastr',
+    notification: 'mini-toastr__notification',
+    title: 'mini-toastr-notification__title',
+    icon: 'mini-toastr-notification__icon',
+    message: 'mini-toastr-notification__message',
     error: `-${TYPES.error}`,
     warn: `-${TYPES.warn}`,
     success: `-${TYPES.success}`,
@@ -51,7 +48,7 @@ var miniToastr = (function () {
 
     for (let k in obj) {
       if (obj.hasOwnProperty(k)) {
-        var prop = obj[k]
+        const prop = obj[k]
         if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
           flatten(prop, into, prefix + k + ' ')
         } else {
@@ -85,7 +82,7 @@ var miniToastr = (function () {
   function appendStyles (css) {
     let head = document.head || document.getElementsByTagName('head')[0]
     let styleElem = makeNode('style')
-    styleElem.id = `${PACKAGE_NAME}-styles`
+    styleElem.id = 'mini-toastr-styles'
     styleElem.type = 'text/css'
 
     if (styleElem.styleSheet) {
@@ -97,7 +94,7 @@ var miniToastr = (function () {
     head.appendChild(styleElem)
   }
 
-  const defaultConfig = {
+  const config = {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
@@ -175,7 +172,7 @@ var miniToastr = (function () {
   }
 
   const exports = {
-    config: defaultConfig,
+    config,
     showMessage (message, title, type, timeout, cb, overrideConf) {
       const config = {}
       Object.assign(config, this.config)
@@ -198,10 +195,11 @@ var miniToastr = (function () {
       if (cb) cb()
       return this
     },
-    init (config) {
+    init (aConfig) {
       const newConfig = {}
-      Object.assign(newConfig, defaultConfig)
       Object.assign(newConfig, config)
+      Object.assign(newConfig, aConfig)
+      this.config = newConfig
 
       const cssStr = makeCss(newConfig.style)
       appendStyles(cssStr)
@@ -220,7 +218,7 @@ var miniToastr = (function () {
       return this
     },
     setIcon (type, nodeType = 'i', attrs = []) {
-      attrs.class  =  (!!attrs.class) ? attrs.class  + ' ' + CLASSES.icon : CLASSES.icon
+      attrs.class = attrs.class ? attrs.class + ' ' + CLASSES.icon : CLASSES.icon
 
       this.config.icons[type] = {
         nodeType,

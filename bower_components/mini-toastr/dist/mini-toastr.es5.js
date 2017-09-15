@@ -15,19 +15,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 // eslint-disable-next-line no-unused-vars
 var miniToastr = function () {
-  'use strict';
-
-  //fix for server-side rendering
-
   var _ref, _style;
 
+  //fix for server-side rendering
   if (typeof window === 'undefined') {
     return {
       init: function init() {}
     };
   }
-
-  var PACKAGE_NAME = 'mini-toastr';
 
   function fadeOut(element, cb) {
     var _this = this;
@@ -55,11 +50,11 @@ var miniToastr = function () {
   };
 
   var CLASSES = {
-    container: '' + PACKAGE_NAME,
-    notification: PACKAGE_NAME + '__notification',
-    title: PACKAGE_NAME + '-notification__title',
-    icon: PACKAGE_NAME + '-notification__icon',
-    message: PACKAGE_NAME + '-notification__message',
+    container: 'mini-toastr',
+    notification: 'mini-toastr__notification',
+    title: 'mini-toastr-notification__title',
+    icon: 'mini-toastr-notification__icon',
+    message: 'mini-toastr-notification__message',
     error: '-' + TYPES.error,
     warn: '-' + TYPES.warn,
     success: '-' + TYPES.success,
@@ -102,7 +97,7 @@ var miniToastr = function () {
   function appendStyles(css) {
     var head = document.head || document.getElementsByTagName('head')[0];
     var styleElem = makeNode('style');
-    styleElem.id = PACKAGE_NAME + '-styles';
+    styleElem.id = 'mini-toastr-styles';
     styleElem.type = 'text/css';
 
     if (styleElem.styleSheet) {
@@ -114,7 +109,7 @@ var miniToastr = function () {
     head.appendChild(styleElem);
   }
 
-  var defaultConfig = {
+  var config = {
     types: TYPES,
     animation: fadeOut,
     timeout: 3000,
@@ -184,7 +179,7 @@ var miniToastr = function () {
   }
 
   var exports = {
-    config: defaultConfig,
+    config: config,
     showMessage: function showMessage(message, title, type, timeout, cb, overrideConf) {
       var config = {};
       Object.assign(config, this.config);
@@ -209,12 +204,13 @@ var miniToastr = function () {
       if (cb) cb();
       return this;
     },
-    init: function init(config) {
+    init: function init(aConfig) {
       var _this2 = this;
 
       var newConfig = {};
-      Object.assign(newConfig, defaultConfig);
       Object.assign(newConfig, config);
+      Object.assign(newConfig, aConfig);
+      this.config = newConfig;
 
       var cssStr = makeCss(newConfig.style);
       appendStyles(cssStr);
@@ -236,7 +232,7 @@ var miniToastr = function () {
       var nodeType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'i';
       var attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
-      attrs['class'] = !!attrs['class'] ? attrs['class'] + ' ' + CLASSES.icon : CLASSES.icon;
+      attrs['class'] = attrs['class'] ? attrs['class'] + ' ' + CLASSES.icon : CLASSES.icon;
 
       this.config.icons[type] = {
         nodeType: nodeType,
