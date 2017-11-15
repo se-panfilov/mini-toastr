@@ -161,6 +161,7 @@ export function addElem (node, text, className) {
 
 const miniToastr = {
   config,
+  isInitialised: false,
   showMessage (message, title, type, timeout, cb, overrideConf) {
     const config = {}
     Object.assign(config, this.config)
@@ -203,6 +204,8 @@ const miniToastr = {
         return this
       }.bind(this)
     })
+
+    this.isInitialised = true;
 
     return this
   },
