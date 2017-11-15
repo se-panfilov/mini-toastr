@@ -25,22 +25,12 @@ via npm:
 npm i mini-toastr --save
 ```
 
-via bower:
-
-```shell
-bower i mini-toastr --save
-```
 or download [latest release][1]
 
 2. Include in project
 
 include in project:
 
-```HTML
-<script src="bower_components/mini-toastr/mini-toastr.js"></script>
-```
-
-or
 
 ```JS
 import miniToastr from 'mini-toastr' //ES6
@@ -159,22 +149,22 @@ miniToastr.setIcon('warn', 'img', {src: 'assets/img/demo-warn.png', style: 'vert
 ```
 
 Basically `setIcon` get 3 params:
- 
+
  - `type`(`String`) - `error`, `info`, `success`, or `warn`. So you can specify each event with custom icon
  - `nodeType`(`String`) - basically what kind of element it's has to be, e.g. `<i></i>` or `<img/>`
  - `attrs`(`Object`) - object with attributes for icon, such as `class`, `style`, or `src` (for `<img/>`)
- 
+
  Usually you have to set `miniToastr.setIcon()` after `miniToastr.init()` but also you can do it on each toast call.
- 
+
  Keep in mind, that if you will add class like `miniToastr.setIcon('info', 'i', {'class': 'fa fa-info-circle'})`,
  your actual class will be `fa fa-info-circle mini-toastr-notification__icon`.
- 
+
  So you'll be able to customize all the icons with css
 
 
 ## Browser support.
-All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].
-You can use `ES5` or `ES6` versions as well.
+Versions up to `v0.6.6` - All modern browsers (`ES5` support require). See [ECMAScript 5 compliant browsers][3].
+Versions `v0.7.0` and above - browsers with `ES6` support only
 
 ## License
 
