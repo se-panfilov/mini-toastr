@@ -9,7 +9,8 @@ export function fadeOut (element, cb) {
   } else {
     element.style.opacity = 0.9
   }
-  setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30)
+  setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30
+  )
 }
 
 export const LIB_NAME = 'mini-toastr'
@@ -159,6 +160,15 @@ export function addElem (node, text, className) {
   node.appendChild(elem)
 }
 
+export function getTypeClass (type) {
+  if (type === SUCCESS) return SUCCESS_CLASS
+  if (type === WARN) return WARNING_CLASS
+  if (type === ERROR) return ERROR_CLASS
+  if (type === INFO) return INFO_CLASS
+
+  return ''
+}
+
 const miniToastr = {
   config,
   isInitialised: false,
@@ -168,8 +178,7 @@ const miniToastr = {
     Object.assign(config, overrideConf)
 
     const notificationElem = makeNode()
-    const typeClass = `${type.toUpperCase()}_CLASS`
-    notificationElem.className = `${NOTIFICATION_CLASS} ${typeClass}`
+    notificationElem.className = `${NOTIFICATION_CLASS} ${getTypeClass(type)}`
 
     notificationElem.onclick = function () {
       config.animation(notificationElem, null)
@@ -180,7 +189,8 @@ const miniToastr = {
     if (message) addElem(notificationElem, message, MESSAGE_CLASS)
 
     config.node.insertBefore(notificationElem, config.node.firstChild)
-    setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout)
+    setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout
+    )
 
     if (cb) cb()
     return this
@@ -199,11 +209,12 @@ const miniToastr = {
     newConfig.appendTarget.appendChild(newConfig.node)
 
     Object.keys(newConfig.types).forEach(v => {
-      exports[newConfig.types[v]] = function (message, title, timeout, cb, config) {
-        this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
-        return this
-      }.bind(this)
-    })
+        this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
+          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
+          return this
+        }.bind(this)
+      }
+    )
 
     this.isInitialised = true;
 
