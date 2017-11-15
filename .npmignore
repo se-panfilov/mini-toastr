@@ -1,8 +1,4 @@
 /src/
-.babelrc
-.eslintrc
-.gitattributes
-.gitignore
 *.log
 node_modules/
 .tmp

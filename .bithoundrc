@@ -1,9 +1,7 @@
 {
   "ignore": [
     "**/node_modules/**",
-    "**/**.min.**",
     "**/test/**",
-    "**/dist/**.**"
   ],
   "test": [
   ],
