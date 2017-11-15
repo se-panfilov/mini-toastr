@@ -159,7 +159,7 @@ export function addElem (node, text, className) {
   node.appendChild(elem)
 }
 
-export default miniToastr = {
+const miniToastr = {
   config,
   showMessage (message, title, type, timeout, cb, overrideConf) {
     const config = {}
@@ -212,3 +212,5 @@ export default miniToastr = {
     this.config.icons[type] = {nodeType, attrs}
   }
 }
+
+export default miniToastr
