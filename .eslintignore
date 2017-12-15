@@ -1,1 +1,4 @@
-./test/**/*.*
+/build/
+/config/
+/dist/
+/*.js
