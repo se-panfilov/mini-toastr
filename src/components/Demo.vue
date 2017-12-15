@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3>Demo</h3>
+    <h3>Small non-blocking notification library. No dependencies </h3>
     <div>
       <label>Title
         <input type="text" v-model="title"/>
@@ -62,7 +62,13 @@
     },
     methods: {
       showToast () {
-        console.info(2123)
+        miniToastr.config.icons = {}
+        if (this.isShowIcon) {
+          miniToastr.setIcon('error', 'i', {'class': 'fa fa-warning'})
+          miniToastr.setIcon('warn', 'img', {'class': 'fa fa-warning'})
+          miniToastr.setIcon('info', 'i', {'class': 'fa fa-info-circle'})
+          miniToastr.setIcon('success', 'i', {'class': 'fa fa-check-circle-o'})
+        }
         miniToastr[this.type](this.text, this.title, this.delay)
       },
       setCurrentType (key) {
