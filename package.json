@@ -11,7 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "mini-toastr": "0.7.1",
+    "mini-toastr": "0.7.2",
     "vue": "2.5.2"
   },
   "devDependencies": {
