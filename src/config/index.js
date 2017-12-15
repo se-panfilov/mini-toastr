@@ -55,7 +55,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'https://se-panfilov.github.io/vue-notifications/',
+    assetsPublicPath: 'https://se-panfilov.github.io/mini-toastr/',
 
     /**
      * Source Maps
