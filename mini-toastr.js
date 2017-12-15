@@ -184,7 +184,7 @@ const miniToastr = {
       config.animation(notificationElem, null)
     }
 
-    if (title) addElem(notificationElem, title, CLASSES.title)
+    if (title) addElem(notificationElem, title, TITLE_CLASS)
     if (config.icons[type]) createIcon(notificationElem, type, config)
     if (message) addElem(notificationElem, message, MESSAGE_CLASS)
 
