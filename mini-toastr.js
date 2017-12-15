@@ -57,7 +57,7 @@ export function flatten (obj, into, prefix) {
 export function makeCss (obj) {
   const flat = flatten(obj)
   let str = JSON.stringify(flat, null, 2)
-  str = str.replace(/"([^"]*)": \{/g, '$1 {')
+  str = str.replace(/"([^"]*)": {/g, '$1 {')
     .replace(/"([^"]*)"/g, '$1')
     .replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
     .replace(/},/g, '}\n')
@@ -162,7 +162,7 @@ export function addElem (node, text, className) {
 
 export function getTypeClass (type) {
   if (type === SUCCESS) return SUCCESS_CLASS
-  if (type === WARN) return WARNING_CLASS
+  if (type === WARN) return WARN_CLASS
   if (type === ERROR) return ERROR_CLASS
   if (type === INFO) return INFO_CLASS
 
