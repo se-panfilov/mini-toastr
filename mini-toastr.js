@@ -30,7 +30,6 @@ export const SUCCESS_CLASS = `-${SUCCESS}`
 export const INFO_CLASS = `-${INFO}`
 export const DEFAULT_TIMEOUT = 3000
 
-
 export function flatten (obj, into, prefix) {
   into = into || {}
   prefix = prefix || ''
@@ -90,6 +89,7 @@ export const config = {
   icons: {},
   appendTarget: document.body,
   node: makeNode(),
+  allowHtml: false,
   style: {
     [`.${CONTAINER_CLASS}`]: {
       position: 'fixed',
@@ -153,10 +153,14 @@ export function createIcon (node, type, config) {
   node.appendChild(iconNode)
 }
 
-export function addElem (node, text, className) {
+export function addElem (node, text, className, config) {
   const elem = makeNode()
   elem.className = className
-  elem.appendChild(document.createTextNode(text))
+  if (config.allowHtml) {
+    elem.innerHTML = text
+  } else {
+    elem.appendChild(document.createTextNode(text))
+  }
   node.appendChild(elem)
 }
 
@@ -186,7 +190,7 @@ const miniToastr = {
 
     if (title) addElem(notificationElem, title, TITLE_CLASS)
     if (config.icons[type]) createIcon(notificationElem, type, config)
-    if (message) addElem(notificationElem, message, MESSAGE_CLASS)
+    if (message) addElem(notificationElem, message, MESSAGE_CLASS, config)
 
     config.node.insertBefore(notificationElem, config.node.firstChild)
     setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout
@@ -209,14 +213,14 @@ const miniToastr = {
     newConfig.appendTarget.appendChild(newConfig.node)
 
     Object.keys(newConfig.types).forEach(v => {
-        this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
-          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
-          return this
-        }.bind(this)
-      }
+      this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
+        this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
+        return this
+      }.bind(this)
+    }
     )
 
-    this.isInitialised = true;
+    this.isInitialised = true
 
     return this
   },
