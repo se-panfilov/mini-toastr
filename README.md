@@ -9,6 +9,8 @@
 
 # mini-toastr
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/se-panfilov/mini-toastr.svg)](https://greenkeeper.io/)
+
 **mini-toastr** - it's a small non-blocking notification library. No dependencies.
 
 [Demo][2]
