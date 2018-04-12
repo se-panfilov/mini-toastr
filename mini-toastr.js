@@ -30,11 +30,13 @@ export const SUCCESS_CLASS = `-${SUCCESS}`
 export const INFO_CLASS = `-${INFO}`
 export const DEFAULT_TIMEOUT = 3000
 
+const EMPTY_STRING = ''
+
 export function flatten (obj, into, prefix) {
   into = into || {}
-  prefix = prefix || ''
+  prefix = prefix || EMPTY_STRING
 
-  for (let k in obj) {
+  for (const k in obj) {
     if (obj.hasOwnProperty(k)) {
       const prop = obj[k]
       if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
@@ -170,7 +172,7 @@ export function getTypeClass (type) {
   if (type === ERROR) return ERROR_CLASS
   if (type === INFO) return INFO_CLASS
 
-  return ''
+  return EMPTY_STRING
 }
 
 const miniToastr = {
@@ -188,7 +190,7 @@ const miniToastr = {
       config.animation(notificationElem, null)
     }
 
-    if (title) addElem(notificationElem, title, TITLE_CLASS)
+    if (title) addElem(notificationElem, title, TITLE_CLASS, config)
     if (config.icons[type]) createIcon(notificationElem, type, config)
     if (message) addElem(notificationElem, message, MESSAGE_CLASS, config)
 
