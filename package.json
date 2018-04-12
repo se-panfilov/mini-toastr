@@ -4,7 +4,7 @@
   "description": "Non-blocking toaster notifications",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/tsc ./src/mini-toastr.ts",
+    "start": "tsc",
     "update": "ncu -a && npm update",
     "test": "mocha --compilers js:babel-core/register ./test/**/*.spec.js",
     "lint": "eslint ./"
@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
   "devDependencies": {
+    "tslint": "^5.9.1",
     "typescript": "2.8.1"
   },
   "dependencies": {}

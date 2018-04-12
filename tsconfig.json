@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "outDir": "./dist",
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es5",
+    "lib": [
+      "es2016",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
