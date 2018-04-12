@@ -1,9 +1,8 @@
 {
   "compileOnSave": false,
-  "outDir": "./dist",
-  "declarationDir": "./",
   "compilerOptions": {
     "module": "commonjs",
+    "noEmitOnError": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "removeComments": true,
@@ -11,15 +10,29 @@
     "sourceMap": true,
     "target": "es5",
     "lib": [
+      "dom",
+      "es6",
+      "es2015",
       "es2016",
-      "dom"
-    ]
+      "es2017",
+      "scripthost"
+    ],
+    "outDir": "./dist",
+//    "outFile": "./mini-toastr",
+    "declaration": true,
+    "declarationDir": "declarations",
+    "rootDir": "src",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    // "noUnusedParameters": true,
+    // "noUnusedLocals": true,
+    // "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
     "node_modules",
+    "declarations",
+    "dist",
     "**/*.spec.ts"
   ]
 }
