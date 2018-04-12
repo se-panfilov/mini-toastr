@@ -2,8 +2,9 @@
   "name": "mini-toastr",
   "version": "0.8.1",
   "description": "Non-blocking toaster notifications",
-  "main": "mini-toastr.js",
+  "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/tsc ./src/mini-toastr.ts",
     "update": "ncu -a && npm update",
     "test": "mocha --compilers js:babel-core/register ./test/**/*.spec.js",
     "lint": "eslint ./"
@@ -37,23 +38,7 @@
   },
   "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
   "devDependencies": {
-    "babel": "6.23.0",
-    "babel-core": "6.26.0",
-    "babel-plugin-transform-es3-member-expression-literals": "6.22.0",
-    "babel-plugin-transform-es3-property-literals": "6.22.0",
-    "babel-preset-latest": "6.24.1",
-    "babili": "0.1.4",
-    "eslint": "4.19.1",
-    "eslint-config-standard": "11.0.0",
-    "eslint-friendly-formatter": "4.0.1",
-    "eslint-plugin-import": "2.10.0",
-    "eslint-plugin-node": "6.0.1",
-    "eslint-plugin-promise": "3.7.0",
-    "eslint-plugin-standard": "3.0.1",
-    "mocha": "5.0.5",
-    "require-dir": "1.0.0",
-    "run-sequence": "2.2.1",
-    "to-case": "2.0.0"
+    "typescript": "2.8.1"
   },
   "dependencies": {}
 }

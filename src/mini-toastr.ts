@@ -1,4 +1,12 @@
-export function fadeOut (element, cb) {
+import { Config } from './Config'
+import { MiniToastr } from './MiniToastr'
+import { DEFAULT_TIMEOUT, EMPTY_STRING, LIB_NAME } from './common.const'
+import { MessageClass } from './MessageClass'
+import { StyleClass } from './StyleClass'
+import { MessageType } from './MessageType'
+import { MiniToastrError } from './mini-toastr-error.class'
+
+export function fadeOut (element: HTMLElement, cb?: Function): void {
   if (element.style.opacity && element.style.opacity > 0.05) {
     element.style.opacity = element.style.opacity - 0.05
   } else if (element.style.opacity && element.style.opacity <= 0.1) {
@@ -13,29 +21,7 @@ export function fadeOut (element, cb) {
   )
 }
 
-export const LIB_NAME = 'mini-toastr'
-
-export const ERROR = 'error'
-export const WARN = 'warn'
-export const SUCCESS = 'success'
-export const INFO = 'info'
-export const CONTAINER_CLASS = LIB_NAME
-export const NOTIFICATION_CLASS = `${LIB_NAME}__notification`
-export const TITLE_CLASS = `${LIB_NAME}-notification__title`
-export const ICON_CLASS = `${LIB_NAME}-notification__icon`
-export const MESSAGE_CLASS = `${LIB_NAME}-notification__message`
-export const ERROR_CLASS = `-${ERROR}`
-export const WARN_CLASS = `-${WARN}`
-export const SUCCESS_CLASS = `-${SUCCESS}`
-export const INFO_CLASS = `-${INFO}`
-export const DEFAULT_TIMEOUT = 3000
-
-const EMPTY_STRING = ''
-
-export function flatten (obj, into, prefix) {
-  into = into || {}
-  prefix = prefix || EMPTY_STRING
-
+export function flatten (obj: Object, into?: Object = {}, prefix?: string = EMPTY_STRING): Object {
   for (const k in obj) {
     if (obj.hasOwnProperty(k)) {
       const prop = obj[k]
@@ -55,7 +41,7 @@ export function flatten (obj, into, prefix) {
   return into
 }
 
-export function makeCss (obj) {
+export function makeCss (obj: Object): string {
   const flat = flatten(obj)
   let str = JSON.stringify(flat, null, 2)
   str = str.replace(/"([^"]*)": {/g, '$1 {')
@@ -69,7 +55,7 @@ export function makeCss (obj) {
   return str
 }
 
-export function appendStyles (css) {
+export function appendStyles (css: string): void {
   let head = document.head || document.getElementsByTagName('head')[0]
   let styleElem = makeNode('style')
   styleElem.id = `${LIB_NAME}-styles`
@@ -84,8 +70,10 @@ export function appendStyles (css) {
   head.appendChild(styleElem)
 }
 
-export const config = {
-  types: {ERROR, WARN, SUCCESS, INFO},
+const { ERROR, WARN, SUCCESS, INFO } = MessageType;
+
+export const config: Config = {
+  types: { ERROR, WARN, SUCCESS, INFO },
   animation: fadeOut,
   timeout: DEFAULT_TIMEOUT,
   icons: {},
@@ -93,13 +81,13 @@ export const config = {
   node: makeNode(),
   allowHtml: false,
   style: {
-    [`.${CONTAINER_CLASS}`]: {
+    [`.${StyleClass.CONTAINER_CLASS}`]: {
       position: 'fixed',
       'z-index': 99999,
       right: '12px',
       top: '12px'
     },
-    [`.${NOTIFICATION_CLASS}`]: {
+    [`.${StyleClass.NOTIFICATION_CLASS}`]: {
       cursor: 'pointer',
       padding: '12px 18px',
       margin: '0 0 6px 0',
@@ -109,16 +97,16 @@ export const config = {
       'border-radius': '3px',
       'box-shadow': '#3c3b3b 0 0 12px',
       width: '300px',
-      [`&.${ERROR_CLASS}`]: {
+      [`&.${ MessageClass.ERROR_CLASS}`]: {
         'background-color': '#D5122B'
       },
-      [`&.${WARN_CLASS}`]: {
+      [`&.${ MessageClass.WARN_CLASS}`]: {
         'background-color': '#F5AA1E'
       },
-      [`&.${SUCCESS_CLASS}`]: {
+      [`&.${ MessageClass.SUCCESS_CLASS}`]: {
         'background-color': '#7AC13E'
       },
-      [`&.${INFO_CLASS}`]: {
+      [`&.${ MessageClass.INFO_CLASS}`]: {
         'background-color': '#4196E1'
       },
       '&:hover': {
@@ -126,10 +114,10 @@ export const config = {
         'box-shadow': '#000 0 0 12px'
       }
     },
-    [`.${TITLE_CLASS}`]: {
+    [`.${StyleClass.TITLE_CLASS}`]: {
       'font-weight': '500'
     },
-    [`.${MESSAGE_CLASS}`]: {
+    [`.${StyleClass.MESSAGE_CLASS}`]: {
       display: 'inline-block',
       'vertical-align': 'middle',
       width: '240px',
@@ -138,11 +126,11 @@ export const config = {
   }
 }
 
-export function makeNode (type = 'div') {
+export function makeNode (type: string = 'div'): HTMLElement {
   return document.createElement(type)
 }
 
-export function createIcon (node, type, config) {
+export function createIcon (node: HTMLElement, type: MessageType, config: Config): void {
   const iconNode = makeNode(config.icons[type].nodeType)
   const attrs = config.icons[type].attrs
 
@@ -155,7 +143,7 @@ export function createIcon (node, type, config) {
   node.appendChild(iconNode)
 }
 
-export function addElem (node, text, className, config) {
+export function addElem (node: HTMLElement, text: string, className: string, config: Config): void {
   const elem = makeNode()
   elem.className = className
   if (config.allowHtml) {
@@ -166,33 +154,33 @@ export function addElem (node, text, className, config) {
   node.appendChild(elem)
 }
 
-export function getTypeClass (type) {
-  if (type === SUCCESS) return SUCCESS_CLASS
-  if (type === WARN) return WARN_CLASS
-  if (type === ERROR) return ERROR_CLASS
-  if (type === INFO) return INFO_CLASS
+export function getTypeClass (type: MessageType): MessageClass {
+  if (type === SUCCESS) return MessageClass.SUCCESS_CLASS
+  if (type === WARN) return MessageClass.WARN_CLASS
+  if (type === ERROR) return MessageClass.ERROR_CLASS
+  if (type === INFO) return MessageClass.INFO_CLASS
 
-  return EMPTY_STRING
+  throw new MiniToastrError('Unknown class type. Check mini-toastr\'s config\s style section"');
 }
 
-const miniToastr = {
+const miniToastr: MiniToastr = {
   config,
   isInitialised: false,
-  showMessage (message, title, type, timeout, cb, overrideConf) {
+  showMessage (message: string, title: string, type: MessageType, timeout: Number, cb: Function, overrideConf: Config): MiniToastr {
     const config = {}
     Object.assign(config, this.config)
     Object.assign(config, overrideConf)
 
     const notificationElem = makeNode()
-    notificationElem.className = `${NOTIFICATION_CLASS} ${getTypeClass(type)}`
+    notificationElem.className = `${StyleClass.NOTIFICATION_CLASS} ${getTypeClass(type)}`
 
     notificationElem.onclick = function () {
       config.animation(notificationElem, null)
     }
 
-    if (title) addElem(notificationElem, title, TITLE_CLASS, config)
+    if (title) addElem(notificationElem, title, StyleClass.TITLE_CLASS, config)
     if (config.icons[type]) createIcon(notificationElem, type, config)
-    if (message) addElem(notificationElem, message, MESSAGE_CLASS, config)
+    if (message) addElem(notificationElem, message, StyleClass.MESSAGE_CLASS, config)
 
     config.node.insertBefore(notificationElem, config.node.firstChild)
     setTimeout(() => config.animation(notificationElem, cb), timeout || config.timeout
@@ -201,7 +189,7 @@ const miniToastr = {
     if (cb) cb()
     return this
   },
-  init (aConfig) {
+  init (aConfig: Config): MiniToastr {
     const newConfig = {}
     Object.assign(newConfig, config)
     Object.assign(newConfig, aConfig)
@@ -210,26 +198,28 @@ const miniToastr = {
     const cssStr = makeCss(newConfig.style)
     appendStyles(cssStr)
 
-    newConfig.node.id = CONTAINER_CLASS
-    newConfig.node.className = CONTAINER_CLASS
+    newConfig.node.id = StyleClass.CONTAINER_CLASS
+    newConfig.node.className = StyleClass.CONTAINER_CLASS
     newConfig.appendTarget.appendChild(newConfig.node)
 
     Object.keys(newConfig.types).forEach(v => {
-      this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
-        this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
-        return this
-      }.bind(this)
-    }
+        this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
+          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
+          return this
+        }.bind(this)
+      }
     )
 
     this.isInitialised = true
 
     return this
   },
-  setIcon (type, nodeType = 'i', attrs = []) {
-    attrs.class = attrs.class ? attrs.class + ' ' + ICON_CLASS : ICON_CLASS
+  setIcon (type: string, nodeType: string = 'i', attrs: ReadonlyArray<string> = []): MiniToastr {
+    attrs.class = attrs.class ? attrs.class + ' ' + StyleClass.ICON_CLASS : StyleClass.ICON_CLASS
 
-    this.config.icons[type] = {nodeType, attrs}
+    this.config.icons[type] = { nodeType, attrs }
+
+    return this
   }
 }
 
