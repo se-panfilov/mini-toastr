@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "outDir": "./dist",
+  "declarationDir": "./",
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
