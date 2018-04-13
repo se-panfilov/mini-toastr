@@ -1,8 +1,8 @@
 export class MiniToastrError extends Error {
-  constructor(message) {
-    super(message);
-    this.message = message;
-    this.name = 'MiniToastrError';
-    Error.captureStackTrace(this, ExpressionError);
+  constructor (message: string) {
+    super(message)
+    this.message = message
+    this.name = 'MiniToastrError'
+    Error.captureStackTrace(this, MiniToastrError)
   }
 }

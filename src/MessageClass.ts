@@ -1,21 +1,10 @@
-import { MessageType } from './MessageType'
+import { ERROR, INFO, SUCCESS, WARN } from './MessageType'
 
-enum classes {
-  ERROR_CLASS = `-${MessageType.ERROR}`,
-  WARN_CLASS = `-${MessageType.WARN}`,
-  SUCCESS_CLASS = `-${MessageType.SUCCESS}`,
-  INFO_CLASS = `-${MessageType.INFO}`
-}
+// TODO (S.Panfilov) hardcode
+export declare type MessageClass = '-error' | '-warn' | '-success' | '-info'
 
-export type MessageClass =
-  classes.ERROR_CLASS
-  | classes.WARN_CLASS
-  | classes.SUCCESS_CLASS
-  | classes.INFO_CLASS
-
-export const MessageClass = {
-  ERROR_CLASS: classes.ERROR_CLASS as MessageClass,
-  WARN_CLASS: classes.WARN_CLASS as MessageClass,
-  SUCCESS_CLASS: classes.SUCCESS_CLASS as MessageClass,
-  INFO_CLASS: classes.INFO_CLASS as MessageClass
-}
+// TODO (S.Panfilov) casting
+export const ERROR_CLASS: MessageClass = `-${ERROR}` as MessageClass
+export const WARN_CLASS: MessageClass = `-${WARN}`as MessageClass
+export const SUCCESS_CLASS: MessageClass = `-${SUCCESS}`as MessageClass
+export const INFO_CLASS: MessageClass = `-${INFO}`as MessageClass

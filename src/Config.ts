@@ -7,7 +7,7 @@ export interface Config {
   timeout: number,
   icons: Object,
   appendTarget: HTMLElement,
-  node:(type: string) => HTMLElement,
+  node: (type: string) => HTMLElement,
   allowHtml: boolean,
   style: {
     [property: string]: StyleClassObject

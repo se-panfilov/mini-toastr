@@ -2,7 +2,7 @@
   "rules": {
     "callable-types": true,
     "class-name": true,
-    "eofline": true,
+    "eofline": false,
     "forin": true,
     "import-spacing": true,
     "indent": [
@@ -40,11 +40,6 @@
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-inferrable-types": [
-      true,
-      "ignore-params"
-    ],
-    "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,

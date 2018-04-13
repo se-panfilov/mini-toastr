@@ -2,25 +2,16 @@ import { LIB_NAME } from './common.const'
 
 const NOTIFICATION = 'notification'
 
-enum classes {
-  CONTAINER_CLASS = LIB_NAME,
-  NOTIFICATION_CLASS = `${LIB_NAME}__${NOTIFICATION}`,
-  TITLE_CLASS = `${LIB_NAME}-${NOTIFICATION}__title`,
-  ICON_CLASS = `${LIB_NAME}-${NOTIFICATION}__icon`,
-  MESSAGE_CLASS = `${LIB_NAME}-${NOTIFICATION}__message`,
-}
+// TODO (S.Panfilov) hardcode
+export type StyleClass = 'mini-toastr'
+  | 'mini-toastr__notification'
+  | 'mini-toastr-notification__title'
+  | 'mini-toastr-notification__icon'
+  | 'mini-toastr-notification__message'
 
-export type StyleClass =
-  classes.CONTAINER_CLASS
-  | classes.TITLE_CLASS
-  | classes.NOTIFICATION_CLASS
-  | classes.ICON_CLASS
-  | classes.MESSAGE_CLASS
-
-export const StyleClass = {
-  CONTAINER_CLASS: classes.CONTAINER_CLASS as StyleClass,
-  NOTIFICATION_CLASS: classes.NOTIFICATION_CLASS as StyleClass,
-  TITLE_CLASS: classes.TITLE_CLASS as StyleClass,
-  ICON_CLASS: classes.ICON_CLASS as StyleClass,
-  MESSAGE_CLASS: classes.MESSAGE_CLASS as StyleClass
-}
+// TODO (S.Panfilov) casting
+export const CONTAINER_CLASS: StyleClass = LIB_NAME as StyleClass
+export const NOTIFICATION_CLASS: StyleClass = `${LIB_NAME}__${NOTIFICATION}` as StyleClass
+export const TITLE_CLASS: StyleClass = `${LIB_NAME}-${NOTIFICATION}__title` as StyleClass
+export const ICON_CLASS: StyleClass = `${LIB_NAME}-${NOTIFICATION}__icon` as StyleClass
+export const MESSAGE_CLASS: StyleClass = `${LIB_NAME}-${NOTIFICATION}__message` as StyleClass
