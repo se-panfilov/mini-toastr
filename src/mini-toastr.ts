@@ -7,16 +7,20 @@ import { MiniToastrError } from './mini-toastr-error.class'
 import { CONTAINER_CLASS, ICON_CLASS, MESSAGE_CLASS, NOTIFICATION_CLASS, TITLE_CLASS } from './StyleClass'
 
 export function fadeOut (element: HTMLElement, cb?: Function): void {
-  if (element.style.opacStyleClass.tsity && element.style.opacity > 0.05) {
-    element.style.opacity = element.style.opacity - 0.05
-  } else if (element.style.opacity && element.style.opacity <= 0.1) {
+  let opacity: number = element.style.opacity ? +element.style.opacity : 0.9
+
+  if (opacity > 0.05) {
+    opacity -= 0.05
+  } else if (opacity <= 0.1) {
     if (element.parentNode) {
       element.parentNode.removeChild(element)
       if (cb) cb()
     }
   } else {
-    element.style.opacity = 0.9
+    opacity = 0.9
   }
+
+  element.style.opacity = opacity.toString()
   setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30
   )
 }
@@ -128,7 +132,7 @@ export function makeNode (type: string = 'div'): HTMLElement {
   return document.createElement(type)
 }
 
-export function createIcon (node: HTMLElement, type: MessageType, config: Config): void {
+export function createIcon (node: Node, type: MessageType, config: Config): void {
   const iconNode = makeNode(config.icons[type].nodeType)
   const attrs = config.icons[type].attrs
 
@@ -141,7 +145,7 @@ export function createIcon (node: HTMLElement, type: MessageType, config: Config
   node.appendChild(iconNode)
 }
 
-export function addElem (node: HTMLElement, text: string, className: string, config: Config): void {
+export function addElem (node: Node, text: string, className: string, config: Config): void {
   const elem = makeNode()
   elem.className = className
   if (config.allowHtml) {
@@ -165,9 +169,7 @@ const miniToastr: MiniToastr = {
   config,
   isInitialised: false,
   showMessage (message: string, title: string, type: MessageType, timeout: Number, cb: Function, overrideConf: Config): MiniToastr {
-    const config = {}
-    Object.assign(config, this.config)
-    Object.assign(config, overrideConf)
+    const config = { ...this.config, ...overrideConf } as Config // TODO (S.Panfilov) "Config" casting
 
     const notificationElem = makeNode()
     notificationElem.className = `${NOTIFICATION_CLASS} ${getTypeClass(type)}`
@@ -188,21 +190,18 @@ const miniToastr: MiniToastr = {
     return this
   },
   init (aConfig: Config): MiniToastr {
-    const newConfig = {}
-    Object.assign(newConfig, config)
-    Object.assign(newConfig, aConfig)
-    this.config = newConfig
+    this.config = { ...config, ...aConfig } as Config // TODO (S.Panfilov) "config" is a kinda global scope and "Config" casting
 
-    const cssStr = makeCss(newConfig.style)
+    const cssStr = makeCss(this.config.style)
     appendStyles(cssStr)
 
-    newConfig.node.id = CONTAINER_CLASS
-    newConfig.node.className = CONTAINER_CLASS
-    newConfig.appendTarget.appendChild(newConfig.node)
+    this.config.node.id = CONTAINER_CLASS
+    this.config.node.className = CONTAINER_CLASS
+    this.config.appendTarget.appendChild(this.config.node)
 
-    Object.keys(newConfig.types).forEach(v => {
-        this[newConfig.types[v]] = function (message, title, timeout, cb, config) {
-          this.showMessage(message, title, newConfig.types[v], timeout, cb, config)
+    Object.keys(this.config.types).forEach(v => {
+        this[this.config.types[v]] = function (message, title, timeout, cb, config) {
+          this.showMessage(message, title, this.config.types[v], timeout, cb, config)
           return this
         }.bind(this)
       }
