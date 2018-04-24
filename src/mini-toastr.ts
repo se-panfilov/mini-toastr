@@ -21,8 +21,7 @@ function fadeOut (element: HTMLElement, cb?: Function): void {
   }
 
   element.style.opacity = opacity.toString()
-  setTimeout(() => fadeOut.apply((<any>this), [element, cb]), 1000 / 30 // TODO (S.Panfilov) wtf is this here?
-  )
+  // setTimeout(() => fadeOut.apply((<any>this), [element, cb]), 1000 / 30) // TODO (S.Panfilov) wtf is this here?
 }
 
 function flatten (obj: any = {}, into: any = {}, prefix: string = EMPTY_STRING): Object { // TODO (S.Panfilov) "into" and "obj" are any

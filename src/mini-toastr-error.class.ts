@@ -3,6 +3,5 @@ export class MiniToastrError extends Error {
     super(message)
     this.message = message
     this.name = 'MiniToastrError'
-    Error.captureStackTrace(this, MiniToastrError)
   }
 }

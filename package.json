@@ -38,10 +38,10 @@
   },
   "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^4.0.2",
-    "install": "^0.11.0",
-    "tslint": "^5.9.1",
+    "gulp": "3.9.1",
+    "gulp-typescript": "4.0.2",
+    "install": "0.11.0",
+    "tslint": "5.9.1",
     "typescript": "2.8.1"
   },
   "dependencies": {}
