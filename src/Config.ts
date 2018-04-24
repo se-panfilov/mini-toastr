@@ -11,9 +11,7 @@ export interface Config {
   appendTarget?: HTMLElement,
   node?: HTMLElement,
   allowHtml: boolean,
-  style?: {
-    [property: string]: StyleClassObject
-  }
+  style?: Styles
 }
 
 export interface FullConfig extends Config {
@@ -26,9 +24,11 @@ export interface FullConfig extends Config {
   appendTarget: HTMLElement,
   node: HTMLElement,
   allowHtml: boolean,
-  style: {
-    [property: string]: StyleClassObject
-  }
+  style: Styles
+}
+
+export interface Styles {
+  [property: string]: StyleClassObject
 }
 
 export interface Icons {
@@ -36,7 +36,7 @@ export interface Icons {
 }
 
 export interface Icon {
-  id: string
-  nodeType: string // TODO (S.Panfilov) check nodeType type
-  attrs: any // TODO (S.Panfilov) check attrs type
+  id?: string
+  nodeType?: string // TODO (S.Panfilov) check nodeType type
+  attrs?: any // TODO (S.Panfilov) check attrs type
 }

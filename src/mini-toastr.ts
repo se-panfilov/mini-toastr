@@ -1,4 +1,4 @@
-import { Config, FullConfig } from './Config'
+import { Config, FullConfig, Styles } from './Config'
 import { MiniToastr } from './MiniToastr'
 import { DEFAULT_TIMEOUT, EMPTY_STRING, LIB_NAME } from './common.const'
 import { ERROR_CLASS, INFO_CLASS, MessageClass, SUCCESS_CLASS, WARN_CLASS } from './MessageClass'
@@ -6,7 +6,7 @@ import { ERROR, INFO, MessageType, SUCCESS, WARN } from './MessageType'
 import { MiniToastrError } from './mini-toastr-error.class'
 import { CONTAINER_CLASS, ICON_CLASS, MESSAGE_CLASS, NOTIFICATION_CLASS, TITLE_CLASS } from './StyleClass'
 
-export function fadeOut (element: HTMLElement, cb?: Function): void {
+function fadeOut (element: HTMLElement, cb?: Function): void {
   let opacity: number = element.style.opacity ? +element.style.opacity : 0.9
 
   if (opacity > 0.05) {
@@ -21,11 +21,11 @@ export function fadeOut (element: HTMLElement, cb?: Function): void {
   }
 
   element.style.opacity = opacity.toString()
-  setTimeout(() => fadeOut.apply(this, [element, cb]), 1000 / 30
+  setTimeout(() => fadeOut.apply((<any>this), [element, cb]), 1000 / 30 // TODO (S.Panfilov) wtf is this here?
   )
 }
 
-export function flatten (obj: Object, into: Object = {}, prefix: string = EMPTY_STRING): Object {
+function flatten (obj: any = {}, into: any = {}, prefix: string = EMPTY_STRING): Object { // TODO (S.Panfilov) "into" and "obj" are any
   for (const k in obj) {
     if (obj.hasOwnProperty(k)) {
       const prop = obj[k]
@@ -45,8 +45,8 @@ export function flatten (obj: Object, into: Object = {}, prefix: string = EMPTY_
   return into
 }
 
-export function makeCss (obj: Object): string {
-  const flat = flatten(obj)
+function makeCss (styles: Styles): string {
+  const flat = flatten(styles)
   let str = JSON.stringify(flat, null, 2)
   str = str.replace(/"([^"]*)": {/g, '$1 {')
     .replace(/"([^"]*)"/g, '$1')
@@ -59,14 +59,18 @@ export function makeCss (obj: Object): string {
   return str
 }
 
-export function appendStyles (css: string): void {
+function isStyleSheet (element: Node | CSSImportRule): element is CSSImportRule {
+  return !!(<any>element).styleSheet
+}
+
+function appendStyles (css: string): void {
   const head = document.head || document.getElementsByTagName('head')[0]
-  const styleElem = makeNode('style')
+  const styleElem = makeNode('style') as HTMLStyleElement // TODO (S.Panfilov) casting to HTMLStyleElement
   styleElem.id = `${LIB_NAME}-styles`
   styleElem.type = 'text/css'
 
-  if (styleElem.styleSheet) {
-    styleElem.styleSheet.cssText = css
+  if (isStyleSheet(styleElem)) {
+    styleElem.styleSheet.cssText = css // TODO (S.Panfilov) deprecated
   } else {
     styleElem.appendChild(document.createTextNode(css))
   }
@@ -74,7 +78,7 @@ export function appendStyles (css: string): void {
   head.appendChild(styleElem)
 }
 
-export const config: FullConfig = {
+const config: FullConfig = {
   types: { ERROR, WARN, SUCCESS, INFO },
   animation: fadeOut,
   timeout: DEFAULT_TIMEOUT,
@@ -132,7 +136,7 @@ function makeNode (type: string = 'div'): HTMLElement {
   return document.createElement(type)
 }
 
-export function createIcon (node: HTMLElement, type: MessageType, config: FullConfig): void {
+function createIcon (node: HTMLElement, type: MessageType, config: FullConfig): void {
   const iconNode = makeNode(config.icons[type].nodeType)
   const attrs = config.icons[type].attrs
 
@@ -145,7 +149,7 @@ export function createIcon (node: HTMLElement, type: MessageType, config: FullCo
   node.appendChild(iconNode)
 }
 
-export function addElem (node: HTMLElement, text: string, className: string, config: FullConfig): void {
+function addElem (node: HTMLElement, text: string, className: string, config: FullConfig): void {
   const elem = makeNode()
   elem.className = className
   if (config.allowHtml) {
@@ -156,7 +160,7 @@ export function addElem (node: HTMLElement, text: string, className: string, con
   node.appendChild(elem)
 }
 
-export function getTypeClass (type: MessageType): MessageClass {
+function getTypeClass (type: MessageType): MessageClass {
   if (type === SUCCESS) return SUCCESS_CLASS
   if (type === WARN) return WARN_CLASS
   if (type === ERROR) return ERROR_CLASS
@@ -168,13 +172,12 @@ export function getTypeClass (type: MessageType): MessageClass {
 const miniToastr: MiniToastr = {
   config,
   isInitialised: false,
-  showMessage (message: string, title: string, type: MessageType, timeout: Number, cb: Function, overrideConf: Config): MiniToastr {
+  showMessage (message: string, title: string, type: MessageType, timeout: number, cb: Function, overrideConf: Config): MiniToastr {
     const config = { ...this.config, ...overrideConf } as FullConfig // TODO (S.Panfilov) "Config" casting
 
     const notificationElem = makeNode()
     notificationElem.className = `${NOTIFICATION_CLASS} ${getTypeClass(type)}`
-
-    notificationElem.onclick = () => config.animation(notificationElem, null)
+    notificationElem.onclick = () => config.animation(notificationElem)
 
     if (title) addElem(notificationElem, title, TITLE_CLASS, config)
     if (config.icons[type]) createIcon(notificationElem, type, config)
@@ -197,11 +200,20 @@ const miniToastr: MiniToastr = {
     this.config.node.className = CONTAINER_CLASS
     this.config.appendTarget.appendChild(this.config.node)
 
-    Object.keys(this.config.types).forEach(v => {
-        this[this.config.types[v]] = function (message, title, timeout, cb, config) {
-          this.showMessage(message, title, this.config.types[v], timeout, cb, config)
-          return this
-        }.bind(this)
+    // Object.keys(this.config.types).forEach(v => {
+    //     this[this.config.types[v]] = function (message: string, title: string, timeout: number, cb: Function, config: Config) {
+    //       this.showMessage(message, title, this.config.types[v], timeout, cb, config)
+    //       return this
+    //     }.bind(this) // TODO (S.Panfilov) bind?
+    //   }
+    // )
+
+    // TODO (S.Panfilov) check if it's working
+    Object.keys(miniToastr.config.types).forEach(v => {
+        miniToastr[miniToastr.config.types[v]] = function (message: string, title: string, timeout: number, cb: Function, config: Config) {
+          miniToastr.showMessage(message, title, miniToastr.config.types[v], timeout, cb, config)
+          return miniToastr
+        }.bind(this) // TODO (S.Panfilov) bind?
       }
     )
 
@@ -209,7 +221,7 @@ const miniToastr: MiniToastr = {
 
     return this
   },
-  setIcon (type: string, nodeType: string = 'i', attrs: ReadonlyArray<string> = []): MiniToastr {
+  setIcon (type: string, nodeType: string = 'i', attrs: any = []): MiniToastr { // TODO (S.Panfilov) attrs is any
     attrs.class = attrs.class ? attrs.class + ' ' + ICON_CLASS : ICON_CLASS
 
     this.config.icons[type] = { nodeType, attrs }
