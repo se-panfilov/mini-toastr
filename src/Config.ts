@@ -7,11 +7,36 @@ export interface Config {
   },
   animation?: (element: HTMLElement, cb?: Function) => void,
   timeout?: number,
-  icons?: Object,
+  icons?: Icons,
   appendTarget?: HTMLElement,
-  node?: Node,
-  allowHtml?: boolean,
+  node?: HTMLElement,
+  allowHtml: boolean,
   style?: {
     [property: string]: StyleClassObject
   }
+}
+
+export interface FullConfig extends Config {
+  types: {
+    [prop: string]: MessageType
+  },
+  animation: (element: HTMLElement, cb?: Function) => void,
+  timeout: number,
+  icons: Icons,
+  appendTarget: HTMLElement,
+  node: HTMLElement,
+  allowHtml: boolean,
+  style: {
+    [property: string]: StyleClassObject
+  }
+}
+
+export interface Icons {
+  [prop: string]: Icon
+}
+
+export interface Icon {
+  id: string
+  nodeType: string // TODO (S.Panfilov) check nodeType type
+  attrs: any // TODO (S.Panfilov) check attrs type
 }

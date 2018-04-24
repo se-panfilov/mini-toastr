@@ -1,4 +1,4 @@
-import { Config } from './Config'
+import { Config, FullConfig } from './Config'
 import { MiniToastr } from './MiniToastr'
 import { DEFAULT_TIMEOUT, EMPTY_STRING, LIB_NAME } from './common.const'
 import { ERROR_CLASS, INFO_CLASS, MessageClass, SUCCESS_CLASS, WARN_CLASS } from './MessageClass'
@@ -74,7 +74,7 @@ export function appendStyles (css: string): void {
   head.appendChild(styleElem)
 }
 
-export const config: Config = {
+export const config: FullConfig = {
   types: { ERROR, WARN, SUCCESS, INFO },
   animation: fadeOut,
   timeout: DEFAULT_TIMEOUT,
@@ -128,11 +128,11 @@ export const config: Config = {
   }
 }
 
-export function makeNode (type: string = 'div'): HTMLElement {
+function makeNode (type: string = 'div'): HTMLElement {
   return document.createElement(type)
 }
 
-export function createIcon (node: Node, type: MessageType, config: Config): void {
+export function createIcon (node: HTMLElement, type: MessageType, config: FullConfig): void {
   const iconNode = makeNode(config.icons[type].nodeType)
   const attrs = config.icons[type].attrs
 
@@ -145,7 +145,7 @@ export function createIcon (node: Node, type: MessageType, config: Config): void
   node.appendChild(iconNode)
 }
 
-export function addElem (node: Node, text: string, className: string, config: Config): void {
+export function addElem (node: HTMLElement, text: string, className: string, config: FullConfig): void {
   const elem = makeNode()
   elem.className = className
   if (config.allowHtml) {
@@ -169,14 +169,12 @@ const miniToastr: MiniToastr = {
   config,
   isInitialised: false,
   showMessage (message: string, title: string, type: MessageType, timeout: Number, cb: Function, overrideConf: Config): MiniToastr {
-    const config = { ...this.config, ...overrideConf } as Config // TODO (S.Panfilov) "Config" casting
+    const config = { ...this.config, ...overrideConf } as FullConfig // TODO (S.Panfilov) "Config" casting
 
     const notificationElem = makeNode()
     notificationElem.className = `${NOTIFICATION_CLASS} ${getTypeClass(type)}`
 
-    notificationElem.onclick = function () {
-      config.animation(notificationElem, null)
-    }
+    notificationElem.onclick = () => config.animation(notificationElem, null)
 
     if (title) addElem(notificationElem, title, TITLE_CLASS, config)
     if (config.icons[type]) createIcon(notificationElem, type, config)
@@ -190,7 +188,7 @@ const miniToastr: MiniToastr = {
     return this
   },
   init (aConfig: Config): MiniToastr {
-    this.config = { ...config, ...aConfig } as Config // TODO (S.Panfilov) "config" is a kinda global scope and "Config" casting
+    this.config = { ...config, ...aConfig } as FullConfig // TODO (S.Panfilov) "config" is a kinda global scope and "Config" casting
 
     const cssStr = makeCss(this.config.style)
     appendStyles(cssStr)
