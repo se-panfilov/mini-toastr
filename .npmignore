@@ -12,3 +12,7 @@ tsconfig.json
 .bithoundrc
 .codeclimate.yml
 .nvmrc
+coverage
+.awcache
+.rpt2_cache
+.nyc_output

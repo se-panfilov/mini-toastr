@@ -1,1 +1,0 @@
-export {miniToastr} from './dist/mini-toastr'

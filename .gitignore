@@ -3,3 +3,8 @@ node_modules
 .idea
 .tmp
 .DS_Store
+coverage
+.awcache
+.rpt2_cache
+.nyc_output
+/src/
