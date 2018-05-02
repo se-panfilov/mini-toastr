@@ -3,6 +3,7 @@
   "version": "0.8.1",
   "description": "Non-blocking toaster notifications",
   "main": "index.js",
+  "types": "dist/mini-toastr.d.ts",
   "scripts": {
     "start": "gulp",
     "update": "ncu -a && npm update",

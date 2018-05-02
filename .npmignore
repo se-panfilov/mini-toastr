@@ -4,3 +4,11 @@ node_modules/
 .tmp
 .DS_Store
 .idea
+tsconfig.json
+.travis.yml
+.gitattributes
+.gitignore
+.editorconfig
+.bithoundrc
+.codeclimate.yml
+.nvmrc

@@ -1,7 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "module": "commonjs",
+//    "module": "commonjs",
+    "module": "system",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -18,9 +19,9 @@
       "scripthost"
     ],
     "outDir": "./dist",
-//    "outFile": "./mini-toastr",
+    "outFile": "./mini-toastr.js",
     "declaration": true,
-    "declarationDir": "declarations",
+//    "declarationDir": "declarations",
     "rootDir": "src",
     "noImplicitReturns": true,
     "noImplicitThis": true,
