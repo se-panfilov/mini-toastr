@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.umd.js",
+  "min": "dist/mini-toastr.umd.min.js",
+  "es5min": "dist/mini-toastr.es5.min.js",
   "module": "dist/mini-toastr.es5.js",
   "typings": "dist/types/mini-toastr.d.ts",
   "types": "dist/mini-toastr.d.ts",

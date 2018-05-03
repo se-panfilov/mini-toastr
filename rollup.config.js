@@ -19,7 +19,7 @@ const libraryName = 'mini-toastr'
 // const isProduction = process.env.buildTarget === 'production' || process.env.NODE_ENV === 'production'
 const isProduction = true // TODO (S.Panfilov) temp
 
-export default {
+export default [{
   input: `src/${libraryName}.ts`,
   output: [
     { file: pkg.main, name: camelCase(libraryName), format: 'umd' }, // TODO (S.Panfilov) test IIFE
@@ -55,11 +55,44 @@ export default {
     // uglify(),
     // ]),
 
-    (isProduction && uglify()),
+    // (isProduction && uglify()),
 
     // conditional(!isProduction, [
     filesize()//,
     // watch()
     // ])
   ]
-}
+}, {
+  input: `src/${libraryName}.ts`,
+  output: [
+    { file: pkg.min, name: camelCase(libraryName), format: 'umd' }, // TODO (S.Panfilov) test IIFE
+    { file: pkg.es5min, format: 'es' } // TODO (S.Panfilov) test IIFE
+  ],
+  sourcemap: true,
+  external: external || [],
+  watch: {
+    include: 'src/**'
+  },
+  plugins: [
+    // Allow json resolution
+    json(),
+    // Compile TypeScript files
+    typescript({ useTsconfigDeclarationDir: true }),
+    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+    commonjs(),
+    // Allow node_modules resolution, so you can use 'external' to control
+    // which external modules to include in the bundle
+    // https://github.com/rollup/rollup-plugin-node-resolve#usage
+    resolve(),
+
+    stripCode({
+      start_comment: 'START.TESTS_ONLY',
+      end_comment: 'END.TESTS_ONLY'
+    }),
+
+    // Resolve source maps to the original source
+    sourceMaps(),
+    uglify(),
+    filesize()
+  ]
+}]
