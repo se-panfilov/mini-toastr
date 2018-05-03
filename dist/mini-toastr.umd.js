@@ -41,16 +41,19 @@ var __assign = Object.assign || function __assign(t) {
 var LIB_NAME = 'mini-toastr';
 var DEFAULT_TIMEOUT = 3000;
 var EMPTY_STRING = '';
+//# sourceMappingURL=common.const.js.map
 
 var ERROR = 'error';
 var WARN = 'warn';
 var SUCCESS = 'success';
 var INFO = 'info';
+//# sourceMappingURL=MessageType.js.map
 
 var ERROR_CLASS = "-" + ERROR;
 var WARN_CLASS = "-" + WARN;
 var SUCCESS_CLASS = "-" + SUCCESS;
 var INFO_CLASS = "-" + INFO;
+//# sourceMappingURL=MessageClass.js.map
 
 var MiniToastrError = (function (_super) {
     __extends(MiniToastrError, _super);
@@ -62,6 +65,7 @@ var MiniToastrError = (function (_super) {
     }
     return MiniToastrError;
 }(Error));
+//# sourceMappingURL=mini-toastr-error.class.js.map
 
 var NOTIFICATION = 'notification';
 var CONTAINER_CLASS = LIB_NAME;
@@ -69,6 +73,7 @@ var NOTIFICATION_CLASS = LIB_NAME + "__" + NOTIFICATION;
 var TITLE_CLASS = LIB_NAME + "-" + NOTIFICATION + "__title";
 var ICON_CLASS = LIB_NAME + "-" + NOTIFICATION + "__icon";
 var MESSAGE_CLASS = LIB_NAME + "-" + NOTIFICATION + "__message";
+//# sourceMappingURL=StyleClass.js.map
 
 function fadeOut(element, cb) {
     var opacity = element.style.opacity ? +element.style.opacity : 0.9;

@@ -1,9 +1,12 @@
-/src/
 *.log
 node_modules/
 .tmp
 .DS_Store
 .idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 tsconfig.json
 .travis.yml
 .gitattributes
