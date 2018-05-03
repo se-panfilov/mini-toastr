@@ -4,7 +4,7 @@ engines:
     enabled: false
     config:
       languages:
-      - javascript
+      - typescript
   eslint:
     enabled: true
     channel: "eslint-3"
@@ -12,8 +12,7 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "**.js"
+  - "**.ts"
 exclude_paths:
 - dist/
 - test/
-- build/

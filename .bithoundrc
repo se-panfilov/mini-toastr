@@ -6,6 +6,6 @@
   "test": [
   ],
   "critics": {
-    "lint": {"engine": "eslint"}
+    "lint": {"engine": "tslint"}
   }
 }
