@@ -6,6 +6,7 @@
 
 [![NPM](https://nodei.co/npm/mini-toastr.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mini-toastr/)
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+[![Package Quality](http://npm.packagequality.com/badge/mini-toastr.png)](http://packagequality.com/#?package=mini-toastr)
 
 # mini-toastr
 
