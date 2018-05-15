@@ -10,8 +10,7 @@ export interface Config {
   icons?: Icons,
   appendTarget?: HTMLElement,
   node?: HTMLElement,
-  allowHtml: boolean,
-  style?: Styles
+  allowHtml: boolean
 }
 
 export interface FullConfig extends Config {
@@ -23,12 +22,7 @@ export interface FullConfig extends Config {
   icons: Icons,
   appendTarget: HTMLElement,
   node: HTMLElement,
-  allowHtml: boolean,
-  style: Styles
-}
-
-export interface Styles {
-  [property: string]: StyleClassObject
+  allowHtml: boolean
 }
 
 export interface Icons {

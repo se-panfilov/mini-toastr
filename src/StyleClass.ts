@@ -1,5 +1,4 @@
-import { LIB_NAME } from './common.const'
-
+const LIB_NAME = 'mini-toastr'
 const NOTIFICATION = 'notification'
 
 // TODO (S.Panfilov) hardcode
