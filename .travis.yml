@@ -9,6 +9,7 @@ node_js:
   - '7'
   - '8'
   - '9'
+  - '10'
 notifications:
   email: false
 script: mocha --compilers js:babel-core/register ./test/**/*.spec.js
