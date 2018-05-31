@@ -10,6 +10,8 @@ import uglify from 'rollup-plugin-uglify'
 // import stripCode from "./rollup-plugin-strip-code"
 import stripCode from 'rollup-plugin-strip-code'
 import filesize from 'rollup-plugin-filesize'
+import stylus from 'rollup-plugin-stylus-compiler';
+import postcss from 'rollup-plugin-postcss';
 
 const pkg = require('./package.json')
 const externalDeps = Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies))
@@ -41,6 +43,10 @@ export default [{
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
+
+    stylus(), // TODO (S.Panfilov) we have to add styles somehow
+
+    postcss(),// TODO (S.Panfilov)
 
     stripCode({
       start_comment: 'START.TESTS_ONLY',
