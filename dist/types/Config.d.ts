@@ -1,5 +1,4 @@
 import { MessageType } from './MessageType';
-import { StyleClassObject } from './StyleClassObject';
 export interface Config {
     types?: {
         [prop: string]: MessageType;
@@ -10,7 +9,6 @@ export interface Config {
     appendTarget?: HTMLElement;
     node?: HTMLElement;
     allowHtml: boolean;
-    style?: Styles;
 }
 export interface FullConfig extends Config {
     types: {
@@ -22,10 +20,6 @@ export interface FullConfig extends Config {
     appendTarget: HTMLElement;
     node: HTMLElement;
     allowHtml: boolean;
-    style: Styles;
-}
-export interface Styles {
-    [property: string]: StyleClassObject;
 }
 export interface Icons {
     [prop: string]: Icon;

@@ -8,131 +8,21 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var common_const_1 = require("./common.const");
 var MessageClass_1 = require("./MessageClass");
 var MessageType_1 = require("./MessageType");
 var mini_toastr_error_class_1 = require("./mini-toastr-error.class");
 var StyleClass_1 = require("./StyleClass");
-function fadeOut(element, cb) {
-    var opacity = element.style.opacity ? +element.style.opacity : 0.9;
-    if (opacity > 0.05) {
-        opacity -= 0.05;
-    }
-    else if (opacity <= 0.1) {
-        if (element.parentNode) {
-            element.parentNode.removeChild(element);
-            if (cb)
-                cb();
-        }
-    }
-    else {
-        opacity = 0.9;
-    }
-    element.style.opacity = opacity.toString();
-}
-function flatten(obj, into, prefix) {
-    if (obj === void 0) { obj = {}; }
-    if (into === void 0) { into = {}; }
-    if (prefix === void 0) { prefix = common_const_1.EMPTY_STRING; }
-    for (var k in obj) {
-        if (obj.hasOwnProperty(k)) {
-            var prop = obj[k];
-            if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
-                flatten(prop, into, prefix + k + ' ');
-            }
-            else {
-                if (into[prefix] && typeof into[prefix] === 'object') {
-                    into[prefix][k] = prop;
-                }
-                else {
-                    into[prefix] = {};
-                    into[prefix][k] = prop;
-                }
-            }
-        }
-    }
-    return into;
-}
-function makeCss(styles) {
-    var flat = flatten(styles);
-    var str = JSON.stringify(flat, null, 2);
-    str = str.replace(/"([^"]*)": {/g, '$1 {')
-        .replace(/"([^"]*)"/g, '$1')
-        .replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
-        .replace(/},/g, '}\n')
-        .replace(/ &([.:])/g, '$1');
-    str = str.substr(1, str.lastIndexOf('}') - 1);
-    return str;
-}
-function isStyleSheet(element) {
-    return !!element.styleSheet;
-}
-function appendStyles(css) {
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var styleElem = makeNode('style');
-    styleElem.id = common_const_1.LIB_NAME + "-styles";
-    styleElem.type = 'text/css';
-    if (isStyleSheet(styleElem)) {
-        styleElem.styleSheet.cssText = css;
-    }
-    else {
-        styleElem.appendChild(document.createTextNode(css));
-    }
-    head.appendChild(styleElem);
-}
+var Animations_1 = require("./Animations");
+var DEFAULT_TIMEOUT = 3000;
+var DEFAULT_NODE_TYPE = 'div';
 var config = {
     types: { ERROR: MessageType_1.ERROR, WARN: MessageType_1.WARN, SUCCESS: MessageType_1.SUCCESS, INFO: MessageType_1.INFO },
-    animation: fadeOut,
-    timeout: common_const_1.DEFAULT_TIMEOUT,
+    animation: Animations_1.fadeOut,
+    timeout: DEFAULT_TIMEOUT,
     icons: {},
     appendTarget: document.body,
-    node: makeNode(),
-    allowHtml: false,
-    style: (_a = {},
-        _a["." + StyleClass_1.CONTAINER_CLASS] = {
-            position: 'fixed',
-            'z-index': 99999,
-            right: '12px',
-            top: '12px'
-        },
-        _a["." + StyleClass_1.NOTIFICATION_CLASS] = (_b = {
-                cursor: 'pointer',
-                padding: '12px 18px',
-                margin: '0 0 6px 0',
-                'background-color': '#000',
-                opacity: 0.8,
-                color: '#fff',
-                'border-radius': '3px',
-                'box-shadow': '#3c3b3b 0 0 12px',
-                width: '300px'
-            },
-            _b["&." + MessageClass_1.ERROR_CLASS] = {
-                'background-color': '#D5122B'
-            },
-            _b["&." + MessageClass_1.WARN_CLASS] = {
-                'background-color': '#F5AA1E'
-            },
-            _b["&." + MessageClass_1.SUCCESS_CLASS] = {
-                'background-color': '#7AC13E'
-            },
-            _b["&." + MessageClass_1.INFO_CLASS] = {
-                'background-color': '#4196E1'
-            },
-            _b['&:hover'] = {
-                opacity: 1,
-                'box-shadow': '#000 0 0 12px'
-            },
-            _b),
-        _a["." + StyleClass_1.TITLE_CLASS] = {
-            'font-weight': '500'
-        },
-        _a["." + StyleClass_1.MESSAGE_CLASS] = {
-            display: 'inline-block',
-            'vertical-align': 'middle',
-            width: '240px',
-            padding: '0 12px'
-        },
-        _a)
+    node: makeNode(DEFAULT_NODE_TYPE),
+    allowHtml: false
 };
 function makeNode(type) {
     if (type === void 0) { type = 'div'; }
@@ -193,8 +83,6 @@ var miniToastr = {
     init: function (aConfig) {
         var _this = this;
         this.config = __assign({}, config, aConfig);
-        var cssStr = makeCss(this.config.style);
-        appendStyles(cssStr);
         this.config.node.id = StyleClass_1.CONTAINER_CLASS;
         this.config.node.className = StyleClass_1.CONTAINER_CLASS;
         this.config.appendTarget.appendChild(this.config.node);
@@ -216,5 +104,4 @@ var miniToastr = {
     }
 };
 exports.default = miniToastr;
-var _a, _b;
 //# sourceMappingURL=mini-toastr.js.map

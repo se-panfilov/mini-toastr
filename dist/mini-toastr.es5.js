@@ -32,22 +32,15 @@ var __assign = Object.assign || function __assign(t) {
     return t;
 };
 
-var LIB_NAME = 'mini-toastr';
-var DEFAULT_TIMEOUT = 3000;
-var EMPTY_STRING = '';
-//# sourceMappingURL=common.const.js.map
-
 var ERROR = 'error';
 var WARN = 'warn';
 var SUCCESS = 'success';
 var INFO = 'info';
-//# sourceMappingURL=MessageType.js.map
 
 var ERROR_CLASS = "-" + ERROR;
 var WARN_CLASS = "-" + WARN;
 var SUCCESS_CLASS = "-" + SUCCESS;
 var INFO_CLASS = "-" + INFO;
-//# sourceMappingURL=MessageClass.js.map
 
 var MiniToastrError = (function (_super) {
     __extends(MiniToastrError, _super);
@@ -59,15 +52,14 @@ var MiniToastrError = (function (_super) {
     }
     return MiniToastrError;
 }(Error));
-//# sourceMappingURL=mini-toastr-error.class.js.map
 
+var LIB_NAME = 'mini-toastr';
 var NOTIFICATION = 'notification';
 var CONTAINER_CLASS = LIB_NAME;
 var NOTIFICATION_CLASS = LIB_NAME + "__" + NOTIFICATION;
 var TITLE_CLASS = LIB_NAME + "-" + NOTIFICATION + "__title";
 var ICON_CLASS = LIB_NAME + "-" + NOTIFICATION + "__icon";
 var MESSAGE_CLASS = LIB_NAME + "-" + NOTIFICATION + "__message";
-//# sourceMappingURL=StyleClass.js.map
 
 function fadeOut(element, cb) {
     var opacity = element.style.opacity ? +element.style.opacity : 0.9;
@@ -86,98 +78,17 @@ function fadeOut(element, cb) {
     }
     element.style.opacity = opacity.toString();
 }
-function flatten(obj, into, prefix) {
-    if (obj === void 0) { obj = {}; }
-    if (into === void 0) { into = {}; }
-    if (prefix === void 0) { prefix = EMPTY_STRING; }
-    for (var k in obj) {
-        if (obj.hasOwnProperty(k)) {
-            var prop = obj[k];
-            if (prop && typeof prop === 'object' && !(prop instanceof Date || prop instanceof RegExp)) {
-                flatten(prop, into, prefix + k + ' ');
-            }
-            else {
-                if (into[prefix] && typeof into[prefix] === 'object') {
-                    into[prefix][k] = prop;
-                }
-                else {
-                    into[prefix] = {};
-                    into[prefix][k] = prop;
-                }
-            }
-        }
-    }
-    return into;
-}
-function makeCss(styles) {
-    var flat = flatten(styles);
-    var str = JSON.stringify(flat, null, 2);
-    str = str.replace(/"([^"]*)": {/g, '$1 {')
-        .replace(/"([^"]*)"/g, '$1')
-        .replace(/(\w*-?\w*): ([\w\d .#]*),?/g, '$1: $2;')
-        .replace(/},/g, '}\n')
-        .replace(/ &([.:])/g, '$1');
-    str = str.substr(1, str.lastIndexOf('}') - 1);
-    return str;
-}
-function isStyleSheet(element) {
-    return !!element.styleSheet;
-}
-function appendStyles(css) {
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var styleElem = makeNode('style');
-    styleElem.id = LIB_NAME + "-styles";
-    styleElem.type = 'text/css';
-    if (isStyleSheet(styleElem)) {
-        styleElem.styleSheet.cssText = css;
-    }
-    else {
-        styleElem.appendChild(document.createTextNode(css));
-    }
-    head.appendChild(styleElem);
-}
+
+var DEFAULT_TIMEOUT = 3000;
+var DEFAULT_NODE_TYPE = 'div';
 var config = {
     types: { ERROR: ERROR, WARN: WARN, SUCCESS: SUCCESS, INFO: INFO },
     animation: fadeOut,
     timeout: DEFAULT_TIMEOUT,
     icons: {},
     appendTarget: document.body,
-    node: makeNode(),
-    allowHtml: false,
-    style: (_a = {}, _a["." + CONTAINER_CLASS] = {
-            position: 'fixed',
-            'z-index': 99999,
-            right: '12px',
-            top: '12px'
-        }, _a["." + NOTIFICATION_CLASS] = (_b = {
-                cursor: 'pointer',
-                padding: '12px 18px',
-                margin: '0 0 6px 0',
-                'background-color': '#000',
-                opacity: 0.8,
-                color: '#fff',
-                'border-radius': '3px',
-                'box-shadow': '#3c3b3b 0 0 12px',
-                width: '300px'
-            }, _b["&." + ERROR_CLASS] = {
-                'background-color': '#D5122B'
-            }, _b["&." + WARN_CLASS] = {
-                'background-color': '#F5AA1E'
-            }, _b["&." + SUCCESS_CLASS] = {
-                'background-color': '#7AC13E'
-            }, _b["&." + INFO_CLASS] = {
-                'background-color': '#4196E1'
-            }, _b['&:hover'] = {
-                opacity: 1,
-                'box-shadow': '#000 0 0 12px'
-            }, _b), _a["." + TITLE_CLASS] = {
-            'font-weight': '500'
-        }, _a["." + MESSAGE_CLASS] = {
-            display: 'inline-block',
-            'vertical-align': 'middle',
-            width: '240px',
-            padding: '0 12px'
-        }, _a)
+    node: makeNode(DEFAULT_NODE_TYPE),
+    allowHtml: false
 };
 function makeNode(type) {
     if (type === void 0) { type = 'div'; }
@@ -238,8 +149,6 @@ var miniToastr = {
     init: function (aConfig) {
         var _this = this;
         this.config = __assign({}, config, aConfig);
-        var cssStr = makeCss(this.config.style);
-        appendStyles(cssStr);
         this.config.node.id = CONTAINER_CLASS;
         this.config.node.className = CONTAINER_CLASS;
         this.config.appendTarget.appendChild(this.config.node);
@@ -260,7 +169,6 @@ var miniToastr = {
         return this;
     }
 };
-var _a, _b;
 
 export default miniToastr;
 //# sourceMappingURL=mini-toastr.es5.js.map
