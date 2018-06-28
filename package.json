@@ -1,5 +1,5 @@
 {
-  "name": "mini-toastr",
+  "name": "mini-toastr-o7",
   "version": "0.6.5",
   "description": "Non-blocking toaster notifications",
   "main": "dist/mini-toastr.es5.js",
@@ -32,13 +32,10 @@
     "messages",
     "errors"
   ],
-  "author": "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)",
+  "author": "Ömer Öztürk <omer.oztrk0@gmail.com> (https://optimum7.com)",
   "license": "MIT",
   "private": false,
-  "bugs": {
-    "url": "https://github.com/se-panfilov/mini-toastr/issues"
-  },
-  "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
+  "homepage": "https://github.com/omerozturk0/mini-toastr#readme",
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.24.0",
