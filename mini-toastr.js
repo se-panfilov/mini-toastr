@@ -5,6 +5,7 @@ export function fadeOut (element, cb) {
     if (element.parentNode) {
       element.parentNode.removeChild(element)
       if (cb) cb()
+      return
     }
   } else {
     element.style.opacity = 0.9
