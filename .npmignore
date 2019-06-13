@@ -3,10 +3,6 @@ node_modules/
 .tmp
 .DS_Store
 .idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
 tsconfig.json
 .travis.yml
 .gitattributes
@@ -19,3 +15,11 @@ coverage
 .awcache
 .rpt2_cache
 .nyc_output
+.log
+test
+node_modules
+src
+.babelrc
+.npmrc
+tslint.json
+yarn-error.log

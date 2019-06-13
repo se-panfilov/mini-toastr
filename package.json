@@ -2,6 +2,29 @@
   "name": "mini-toastr",
   "version": "1.0.0",
   "description": "Non-blocking toaster notifications",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/es6/index.js",
+  "jsnext:main": "./lib/es6/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib && yarn build:commonjs && yarn build:es6 && yarn build:amd && yarn build:umd && yarn build:system",
+    "build:commonjs": "yarn ts --outDir lib/commonjs --module CommonJS",
+    "build:es6": "yarn ts --outDir lib/es6 --module ES6",
+    "build:amd": "yarn ts --outDir lib/amd --module AMD",
+    "build:umd": "yarn ts --outDir lib/umd --module UMD",
+    "build:system": "yarn ts --outDir lib/system --module System",
+    "ts": "tsc -p tsconfig.json",
+    "lint": "tslint --project ."
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/se-panfilov/mini-toastr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/se-panfilov/mini-toastr/issues"
+  },
+  "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
   "keywords": [
     "non-blocking",
     "notification",
@@ -19,121 +42,16 @@
     "messages",
     "errors"
   ],
-  "main": "dist/mini-toastr.umd.js",
-  "min": "dist/mini-toastr.umd.min.js",
-  "es5min": "dist/mini-toastr.es5.min.js",
-  "module": "dist/mini-toastr.es5.js",
-  "typings": "dist/types/mini-toastr.d.ts",
-  "types": "dist/mini-toastr.d.ts",
-  "files": [
-    "dist"
-  ],
+  "ignore": {},
   "author": "S.Panfilov <se-panfilov@ya.ru> (https://se-panfilov.github.io)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/se-panfilov/mini-toastr.git"
-  },
-  "license": "MIT",
   "private": false,
-  "bugs": {
-    "url": "https://github.com/se-panfilov/mini-toastr/issues"
-  },
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "homepage": "https://github.com/se-panfilov/mini-toastr#readme",
-  "scripts": {
-    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c rollup.config.js && typedoc --out docs --target es6 --theme minimal --mode file src",
-    "start": "rollup -c rollup.config.js -w",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:prod": "yarn run lint && yarn run test -- --coverage --no-cache",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "git-cz",
-    "semantic-release": "semantic-release",
-    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "update": "./node_modules/.bin/npm-check-updates -a",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "prettier --write --no-semi --single-quote",
-      "git add"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    },
-    "validate-commit-msg": {
-      "types": "conventional-commit-types",
-      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
-    }
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
-    "collectCoverage": true,
-    "mapCoverage": true
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/jest": "22.0.0",
-    "@types/node": "9.3.0",
-    "colors": "1.1.2",
-    "commitizen": "2.9.6",
-    "coveralls": "3.0.0",
-    "cross-env": "5.0.1",
-    "cz-conventional-changelog": "2.0.0",
-    "husky": "0.14.0",
-    "jest": "22.0.2",
-    "lint-staged": "7.0.0",
-    "lodash.camelcase": "4.3.0",
-    "npm-check-updates": "2.14.2",
-    "prettier": "1.4.4",
-    "prompt": "1.0.0",
-    "replace-in-file": "3.0.0-beta.2",
-    "rimraf": "2.6.1",
-    "rollup": "0.57.0",
-    "rollup-plugin-commonjs": "9.0.0",
-    "rollup-plugin-filesize": "1.5.0",
-    "rollup-plugin-json": "2.3.0",
-    "rollup-plugin-node-resolve": "3.0.0",
-    "rollup-plugin-postcss": "1.6.2",
-    "rollup-plugin-sourcemaps": "0.4.2",
-    "rollup-plugin-strip-code": "0.2.5",
-    "rollup-plugin-stylus-compiler": "0.2.1",
-    "rollup-plugin-typescript2": "0.11.1",
-    "rollup-plugin-uglify": "3.0.0",
-    "semantic-release": "15.0.0",
-    "ts-jest": "22.0.0",
-    "ts-node": "6.0.0",
-    "tslint": "5.8.0",
-    "tslint-config-prettier": "1.1.0",
-    "tslint-config-standard": "7.0.0",
-    "typedoc": "0.11.0",
-    "typescript": "2.6.2",
-    "validate-commit-msg": "2.12.2"
-  },
-  "dependencies": {}
+    "rimraf": "2.6.3",
+    "ts-loader": "6.0.2",
+    "tslint": "5.17.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-immutable": "6.0.0",
+    "typescript": "3.5.2"
+  }
 }

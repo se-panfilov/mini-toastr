@@ -1,1 +1,1 @@
-export {miniToastr} from './dist/mini-toastr'
+export { miniToastr } from './lib/es6';
